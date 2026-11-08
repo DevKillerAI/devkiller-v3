@@ -1,0 +1,1 @@
+const origin='http://127.0.0.1:4380';const s=await(await fetch(origin+'/api/state')).json();if(s.busy)throw Error('Busy');await fetch(origin+'/api/shutdown',{method:'POST',headers:{Origin:origin,'X-DevKiller-Token':s.token,'Content-Type':'application/json'},body:'{}'});

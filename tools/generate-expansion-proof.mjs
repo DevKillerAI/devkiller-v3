@@ -1,0 +1,15 @@
+import fs from 'node:fs/promises';
+const origin='http://127.0.0.1:4330';
+const workspace=await(await fetch(origin+'/api/workspace')).json();
+async function post(route,body){const r=await fetch(origin+route,{method:'POST',headers:{Origin:origin,'Content-Type':'application/json','X-MVP-Token':workspace.token},body:JSON.stringify(body)});const j=await r.json();if(!r.ok)throw Error(j.error||r.status);return j;}
+const idea=`Create Prism Lab, a polished working material-review application for a small industrial design team. This is a product workspace, not a marketing landing page. English interface. No images or photos: the material preview must be a real interactive Three.js object, never a screenshot.
+
+Use React, official shadcn components, React Three Fiber and Drei from the Engine, and a REAL Fastify backend with PostgreSQL. Create src/server/routes.mjs and append-only SQL migrations. Persist material records, review comments and approval status on the server. Include server-side validation, parameterized SQL, and clear error/loading/empty states. Never put credentials in frontend source. Seed 4 clearly labeled demo materials once only.
+
+Two main views: Material library and Material workbench. Library: search by name, filter Draft / In review / Approved, create a named material and open its workbench. Workbench: real 3D sphere/cube toggle, rotate with pointer, configurable base color, roughness and metalness, accessible labeled controls, save changes, append a review comment and change review status. Reload must preserve saved settings, comments and status. Reject blank names and invalid numeric ranges on the server. Show visible confirmation after a successful commit; preserve input after a failed save. Provide a meaningful fallback if WebGL is unavailable. Dispose graphics resources and respect reduced motion. No external HDRs or invented image/model URLs.
+
+Design: a precise, premium design-tool workspace. Bright canvas, graphite text, electric blue accents, a compact dark navigation rail and a large material viewer. Strong typography, deliberate spacing and realistic useful content, not a grid of generic dashboard cards. Use official shadcn Dialog/Select/Tabs/Button/Input primitives where appropriate, with consistent theme tokens and readable portals. Mobile: library and workbench controls reorganize vertically without overlap. Focus states, keyboard operation, real button behavior. Organize source into focused modules and include independent executable acceptance scenarios for creating, editing and saving. Do not add authentication, payments or simulated integrations.`;
+const draft=await post('/api/projects',{title:'Prism Lab — expansion verification',idea});
+await post('/api/projects/'+draft.id+'/generate',{confirm:true});
+await fs.writeFile('validation/expansion/live-generation.json',JSON.stringify({mvpProjectId:draft.id,startedAt:new Date().toISOString(),prompt:idea},null,2));
+console.log(JSON.stringify({mvpProjectId:draft.id,status:'submitted through MVP'}));

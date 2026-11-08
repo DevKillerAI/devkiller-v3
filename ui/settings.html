@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DevKiller Engine · Connections</title><link rel="icon" href="/assets/dk-icon.png"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/settings.css"><link rel="stylesheet" href="/engine.css"><script type="module" src="/settings.js"></script></head>
+<body>
+  <aside class="sidebar">
+ <a class="brand" href="/#under-the-hood" aria-label="DevKiller Engine home"><img src="/assets/dk-mark.png" alt=""><span>DevKiller<small>ENGINE</small></span></a>
+ <div class="workspace-label">ENGINE CONTROL ROOM</div>
+ <nav aria-label="Main navigation"><a class="nav-item" href="/#under-the-hood" data-nav="hood"><span>◉</span> Under the hood <i class="nav-dot"></i></a><a class="nav-item" href="/#generator" data-nav="generator"><span>✧</span> Generate app</a><a class="nav-item" href="/#projects" data-nav="projects"><span>▦</span> App library</a><a class="nav-item selected" aria-current="page" href="/settings"><span>⚙</span> Connections</a></nav>
+ <div class="sidebar-note"><span class="tiny-label">BUILT TO CREATE</span><p>Our engine.<br>Our workshop.<br><strong>What comes next.</strong></p><div class="mini-track"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small>Watch every step.<br>Stay in control.</small></div>
+ <div class="sidebar-bottom"><span class="local-dot"></span> Running on this PC<small>DevKiller Engine · v0.12.0</small></div>
+ </aside>
+  <main><header class="topbar"><span>Connections <span class="slash">/</span> <strong>Models & secrets</strong></span><a href="/#generator" class="back-link">← Back to generator</a></header>
+ <section class="heading"><div><div class="eyebrow">ENGINE / CONNECTIONS</div><h1>Intelligence, connected.</h1><p>Choose what powers our Engine. Keep the connection under your control.</p></div></section>
+ <section class="card secret-card model-card"><div class="secret-heading"><div><span class="secret-icon">✧</span><h2>Generation model</h2></div><span class="edition-badge">ENGINE SETTINGS</span></div>
+ <form id="connection-form"><label for="provider">AI provider</label><select id="provider"><option value="openai">OpenAI · API</option><option value="local" disabled>Local model · coming later</option></select><p class="connection-note">Local model support is planned. It is not connected yet.</p>
+ <label for="model">OpenAI model</label><select id="model" aria-describedby="model-description" disabled><option>Loading models…</option></select><p id="model-description" class="connection-note"></p><p id="connection-status" role="status">Reading saved connection…</p><button id="save-connection" class="primary" type="submit" disabled>Save model</button></form>
+ <p class="connection-note">One call per attempt. Changing models does not change the 20,000-token or 180-second limits. Access and pricing depend on your OpenAI account. The Engine does not switch models automatically.</p></section>
+ <p id="settings-message" role="status" hidden></p>
+ <section class="card secret-card"><div class="secret-heading"><div><span class="secret-icon">⌑</span><h2>OpenAI API key</h2></div><span id="secret-status" class="status" role="status">Checking…</span></div>
+ <p id="saved-description">Checking secure storage…</p>
+ <form id="secret-form" autocomplete="off"><label for="api-key">OpenAI API key</label><input id="api-key" type="password" placeholder="Paste your sk-… key" autocomplete="off" spellcheck="false" maxlength="510" required aria-describedby="secret-help"><p id="secret-help">The value stays hidden and is never displayed again after saving.</p><div class="secret-actions"><button id="save-secret" class="primary" type="submit">Save key</button><button id="remove-secret" class="secondary" type="button" disabled>Delete key</button></div></form>
+ <div class="secret-explanation"><h3>How your key is stored</h3><ul><li>Persistent: stays saved when you close and reopen the panel.</li><li>Encrypted using your Windows user account protection.</li><li>Loaded by the backend; generated apps never receive it.</li><li>Excluded from Git and exported packages.</li></ul><p>Set up the key again when moving to another computer or Windows user account. Saving makes no OpenAI call and does not confirm balance or permissions.</p></div>
+ </section><footer>DevKiller Engine · Internal connection settings</footer></main></body></html>

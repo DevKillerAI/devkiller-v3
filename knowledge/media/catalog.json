@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "file": "hero.jpg",
+      "artist": "Luke Miller",
+      "source": "https://www.pexels.com/photo/tent-on-top-of-a-mountain-27524830/",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "description": "Orange tent in a rocky evergreen forest clearing",
+      "role": "environment",
+      "crop": "50% 63%",
+      "topic": "outdoor camping hiking rental"
+    },
+    {
+      "file": "expedition.jpg",
+      "artist": "Sidde",
+      "source": "https://www.pexels.com/photo/big-backpack-with-mat-on-a-grass-field-8220243/",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "description": "Dark expedition backpack with green rolled foam mat on grass",
+      "role": "backpack",
+      "crop": "50% 50%",
+      "topic": "outdoor camping hiking rental"
+    },
+    {
+      "file": "daypack.jpg",
+      "artist": "Alina Zahorulko",
+      "source": "https://www.pexels.com/photo/backpack-hanging-on-a-tree-20446195/",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "description": "Green hiking backpack hanging on tree; accessories not automatically included",
+      "role": "backpack",
+      "crop": "50% 50%",
+      "topic": "outdoor camping hiking rental"
+    },
+    {
+      "file": "alpine.jpg",
+      "artist": "Anna Shvets",
+      "source": "https://www.pexels.com/photo/orange-tent-on-mountain-4014879/",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "description": "Small orange tent below snowy mountain peaks; contextual campsite, no technical rating verified",
+      "role": "environment",
+      "crop": "50% 65%",
+      "topic": "outdoor camping hiking rental"
+    },
+    {
+      "file": "journey.jpg",
+      "artist": "moon chahcha",
+      "source": "https://www.pexels.com/photo/person-carrying-green-backpack-in-forest-2415438/",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "description": "Hiker with backpack on lush woodland path",
+      "role": "environment",
+      "crop": "50% 50%",
+      "topic": "outdoor camping hiking rental"
+    },
+    {
+      "file": "woodland.jpg",
+      "artist": "Todd Trapani",
+      "source": "https://www.pexels.com/photo/photo-of-tent-in-forest-2609954/",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "description": "Orange dome tent in sunlit woods; contextual shelter photo",
+      "role": "shelter",
+      "crop": "50% 50%",
+      "topic": "outdoor camping hiking rental"
+    }
+  ]
+}

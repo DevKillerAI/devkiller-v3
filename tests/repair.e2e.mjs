@@ -1,0 +1,20 @@
+import {test,expect} from '@playwright/test';
+test('corrigir uma vez, verificar, preservar anterior, restaurar e detectar resposta igual',async({page})=>{
+  test.skip(process.env.DEVKILLER_AI_FIXTURE!=='1','Exige instância isolada com a resposta simulada.');
+  await page.goto('/settings');await page.getByLabel('OpenAI API key').fill('sk-browser-test-placeholder-not-a-real-key');await page.locator('#save-secret').click();await expect(page.locator('#settings-message')).toContainText('Key saved securely');await expect(page.locator('#secret-status')).toHaveText('Key saved');
+  await page.goto('/');
+  const html='<!doctype html><h1>Meu jogo preservado</h1><button id="play">Jogar</button><output id="result">0</output><script src="app.js" defer></script>';
+  const js="'use strict';\njogoAtivo = true;\ndocument.querySelector('#play').onclick=()=>document.querySelector('#result').textContent='1';";
+  const upload=async(script)=>{await page.locator('#files').setInputFiles([{name:'index.html',mimeType:'text/html',buffer:Buffer.from(html)},{name:'app.js',mimeType:'text/javascript',buffer:Buffer.from(script)}]);const response=page.waitForResponse(r=>r.url().endsWith('/api/start')&&r.request().method()==='POST');await page.locator('#start').click();const result=await(await response).json();await expect(page.locator('#version')).toHaveText(`v${result.active.version}`);await expect(page.locator('#status')).toHaveText('Opened with an error',{timeout:45000});};
+  await upload(js);const version=await page.locator('#version').textContent();
+  await page.getByRole('button',{name:'Try a repair'}).click();
+  await expect(page.locator('#repair-status')).toContainText('reviewing',{timeout:15000});await expect(page.locator('#version')).toHaveText(version);await expect(page.frameLocator('#preview').getByRole('heading',{name:'Meu jogo preservado'})).toBeVisible();
+  await expect(page.locator('#repair-status')).toContainText('did not appear',{timeout:45000});await expect(page.locator('#status')).toHaveText('Available');
+  await expect(page.locator('#repair-metrics')).toContainText('123 input tokens + 456 output');
+  await page.frameLocator('#preview').getByRole('button',{name:'Jogar',exact:true}).click();await expect(page.frameLocator('#preview').locator('#result')).toHaveText('1');
+  await expect(page.getByRole('link',{name:'Open previous version'})).toBeVisible();
+  await page.getByRole('button',{name:'Restore previous version'}).click();await expect(page.locator('#status')).toHaveText('Opened with an error');await expect(page.locator('#version')).toHaveText(version);
+  await upload(js+'\n// SAME_CODE');const unchangedVersion=await page.locator('#version').textContent();await page.getByRole('button',{name:'Try a repair'}).click();await expect(page.locator('#repair-result')).toContainText('same code',{timeout:15000});await expect(page.locator('#version')).toHaveText(unchangedVersion);
+  await page.getByRole('button',{name:'Stop',exact:false}).click();await expect(page.locator('#status')).toHaveText('Stopped');
+  await page.goto('/settings');await page.getByRole('button',{name:'Delete key'}).click();await expect(page.locator('#secret-status')).toHaveText('Not configured');
+});

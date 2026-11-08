@@ -1,0 +1,6 @@
+export const reactFiles=[{name:'src/App.jsx',content:`import {useEffect,useState} from 'react';
+function Counter({value,onSave,busy}){return <section><output id="count">{value}</output><button id="save" onClick={onSave} disabled={busy}>Salvar mais um</button></section>}
+export default function App(){const [value,setValue]=useState(0),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState('');
+useEffect(()=>{let active=true;window.DevKillerDB.get('count').then(n=>{if(active){setValue(n??0);setLoading(false)}}).catch(()=>setError('Falha ao carregar'));return()=>{active=false}},[]);
+async function save(){setBusy(true);try{await window.DevKillerDB.set('count',value+1);setValue(value+1)}catch{setError('Falha ao salvar')}finally{setBusy(false)}}
+return <main><h1>React com banco local</h1>{error&&<p role="alert">{error}</p>}{loading?<p>Carregando…</p>:<Counter value={value} onSave={save} busy={busy}/>}</main>}`},{name:'src/styles.css',content:'body{font-family:system-ui;background:#f6f5fa;color:#292339;margin:0}main{max-width:640px;margin:40px auto;padding:24px}section{display:flex;gap:20px;align-items:center}button{background:#6554c0;color:white;border:0;border-radius:8px;padding:12px}output{font-size:28px}'}];

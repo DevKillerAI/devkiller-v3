@@ -1,0 +1,1 @@
+import fs from 'node:fs/promises';const s=JSON.parse(await fs.readFile('validation/trailroom-professional-state.json','utf8'));console.log(s.generation.projectId,s.previewUrl);console.log(s.qa.filter(x=>x.status!=='passed').map(x=>({check:x.check,evidence:x.evidence})));console.log(s.generation.usage);

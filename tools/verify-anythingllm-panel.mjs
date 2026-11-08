@@ -1,0 +1,31 @@
+import {chromium} from 'playwright';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+const browser=await chromium.launch({headless:true});
+try{
+  const page=await browser.newPage({viewport:{width:1440,height:1050}}),errors=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  await page.goto('http://127.0.0.1:4310/#generator');
+  await page.locator('#knowledge-status').filter({hasText:'Conexão verificada'}).waitFor();
+  assert.equal(await page.locator('#knowledge-mode').inputValue(),'anythingllm');
+  assert.equal(await page.locator('#knowledge-sources input').count(),46);
+  assert.equal(await page.locator('#knowledge-build').isDisabled(),true);
+  await page.locator('#knowledge').screenshot({path:'evidencias/rag/anythingllm-panel-desktop.png'});
+  await page.getByText('Sources and retrieval preview',{exact:true}).click();
+  await page.locator('#knowledge-query').fill('Design premium para cafeteria com ícones SVG sem emojis, carrinho e cardápio.');
+  await page.locator('#knowledge-search').click();
+  await page.locator('#knowledge-results summary').first().waitFor();
+  const references=await page.locator('#knowledge-results summary').allTextContents();
+  assert.ok(references.length>0&&references.length<=6);
+  assert.ok(references.some(r=>r.includes('premium')));
+  await page.locator('#knowledge-results summary').first().click();
+  assert.ok((await page.locator('#knowledge-results pre').first().innerText()).length>50);
+  await page.getByText('Sources and retrieval preview',{exact:true}).click();
+  await page.setViewportSize({width:390,height:844});await page.locator('#knowledge').scrollIntoViewIfNeeded();
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  await page.screenshot({path:'evidencias/rag/anythingllm-panel-mobile.png'});
+  assert.deepEqual(errors,[]);
+  const status=await (await fetch('http://127.0.0.1:4310/api/knowledge')).json();
+  const report={checkedAt:new Date().toISOString(),mode:status.mode,workspace:status.workspace,sources:status.sources.length,connection:status.connection,uiSearchReferences:references,browserErrors:errors,mobileOverflow:false,paidModelCalls:0};
+  await fs.writeFile('evidencias/rag/anythingllm-panel-verification.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));
+}finally{await browser.close();}

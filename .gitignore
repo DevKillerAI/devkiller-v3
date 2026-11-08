@@ -1,0 +1,23 @@
+node_modules/
+.runtime/
+.secrets/
+projects/
+.env
+.env.*
+test-results/
+playwright-report/
+*.log
+
+settings/
+
+# Additional local-only export exclusions
+logs/
+evidencias/
+validation/
+playwright-report/
+*.db
+*.sqlite*
+*.pem
+*.key
+*.pfx
+*.p12

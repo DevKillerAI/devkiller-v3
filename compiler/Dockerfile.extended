@@ -1,0 +1,9 @@
+FROM node:24-alpine
+WORKDIR /opt/compiler
+ARG PROFILE=pro
+COPY ${PROFILE}/package.json ${PROFILE}/package-lock.json ./
+RUN npm ci --ignore-scripts --no-audit --no-fund && npm cache clean --force
+COPY compile-extended.mjs backend-config.mjs import-policy.mjs ./
+USER 1000:1000
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
+ENTRYPOINT ["node","/opt/compiler/compile-extended.mjs"]

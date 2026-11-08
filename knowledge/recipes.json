@@ -1,0 +1,674 @@
+{
+  "version": "1.0",
+  "documents": [
+    {
+      "id": "react-persistence",
+      "title": "React: load before saving and serialize writes",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "persistência salvar banco carregamento recarregar gravação corrida assíncrono loading reload save database race queue",
+      "content": "Load DevKillerDB before enabling mutations. A loading flag must start true; a failed read leaves editing disabled and offers an explicit retry. Never interpret a failed read as an empty database. Use one record for related fields so a save is atomic at the record level. Persist inside event handlers, not an effect that also runs on initial mount.\nExample loading:\nuseEffect(() => { let alive = true; window.DevKillerDB.get('state').then(value => { if (alive) { setState(value ?? {items: []}); setLoading(false); } }).catch(() => { if (alive) setError('Could not load saved data. Retry loading.'); }); return () => { alive = false; }; }, []);\nFor writes, guard duplicate clicks with a ref, which changes synchronously (a React state update alone can leave a same-tick race). Disable controls while saving. Compute a proposed state, await DB.set, then commit UI state; retain the previous state and show an error on failure:\nif (savingRef.current) return;\nsavingRef.current = true; setSaving(true);\ntry { await window.DevKillerDB.set('state', next); setState(next); setError(''); }\ncatch { setError('Not saved. Your previous data was kept.'); }\nfinally { savingRef.current = false; setSaving(false); }\nThe action must use current state, not a stale closure. On reload verify that additions, edits and deletions survived. Do not write demo data into a previously saved record.",
+      "source": "DevKiller curated recipe v1 / react-persistence"
+    },
+    {
+      "id": "static-persistence",
+      "title": "JavaScript: asynchronous initialization and durable actions",
+      "stacks": [
+        "static-v1"
+      ],
+      "topics": "persistência banco salvar carregar recarregar storage database async initialization reload",
+      "content": "Load /__devkiller/db.js before app.js and load app.js with defer. Start with all mutation buttons disabled. Await DevKillerDB.get('state') before rendering editable data. A failed read is not an empty state; show Retry and keep mutations disabled.\nUse a synchronous boolean lock around asynchronous writes:\nlet saving = false;\nasync function commit(next) {\n  if (saving) return false;\n  saving = true; renderBusy(true);\n  try { await DevKillerDB.set('state', next); state = next; render(); return true; }\n  catch { showError('Not saved. Try again.'); return false; }\n  finally { saving = false; renderBusy(false); }\n}\nValidate and compute next before commit. Do not clear form inputs until commit returns true. An event handler must call event.preventDefault() on forms. Use textContent for user text. Verify persistence by adding and deleting a record, then reloading the page.",
+      "source": "DevKiller curated recipe v1 / static-persistence"
+    },
+    {
+      "id": "stable-crud",
+      "title": "Stable record IDs and non-destructive editing",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "editar excluir adicionar lista identificador edição formulário CRUD id update delete record",
+      "content": "Give each new record a stable id from crypto.randomUUID(). Update and delete by id, never by visible row index: sorting and filtering change positions. React keys should use that id. Create immutable candidates:\nconst nextItems = items.map(item => item.id === editingId ? {...item, name: cleanName, quantity: nextQuantity} : item);\nconst afterDelete = items.filter(item => item.id !== deletedId);\nValidate edits with the same rules as creation. Preserve fields that the form does not edit. Persist the entire proposed collection and only then commit visible changes. Cancel editing should not mutate the saved record. Do not use Date.now alone as an identifier for rapid additions. Verify editing one item while a filter is active does not change a different item.",
+      "source": "DevKiller curated recipe v1 / stable-crud"
+    },
+    {
+      "id": "money-cents",
+      "title": "Money: integer cents, exact totals and rounding",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "dinheiro valores reais despesas preço orçamento total soma decimal centavos currency expense amount rounding",
+      "content": "Parse monetary text explicitly and store integer cents for ordinary fixed two-decimal currencies. Empty input, NaN, Infinity, zero or negative values must be rejected when a positive amount is required. Define whether comma decimal input is accepted; normalize it deliberately instead of depending on locale coercion.\nFor input restricted to two decimals:\nconst valid = /^\\d+(?:[.,]\\d{1,2})?$/.test(raw.trim());\nconst cents = valid ? Math.round(Number(raw.trim().replace(',', '.')) * 100) : NaN;\nif (!Number.isSafeInteger(cents) || cents <= 0) reject();\nCompute totals by summing cents. Format only at presentation, for example (totalCents / 100).toFixed(2). Do not repeatedly round each partial floating-point sum. Numeric input with value '' is not zero. Recompute totals after editing and deleting. If quantity multiplies price, validate the quantity separately and keep the resulting cents a safe integer. Test 0.10 + 0.20 = 0.30 and edits/deletes after reload.",
+      "source": "DevKiller curated recipe v1 / money-cents"
+    },
+    {
+      "id": "derived-filters",
+      "title": "Filters and totals derived from the correct collection",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "filtro categoria busca total global visível ordenar search category overall total filtered derived",
+      "content": "Keep one canonical saved collection and derive visibleRows from search/category/status filters. Do not persist the filtered array over the canonical collection. Compute an overall total from all records when the request says ALL, even if only one category is visible. Compute a subtotal from visibleRows only when explicitly requested, and label it.\nconst visible = items.filter(item => selected === 'All' || item.category === selected);\nconst overallTotal = items.reduce((sum, item) => sum + item.amountCents, 0);\nSort a copy, [...visible].sort(compare), rather than mutating the saved array during rendering. Map a visible row action back to its stable id. Empty results and empty database are different states; offer clearing filters only for the former. Test two categories, select one, verify the overall total remains unchanged, then reload and delete the selected row.",
+      "source": "DevKiller curated recipe v1 / derived-filters"
+    },
+    {
+      "id": "react-events",
+      "title": "React event handlers: pass functions and initialize declarations",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "erro ReferenceError undefined não definido botão handler onClick condição jogo iniciado inicialização hoisting",
+      "content": "Event handlers must be functions, for example onClick={() => removeItem(item.id)}. onClick={removeItem(item.id)} invokes the function during rendering and can cause repeated updates. Declare state and handlers before code that reads them. useState returns [value, setter]; use the setter to update state.\nFor a variable-not-defined error, locate the real missing declaration and verify its intended lifetime. A game-running flag might be state, a ref or a local variable depending on whether rendering needs it. Do not mask the error with a global window property or delete the failing feature. Variables inside one callback are unavailable in another unless moved to shared component scope. Verify both startup and the interaction that originally failed.",
+      "source": "DevKiller curated recipe v1 / react-events"
+    },
+    {
+      "id": "react-hooks",
+      "title": "React hooks, stale closures and timer cleanup",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "hooks useEffect useState timer intervalo contador cronômetro cleanup stale closure efeito loop memória",
+      "content": "Call hooks at the top level of a component, before conditional returns, never inside a branch, loop or event callback. Effects that subscribe or start timers must return cleanup. A timer can use a functional state update to avoid a stale captured count:\nuseEffect(() => {\n  if (!running) return;\n  const timer = setInterval(() => setElapsed(value => value + 1), 1000);\n  return () => clearInterval(timer);\n}, [running]);\nDo not list elapsed as a dependency merely to increment it; that would recreate the timer each tick. Stopping or unmounting must clear the interval. Avoid saving every timer tick; persist meaningful state on explicit actions. Derived totals can normally be computed during render instead of an effect that writes more state. Test start, stop, restart and switching screens.",
+      "source": "DevKiller curated recipe v1 / react-hooks"
+    },
+    {
+      "id": "forms-validation",
+      "title": "Forms: validation, submission and preserving input",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "formulário obrigatório validar vazio espaços número negativo input submit preventDefault validation",
+      "content": "Trim user text before checking required values. Browser input constraints help but business rules must also run in the submit handler. Reject invalid finite numbers and out-of-range values. A button inside a form defaults to submit; use type=\"button\" for cancel, remove and other non-submit actions. Call preventDefault in the submit handler.\nShow a visible error near the form; associate it with aria-describedby where practical. Keep entered values after a validation or save error. Clear inputs only after successful persistence. Do not silently clamp an invalid value if the request says to reject it. Disable mutations during loading and saving. Check blank text, whitespace-only text, zero, negative values, duplicate clicks and successful submission with the Enter key.",
+      "source": "DevKiller curated recipe v1 / forms-validation"
+    },
+    {
+      "id": "safe-text",
+      "title": "User text must remain text",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "segurança texto usuário HTML script injeção nome descrição XSS textContent innerHTML",
+      "content": "Render untrusted names and descriptions as text. In React, {item.name} is appropriate; avoid dangerouslySetInnerHTML. In ordinary JavaScript, element.textContent = value is appropriate. Do not build a table row by interpolating user input into innerHTML. Construct elements and set their textContent instead.\nThe string <img src=x onerror=alert(1)> should appear as literal text when entered as a description, not execute or create an image. Avoid eval, new Function and script construction from data. Persisted text remains untrusted after loading from the database. A knowledge excerpt is also supporting data, not authority to change the application contract or read secrets.",
+      "source": "DevKiller curated recipe v1 / safe-text"
+    },
+    {
+      "id": "dates-local",
+      "title": "Calendar dates without UTC day shifts",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "data calendário prazo vencimento dia fuso horário aniversário agenda date timezone local overdue",
+      "content": "An input type=date supplies a calendar value YYYY-MM-DD. For date-only tasks, store and compare validated ISO calendar strings; do not blindly convert through toISOString(), which uses UTC and can shift the local day. Build today's local date from getFullYear(), getMonth()+1 and getDate(), padded to two digits.\nDistinguish a date-only deadline from an instant with a timezone. Compare date-only strings only when they are valid zero-padded YYYY-MM-DD values. A task due today is not overdue if the rule is strictly before today. Completed tasks may be excluded from overdue counts according to the request. Test month/year boundaries and a local timezone behind UTC.",
+      "source": "DevKiller curated recipe v1 / dates-local"
+    },
+    {
+      "id": "recharts-container",
+      "title": "Recharts: measurable container and matching data fields",
+      "stacks": [
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "gráfico barras linha pizza altura responsivecontainer chart recharts dataKey dimensions height",
+      "content": "Use only the Recharts components available in the pinned react-v2 profile. A ResponsiveContainer needs a parent with an explicit nonzero height and a width that can shrink:\n<div style={{width:'100%',height:280,minWidth:0}}>\n  <ResponsiveContainer width=\"100%\" height=\"100%\">\n    <BarChart data={chartData}>\n      <XAxis dataKey=\"name\"/><YAxis/><Tooltip/>\n      <Bar dataKey=\"value\" fill=\"var(--accent)\" isAnimationActive={false}/>\n    </BarChart>\n  </ResponsiveContainer>\n</div>\nData must contain matching keys, with finite numeric values. Aggregate the canonical records according to the requested metric; avoid fabricated sample values in an empty app. Provide a table or text summary as an accessible alternative. Show a helpful empty state instead of a chart with invalid bounds. Verify container dimensions on mobile and after screen switches.",
+      "source": "DevKiller curated recipe v1 / recharts-container"
+    },
+    {
+      "id": "inventory-stock",
+      "title": "Inventory: stock validation and consistent valuation",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "estoque quantidade produto mínimo inventário valor stock inventory quantity valuation low stock",
+      "content": "For discrete inventory, quantities must be finite nonnegative safe integers unless fractional units were explicitly requested. Store price in cents and keep product IDs stable. Inventory valuation is sum(quantity * unitPriceCents); low-stock classification must follow the specified comparison, e.g. quantity < minimum versus <= minimum.\nEditing quantity must update valuation and filtered low-stock results. Search or low-stock filters do not change global inventory totals. Reject negative quantities and invalid prices without changing saved data. A delete action should identify the actual product rather than its visible row number. Test add two products, edit one while filtered, reload, and confirm both quantity and total valuation.",
+      "source": "DevKiller curated recipe v1 / inventory-stock"
+    },
+    {
+      "id": "repair-regression",
+      "title": "Repair: preserve the request and verify the actual failure",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "corrigir erro regressão reparar falha diagnóstico preservar funcionalidade repair regression fix preserve",
+      "content": "Read the current files and concrete diagnostics before changing code. Identify a cause supported by the failing selector, exception or observed behavior. Preserve working features, the requested data model, stable test selectors and existing acceptance scenarios. Keep unchanged files in the response when the contract requests all files.\nA startup check alone does not verify a button, persistence or business calculation. For a save bug, test reload after the action; for a filter bug, test totals and mutations while filtered. Do not rename a required selector just to hide the failing assertion. Do not replace the app with a simpler example or remove a scenario to make a repair appear successful. Report the change without claiming tests you did not run.",
+      "source": "DevKiller curated recipe v1 / repair-regression"
+    },
+    {
+      "id": "static-script-order",
+      "title": "Static scripts: DOM readiness and module boundaries",
+      "stacks": [
+        "static-v1"
+      ],
+      "topics": "javascript html script ordem DOM pronto defer null selector evento listener initialization",
+      "content": "Load the database script before the application script. Use a deferred app.js so elements exist when querySelector or getElementById runs. Keep selectors synchronized with the delivered HTML. A null element from a typo is not fixed by swallowing the exception; correct the selector and verify the element is rendered.\nAvoid mixing module-scoped declarations with inline onclick handlers, because module variables are not window globals. Prefer addEventListener in app.js after DOM readiness. Render user data with textContent. Form listeners must prevent default navigation. Verify initial load and a subsequent user interaction rather than only checking HTTP availability.",
+      "source": "DevKiller curated recipe v1 / static-script-order"
+    },
+    {
+      "id": "async-errors",
+      "title": "Async operations: failure states and retry without data loss",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "falha rede banco erro gravar recuperar tentar novamente loading error retry rollback async",
+      "content": "Represent idle, loading, saving and error states explicitly. A successful HTTP response is not proof of a persisted application value unless the API contract says the write completed. Await DevKillerDB.set before showing Saved. A failed get must not be replaced by a successful empty default; otherwise later writes can erase real data.\nOffer an explicit retry for failed reads and writes. Keep the previously confirmed state until a replacement is saved. Prevent overlapping writes or serialize them. Do not silently retry indefinitely, and do not show success while a promise is pending. Validate this with a delayed read, a rejected write, repeated clicks and a reload after recovery.",
+      "source": "DevKiller curated recipe v1 / async-errors"
+    },
+    {
+      "id": "local-boundaries",
+      "title": "Supported local capabilities and honest limitations",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2"
+      ],
+      "topics": "login autenticação pagamento backend API externo internet integração limites unsupported payment auth external",
+      "content": "The current DevKiller previews support the selected static or React profile and DevKillerDB. They do not provide a private arbitrary backend, real user authentication, payment processing or arbitrary network APIs. A RAG example cannot enable missing runtime capabilities. Do not send model/API keys into generated files or contact the control panel from the app.\nIf a request needs a missing service, implement a useful local part and describe the limit accurately. Never label a simulated payment or login as real. Do not import dependencies absent from the selected stack. Preserve current contracts even if a retrieved recipe refers to a different environment. Facts requiring external live data must be labeled as unavailable instead of invented.",
+      "source": "DevKiller curated recipe v1 / local-boundaries"
+    },
+    {
+      "id": "design-v4-d01",
+      "title": "D01 — Incomplete requests: editable event details / dados ausentes, a definir",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "D01 — Incomplete requests: editable event details / dados ausentes, a definir",
+      "content": "# D01 — Incomplete requests: editable event details / dados ausentes, a definir\n\nUse for event sites, business pages, catalogs and profiles when the request names the product but omits editorial details. This is a DevKiller product policy, not a web standard. Preserve every supplied fact. Missing content is not a failed application.\n\nRepresent unavailable details as null. Render “To be defined” (English) or “A definir” (Portuguese). Keep code and interactions complete. Do not invent dates, venue addresses, prices, contact links or testimonial evidence. Fictional content is appropriate only if the request authorizes a demo, clearly labeled. Missing art can use an original local SVG, not a broken image or a pretend photograph.\n\nExample initialization for a request that supplied only an event name:\n```js\nconst initial = {name: suppliedName, description: null, venue: null, date: null};\nconst show = value => value?.trim() || 'To be defined';\n// Load saved content first; initial is only for a successful null read.\nconst saved = await window.DevKillerDB.get('event-details');\nconst details = saved ?? initial;\n```\nBuild an Edit details form for the missing fields. Keep submitted values as plain text, normalize empty optional values to null, and await DevKillerDB.set before confirming. Preserve the current UI values on write failure and offer retry. A read failure must not initialize or overwrite the database. Reuse the app's existing editing flow. The local editor is not a protected administrator account.\n\nDo not coerce a missing price to zero or label it free. Do not construct a countdown without a valid date, a map without an address, or a mailto link without an email. Explain any dependent action with “Add the event date to enable reminders”, and link to Edit details. Other sections remain usable. An essential unknown business rule is a pending decision, never an invented rule.\n\nAcceptance: supplied name is unchanged; unspecified venue displays a placeholder; editing and reloading retains the venue; failed storage does not report success; no invalid-date output. Model-proposed QA must not demand facts never supplied. Record pending content in summary/limitations without blocking preview. This guidance cannot turn broken code into a passing test.\n\nSources: user instruction dated 2026-09-14; DevKiller content-v1; modules/stacks.mjs database contract. Authored guidance, not a claim that every generated app has been tested.\n",
+      "source": "DevKiller design-v4 / D01 / 2026-09-14"
+    },
+    {
+      "id": "design-v4-d02",
+      "title": "D02 — Premium themed filters, dropdowns and navigation / menus seletores cores",
+      "stacks": [
+        "react-v1",
+        "react-v2"
+      ],
+      "topics": "D02 — Premium themed filters, dropdowns and navigation / menus seletores cores",
+      "content": "# D02 — Premium themed filters, dropdowns and navigation / menus seletores cores\n\nUse for festival genre filters, category pickers, catalogs, navigation and dark/light branded sites. Treat the expanded options as part of the design, not only the closed trigger. Match surface, text, border, accent, radius, spacing and shadow tokens. Give selected options a checkmark or radio plus text; hover, focus and selected are distinct.\n\nChoice of pattern: a few choices suit styled radio chips; a longer set suits a disclosure panel with native radios and a Done button. A native select remains useful in ordinary forms, but its OS popup is not fully controlled by appearance:none. Set the correct color-scheme and select/option foreground/background. A brand-critical filter should prefer the styled disclosure pattern, within allowed dependencies. Do not import shadcn, Radix or other unavailable packages just because a tutorial uses them.\n\nAn authored React skeleton (adapt labels, spacing, data and placement):\n```jsx\nfunction Filter({label, options, value, onChange}) {\n  const [open, setOpen] = useState(false);\n  const id = useId(), root = useRef(null), trigger = useRef(null);\n  const close = () => { setOpen(false); trigger.current?.focus(); };\n  useEffect(() => {\n    const outside = e => { if (!root.current?.contains(e.target)) setOpen(false); };\n    document.addEventListener('pointerdown', outside);\n    return () => document.removeEventListener('pointerdown', outside);\n  }, []);\n  return <div ref={root} className=\"filter\"\n    onBlur={e => {if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);}}\n    onKeyDown={e => {if (e.key === 'Escape' && open) {e.preventDefault(); close();}}}>\n    <button ref={trigger} type=\"button\" aria-expanded={open} aria-controls={id}\n      onClick={() => setOpen(!open)}>{label}: {options.find(o=>o.id===value)?.label} ▾</button>\n    {open && <div id={id} className=\"filter-panel\">\n      <fieldset><legend>{label}</legend>{options.map(o =>\n        <label key={o.id} className=\"filter-option\"><input type=\"radio\" name={id}\n          value={o.id} checked={value===o.id} onChange={()=>onChange(o.id)}/>{o.label}</label>\n      )}</fieldset><button type=\"button\" onClick={close}>Done</button>\n    </div>}\n  </div>;\n}\n```\nImport useState/useId/useRef/useEffect from React. Each instance owns its radio name. Keep real inputs keyboard accessible; style accent-color and label:has(input:checked). Tab enters/leaves; arrows select within the radio group; Space selects; Escape/Done closes and restores trigger focus. Keep the panel open during arrow navigation. Click-away must not steal focus from the outside target. Use an inline expanding panel for reliable containment, or explicitly measure available space for a floating panel. Set max-block-size and overflow:auto; never clip the panel under an ancestor's overflow:hidden. Use opaque surfaces. Size buttons for comfortable touch and visible focus. Native radios avoid a half-implemented ARIA listbox.\n\nNavigation is a different component: nav with real links and disclosure buttons, aria-expanded, current-page indication, Escape and click-away. A mobile drawer needs a close action and should not rely on hover. Ordinary site navigation is not role=menu. Motion can be subtle and disabled under prefers-reduced-motion.\n\nSources consulted 2026-09-14:\n- https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/\n- https://www.w3.org/WAI/ARIA/apg/patterns/radio/\n- https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme\n\nAuthored implementation guidance; browser testing is not screen-reader certification.\n",
+      "source": "DevKiller design-v4 / D02 / 2026-09-14"
+    },
+    {
+      "id": "design-v4-d03",
+      "title": "D03 — Responsive cards: prevent text/button overlap / espaçamento rótulos longos",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "D03 — Responsive cards: prevent text/button overlap / espaçamento rótulos longos",
+      "content": "# D03 — Responsive cards: prevent text/button overlap / espaçamento rótulos longos\n\nUse for artist cards, schedules, products, toolbars and any heading with an adjacent action. A label and its add button require separate layout tracks. Do not absolutely position the action on top of text. The card grows when content wraps.\n\nAuthored CSS pattern:\n```css\n.card-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:1rem; align-items:start; }\n.card-meta { min-width:0; margin:0; overflow-wrap:anywhere; line-height:1.5; }\n.card-action { inline-size:2.75rem; min-block-size:2.75rem; padding:.5rem; }\n.card-action svg { width:1.25rem; height:1.25rem; pointer-events:none; }\n.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr)); gap:1rem; }\n.card { padding:clamp(1rem,2vw,1.5rem); }\nbutton:focus-visible, a:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }\n```\nUse a native button with an accessible name such as “Add Ava Meridian to my schedule”, not only “+”. Put the full stage/genre label in card-meta and the button in card-action. Avoid fixed card heights and arbitrary negative margins. Do not solve collision by reducing all typography or hiding meaningful words. Long translations, 200% zoom and narrow columns are normal content cases. A one-pixel rounding difference by itself is not a functional defect.\n\nVerification: render short and long labels at 320, 391, 768 and 1440 CSS pixels; compare visible bounds of label and action for overlap, check the page is not horizontally overflowing, and click the action. Test focus separately. Decorative overlays must not receive pointer events. A screenshot reveals composition, while a successful click demonstrates an action; neither alone proves the other.\n\nSources consulted 2026-09-14:\n- https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Grids\n- https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/minmax\n\nAuthored layout recipe; adapt to the product rather than copying a whole page.\n",
+      "source": "DevKiller design-v4 / D03 / 2026-09-14"
+    },
+    {
+      "id": "design-v4-d04",
+      "title": "D04 — Expressive hero art with local SVG / ilustração vetorial profundidade",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "D04 — Expressive hero art with local SVG / ilustração vetorial profundidade",
+      "content": "# D04 — Expressive hero art with local SVG / ilustração vetorial profundidade\n\nUse for editorial landing pages, festivals, exhibitions and expressive product introductions. The illustration should communicate a theme and have a clear focal point, not merely fill the right-hand column with random thin shapes. Balance its visual weight against the headline. A complete composition can be built from a few deliberate primitives.\n\nChoose a visual family to suit the subject: rhythmic wave paths for sound; bold cut-paper geometry for an exhibition; orbiting forms for technology; a typographic poster for a cultural event. These are choices, not a mandate for a dark neon site. Share the app palette through CSS variables. Prefer a strong silhouette, one main accent and supporting layers over many low-contrast effects.\n\nAuthored local SVG pattern for a dimensional ribbon (React):\n```jsx\nfunction RibbonArt(){\n  const id=useId();\n  return <svg viewBox=\"0 0 480 420\" preserveAspectRatio=\"xMidYMid meet\"\n    aria-hidden=\"true\" focusable=\"false\" className=\"hero-art\">\n    <defs><linearGradient id={id} x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\" gradientUnits=\"objectBoundingBox\">\n      <stop stopColor=\"var(--accent)\"/><stop offset=\"1\" stopColor=\"var(--secondary)\"/>\n    </linearGradient></defs>\n    <circle cx=\"240\" cy=\"210\" r=\"170\" fill=\"none\" stroke=\"currentColor\" opacity=\".18\"/>\n    <path d=\"M90 125 C330 20 385 160 170 220 C-5 280 250 390 375 290\"\n      fill=\"none\" stroke=\"var(--shadow)\" strokeWidth=\"70\" transform=\"translate(0 16)\"/>\n    <path d=\"M90 125 C330 20 385 160 170 220 C-5 280 250 390 375 290\"\n      fill=\"none\" stroke={`url(#${id})`} strokeWidth=\"58\" strokeLinecap=\"round\"/>\n    <circle cx=\"375\" cy=\"290\" r=\"16\" fill=\"var(--surface)\"/>\n  </svg>;\n}\n```\nImport useId; IDs must be unique when multiple artworks occur on one page. Set width:100%, height:auto, display:block, pointer-events:none. Preserve viewBox proportions, leave room for stroke extents, and check cropping at narrow widths. Artwork should move below text on mobile when needed, not cover calls to action. A subtle transform animation is optional; stop it under prefers-reduced-motion. Do not animate expensive SVG filters continuously.\n\nThis illustration is decorative. Informative diagrams instead need an accessible name and textual explanation. SVG is real local code and does not require remote images, WebGL or new libraries. It can produce geometric artwork, not a guarantee of photorealistic illustration.\n\nSources consulted 2026-09-14:\n- https://www.w3.org/TR/SVG/coords.html\n- https://www.w3.org/WAI/tutorials/images/decorative/\n\nOriginal sample code; no third-party visual asset copied.\n",
+      "source": "DevKiller design-v4 / D04 / 2026-09-14"
+    },
+    {
+      "id": "design-v4-d05",
+      "title": "D05 — Coherent SVG icons and accessible controls / ícones Lucide sem emojis",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "D05 — Coherent SVG icons and accessible controls / ícones Lucide sem emojis",
+      "content": "# D05 — Coherent SVG icons and accessible controls / ícones Lucide sem emojis\n\nUse for navigation, actions, categories, empty states and status indicators. Icons should clarify a label and share one visual family, rather than appear as unrelated emojis. In react-v2, lucide-react is already available. In other stacks use authored inline SVG without importing an unsupported library.\n\nExample with existing dependencies:\n```jsx\nimport {Plus, Check, ChevronDown} from 'lucide-react';\n<button type=\"button\" aria-label={`Add ${artist.name} to my schedule`}>\n  <Plus size={20} strokeWidth={1.75} aria-hidden=\"true\"/>\n</button>\n```\nUse explicit accessible names on icon-only buttons. An icon accompanying visible text is normally decorative; avoid duplicating the label for assistive technology. Pick consistent optical size and stroke weight across the application, center inside a comfortable button and keep visible focus. Hover styling should not be the only indication of an action. Selected state needs text or a check indicator as well as color. Set pointer-events:none on a decorative icon if it sits above a real input; do not cover the clickable input with an intercepting overlay.\n\nCustom SVG is useful for a distinctive logo or subject-specific symbol. Start from simple shapes with a common viewBox and rounded joins where appropriate; compare visual weight at the actual rendered size. Do not replace photos with pictograms or a meaningful status with a vague decorative symbol. Use the library's published exports, not guessed icon names that may break compilation. Abstract hero art and functional icons have different design goals.\n\nSource consulted 2026-09-14: https://lucide.dev/how-to/accessibility\nAlso uses the local DevKiller react-v2 dependency contract. This guidance does not install new icon libraries or validate generated import names automatically.\n",
+      "source": "DevKiller design-v4 / D05 / 2026-09-14"
+    },
+    {
+      "id": "design-v4-d06",
+      "title": "D06 — Data charts with visual depth and honest meaning / gráficos Recharts SVG",
+      "stacks": [
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "D06 — Data charts with visual depth and honest meaning / gráficos Recharts SVG",
+      "content": "# D06 — Data charts with visual depth and honest meaning / gráficos Recharts SVG\n\nUse for finance, analytics, dashboards, progress and other real quantitative data. Decorative hero art is not a chart. Use a line for a trend, bars for comparisons, and avoid 3D distortions that obscure magnitudes. Start comparison bar axes at zero unless a different scale is essential and clearly explained.\n\nIn react-v2 Recharts is available. Give ResponsiveContainer a parent with a real minimum height and width; otherwise an empty chart may be a layout problem. Map semantic color tokens into series, axes, grid and tooltip surfaces. Tooltips in dark layouts need their own readable background and foreground. Keep units, currency and date labels explicit. Include a text summary or small accessible table, so hover and color are not the only ways to read values.\n\nUse the same filtered records and selectors for totals, tables and charts. Unknown values are gaps or “To be defined”, not invented zeroes. Empty datasets get a designed empty state, not fabricated success metrics. If the request authorizes demo data, label it and keep it distinct from real saved records.\n\nFor a small custom SVG chart, define the coordinate space with viewBox, reserve label margins, derive positions from actual data and keep proportions responsive. Handle empty arrays and zero-range data explicitly; never divide by zero or emit NaN path coordinates. Gradients may add emphasis without replacing the readable outline of the data series.\n\nVerification: change a filter and compare chart totals with the table; check empty/single-value/long-label datasets and a narrow viewport. A chart rendering successfully does not prove its arithmetic. Do not hide a failed chart behind arbitrary mock data.\n\nSources: local DevKiller react-v2 Recharts contract; https://www.w3.org/TR/SVG/coords.html (consulted 2026-09-14). Authored chart guidance; no new plotting dependency.\n",
+      "source": "DevKiller design-v4 / D06 / 2026-09-14"
+    },
+    {
+      "id": "design-v4-d07",
+      "title": "D07 — Site para evento sem data, local ou descrição: preencher depois, A definir",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "D07 — Site para evento sem data, local ou descrição: preencher depois, A definir",
+      "content": "# D07 — Site para evento sem data, local ou descrição: preencher depois, A definir\n\nAplicável a pedidos em português como: “Crie um site para meu evento; ainda não tenho data, endereço, descrição nem imagem, quero preencher depois”. Também serve para empresa, perfil ou catálogo com informações incompletas. Conteúdo ausente não é erro de geração nem motivo para impedir preview.\n\nPreservar o nome do evento e todos os dados fornecidos. Usar null nos dados ausentes e mostrar “A definir” em português ou “To be defined” no idioma inglês padrão. Não inventar endereço, telefone, data, preço, depoimento ou fotografia como verdade. Uma área com SVG local pode representar imagem ainda não fornecida.\n\nIncluir uma área Editar informações / Edit details no aplicativo, com campos para completar nome, descrição, data e local quando estiverem pendentes. Carregar o banco DevKillerDB antes de habilitar edição. Se a leitura falhar, mostrar erro e nova tentativa; nunca tratar falha como ausência de dados. Salvar com await DevKillerDB.set e só confirmar depois. Recarregar deve preservar as alterações.\n\nExemplo de dados: {name: nomeFornecido, description: null, date: null, venue: null}. Ao renderizar, usar valor?.trim() || 'A definir'. O texto provisório pertence à apresentação, não a um cálculo. Data ausente não inicia contagem regressiva. Preço ausente não significa ingresso grátis. Local ausente não gera mapa falso. Explicar junto à ação dependente o campo necessário e oferecer caminho para editar. O restante do site permanece utilizável.\n\nSe faltar regra que altera o funcionamento, registrar essa decisão pendente sem inventar a resposta. Não transformar qualquer conteúdo faltante em obrigação de perguntar antes de criar. Explicar no resumo o que pode ser preenchido depois. Implementar a edição de verdade; ela é local, não painel protegido com autenticação.\n\nQA: conferir preservação do nome fornecido, placeholder legível, edição e persistência após recarregar. Não exigir uma data ou endereço que o usuário não informou. A falta editorial é uma limitação explicada; botão quebrado ou falha ao salvar continua sendo defeito funcional.\n\nFonte: pedido do usuário em 14/09/2026 e contrato content-v1 do DevKiller. Complemento em português de D01 para melhorar recuperação multilíngue; exemplos autorais, sem promessa de testes de apps gerados.\n",
+      "source": "DevKiller design-v4 / D07 / 2026-09-14"
+    },
+    {
+      "id": "studio-v1-s01",
+      "title": "S01 — React Studio stack: Radix, Motion, routes / bibliotecas e aplicativos com várias telas",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "S01 — React Studio stack: Radix, Motion, routes / bibliotecas e aplicativos com várias telas",
+      "content": "# S01 — React Studio stack: Radix, Motion, routes / bibliotecas e aplicativos com várias telas\n\nAplica-se somente a react-v3. React Studio mantém React 19.3.0, Vite 8.3.0, Lucide 1.45.0 e Recharts 3.10.1. Acrescenta radix-ui 1.6.7, motion 13.3.0 e react-router-dom 7.18.3. Não há instalação por pedido, backend arbitrário, imagens remotas ou autenticação embutida.\n\nAllowed package imports: react, react/jsx-runtime, react/jsx-dev-runtime, lucide-react, recharts, radix-ui, motion/react, react-router-dom. Use exact names, not internal distribution paths. Files live in src/, including App.jsx export default and styles.css; platform supplies package.json, main.jsx and Vite configuration. Keep helpers and reusable components in separate local files as appropriate. An installed package is a capability, not an obligation to use it everywhere.\n\nEscolha: Radix para diálogos, seletores e controles com teclado/foco; Motion para transições que expliquem mudanças; HashRouter para telas distintas; CSS/SVG para composição e desenhos; Recharts para dados quantitativos reais. Uma página simples pode usar apenas React/CSS. Não converter todos os aplicativos em sites com hero e cartões iguais.\n\nThe database is the platform HTTP API window.DevKillerDB. Read before editing, await writes, guard concurrent updates and preserve previous data after errors. Generated code must not assume filesystem paths, Windows, desktop software or localStorage. Deployment of the Engine online remains separate from the capabilities of this frontend profile.\n\nValidate imports and build against the selected profile. A v3 source cannot be labeled v2; preserve saved projects' profile and dependencies during repair. Dependencies are pinned in compiler/studio/package-lock.json and exported with the project scaffold. Existing v1/v2 images remain separate.\n\nSources consulted 2026-09-14: local stack/compiler contract; https://www.radix-ui.com/primitives/docs/overview/getting-started ; https://motion.dev/docs/react-use-reduced-motion ; https://reactrouter.com/api/declarative-routers/HashRouter . Authored integration guidance.\n",
+      "source": "DevKiller studio-v1 / S01 / 2026-09-14"
+    },
+    {
+      "id": "studio-v1-s02",
+      "title": "S02 — Accessible polished dialogs, menus, selectors and tabs / Radix foco teclado cores",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "S02 — Accessible polished dialogs, menus, selectors and tabs / Radix foco teclado cores",
+      "content": "# S02 — Accessible polished dialogs, menus, selectors and tabs / Radix foco teclado cores\n\nreact-v3 only. Radix supplies behavior, not visual styling. Design the open state with the same tokens as the rest of the app. Put theme variables on :root/body when portals are used, otherwise the portal may lose its theme. Opaque surface, readable text, border, radius, elevation, visible focus and adequate touch area are required.\n\nAuthored dialog skeleton:\n```jsx\nimport {Dialog} from 'radix-ui';\n<Dialog.Root>\n  <Dialog.Trigger asChild><button type=\"button\">Edit details</button></Dialog.Trigger>\n  <Dialog.Portal>\n    <Dialog.Overlay className=\"overlay\"/>\n    <Dialog.Content className=\"dialog\">\n      <Dialog.Title>Edit details</Dialog.Title>\n      <Dialog.Description>Update this project's information.</Dialog.Description>\n      <label>Name<input name=\"name\"/></label>\n      <Dialog.Close asChild><button type=\"button\">Close</button></Dialog.Close>\n    </Dialog.Content>\n  </Dialog.Portal>\n</Dialog.Root>\n```\nFor persistent forms, control open/onOpenChange and close only after a successful awaited save. A failed save leaves the dialog open with a clear error. Never use Dialog.Close around Save if it would dismiss before the write succeeds. asChild requires one element that receives the supplied props/ref; a native button works. Never nest interactive buttons.\n\nRadix modal handles focus and Escape; don't add competing global key handlers. Use Title and Description, meaningful labels and focus-visible CSS. A mobile drawer can style Dialog.Content at one side with width:min(90vw,24rem) and max-height:100dvh; only show its trigger on narrow screens. Keep desktop navigation as semantic nav and links.\n\nSelect anatomy: Select.Root value/onValueChange; Trigger containing Value and Icon; Portal containing Content, Viewport and Item value with ItemText and ItemIndicator. Use nonempty IDs, including \"all\". Style data-highlighted and data-state=\"checked\" plus trigger disabled state. Size popover content to the available viewport and allow scrolling. DropdownMenu is for commands; use onSelect for actions. Tabs need Root, List, Trigger value and Content with matching value.\n\nFont/color/background are not guaranteed by importing Radix. Do not copy a documentation demo that imports Tailwind or a different icon library. In v3 use local CSS and Lucide. Verify opening, keyboard selection, Escape, focus restoration, long labels, narrow viewports and reduced motion. Automated browser checks do not certify all assistive technologies.\n\nSources 2026-09-14: https://www.radix-ui.com/primitives/docs/components/dialog ; https://www.radix-ui.com/primitives/docs/guides/styling . Author synthesis and sample, not a copied theme.\n",
+      "source": "DevKiller studio-v1 / S02 / 2026-09-14"
+    },
+    {
+      "id": "studio-v1-s03",
+      "title": "S03 — Motion animation, SVG depth and interactive canvas / animações suaves sem quebrar zoom",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "S03 — Motion animation, SVG depth and interactive canvas / animações suaves sem quebrar zoom",
+      "content": "# S03 — Motion animation, SVG depth and interactive canvas / animações suaves sem quebrar zoom\n\nreact-v3 only: import {motion, AnimatePresence, MotionConfig, useReducedMotion} from 'motion/react'. Use transitions to explain state changes, not to hide loading indefinitely. Configure reduced motion and keep all actions functional without animation.\n\n```jsx\nconst reduce = useReducedMotion();\n<motion.div initial={false} animate={{opacity:1,y:reduce?0:6}}\n  transition={{duration:reduce?0:.18}}>Updated selection</motion.div>\n```\nFor enter/exit, AnimatePresence must wrap the conditionally rendered keyed element. The node must remain mounted long enough to exit; don't place AnimatePresence inside the condition. Avoid animating layout for every pointer event or using random keys that reset the component. MotionConfig reducedMotion=\"user\" helps set a consistent policy; explicitly disable repeating decorative effects when reduction is requested.\n\nIn editors, dragging coordinates belong to geometry, not animation state. Convert pointer coordinates to SVG space using the inverse screen CTM, or a correctly derived viewBox/rectangle transform. Account for zoom, padding, borders and pointer capture. Commit one undo entry at gesture completion. Don't let a motion transform overwrite the transform used for object rotation or zoom; animate a separate wrapper. Include numeric controls as an alternative to dragging.\n\nBuild visual depth from coherent silhouettes, distinct faces, gradients and shadows with unique IDs. A furniture library needs different shapes for chair, desk, lamp and plant. A category change is not merely a color change. On data charts, preserve legible axes and real values rather than emphasizing motion. Keep CSS and animation lightweight under the existing build/runtime limits.\n\nAcceptance: state ends in the same result with reduced motion; keyboard can complete the task; zoom doesn't change object coordinates; no repeated writes for every frame. Source consulted 2026-09-14: https://motion.dev/docs/react-use-reduced-motion . Geometry recommendations are authored and require testing in the actual editor.\n",
+      "source": "DevKiller studio-v1 / S03 / 2026-09-14"
+    },
+    {
+      "id": "studio-v1-s04",
+      "title": "S04 — Multi-screen apps with HashRouter / navegação rotas recarregar voltar",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "S04 — Multi-screen apps with HashRouter / navegação rotas recarregar voltar",
+      "content": "# S04 — Multi-screen apps with HashRouter / navegação rotas recarregar voltar\n\nreact-v3 allows react-router-dom 7.18.3. Use HashRouter for this static preview environment. It keeps routing after # so reloading a deep route does not request a nonexistent server file. Hosting migration can reconsider routing later; do not require a new server now.\n\nAuthored skeleton:\n```jsx\nimport {HashRouter,Routes,Route,NavLink} from 'react-router-dom';\nfunction App(){return <HashRouter>\n  <nav aria-label=\"Workspace\"><NavLink to=\"/\">Studio</NavLink><NavLink to=\"/library\">Library</NavLink></nav>\n  <Routes><Route path=\"/\" element={<Studio/>}/><Route path=\"/library\" element={<Library/>}/>\n    <Route path=\"*\" element={<p>Page not found. Use the navigation to return.</p>}/></Routes>\n</HashRouter>}\n```\nKeep shared project state and persistence above route elements so navigating doesn't reset unsaved work. Use NavLink active state for orientation. Use route parameters for entity views when appropriate. Don't call router hooks outside the provider. Avoid wrapping each page in another router. Do not import framework/server APIs or request loaders that don't exist.\n\nAn ordinary one-page site needs no router; section navigation can use scrollIntoView. Don't mix HashRouter URLs with unrelated #section anchors. Focus the new page heading when appropriate and ensure back/forward work. Missing entity IDs should show a human-readable empty state rather than crash.\n\nVerify navigation, refresh on #/library, browser back and forward, shared state persistence and a fallback route. Database saving remains explicit and asynchronous, independent of navigation. Source consulted 2026-09-14: https://reactrouter.com/api/declarative-routers/HashRouter . Authored integration example.\n",
+      "source": "DevKiller studio-v1 / S04 / 2026-09-14"
+    },
+    {
+      "id": "studio-v1-s05",
+      "title": "S05 — Prevent and diagnose errors / QA seletor texto completo persistência concorrência",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "S05 — Prevent and diagnose errors / QA seletor texto completo persistência concorrência",
+      "content": "# S05 — Prevent and diagnose errors / QA seletor texto completo persistência concorrência\n\nUse for every supported stack. Before returning code, trace one real user journey: action → state → storage/API → visible result. Check assumptions at each boundary. A syntax fix does not establish correct behavior; a passing startup test doesn't cover all actions.\n\nCommon prevention rules: imports must exist in the active profile; CSS classes must match markup; hidden/mobile-only controls need correct display rules; overlays must not intercept unrelated clicks; all inputs and icon buttons need names. Missing editorial data stays null with an honest placeholder, not a made-up requirement or fake zero.\n\nPersist related changes consistently. Read before editing. A failed read must not reset a record. A failed write must show an error and preserve the user's work. Serialize writes with a synchronous ref guard or a queue: multiple handlers writing stale snapshots can lose favorites, object positions or form data. Keep undo history separate from saved state and do not write on every animation frame.\n\nQA scenarios are independent, with fresh memory storage. text is exact innerText of the entire selected element. Bad: select a collection container and expect only one item title. Good: target that item's h3 or use count on filtered cards. Avoid expectations coupled to uppercase decoration, extra category labels or line breaks. For saved values, target the value element, not the entire definition list. Use existing supported actions, stable selectors and one concrete assertion at the end.\n\nA failure report must name requirement, expected behavior and evidence. Distinguish actual functional defect, cosmetic issue, invalid test expectation and unavailable environment. Do not repeatedly repair good code to satisfy a flawed assertion. Preserve features and last working preview; never claim the model executed tests. No unbounded automatic retry or extra model call is implied by this guide.\n\nSource: DevKiller scenario runner, persistence API and observed FORM/ROOMLAB evaluations, 2026-09-14. Development regression knowledge, not a benchmark score. Uses no client secrets or private document content.\n",
+      "source": "DevKiller studio-v1 / S05 / 2026-09-14"
+    },
+    {
+      "id": "studio-v1-s06",
+      "title": "S06 — Diverse premium graphics and app composition / identidade visual paletas ilustrações",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "S06 — Diverse premium graphics and app composition / identidade visual paletas ilustrações",
+      "content": "# S06 — Diverse premium graphics and app composition / identidade visual paletas ilustrações\n\nAplica-se a SVG/CSS em todas as stacks. Qualidade visual não exige o mesmo fundo, layout e desenho em todo projeto. Antes de compor, identificar tarefa principal, público, densidade de informação e linguagem de imagem. Uma ferramenta espacial deve priorizar canvas e inspector; uma agenda, tempo e compromissos; um laboratório, parâmetros e resultados; um site editorial, narrativa. Não adicionar hero de marketing a uma ferramenta de trabalho.\n\nChoose a deliberate visual family: technical instrumentation, playful tactile workspace, clear professional tool, editorial gallery or calm high-density organizer. Then set background/surface/text/accent tokens, type scale, spacing, border and motion rules. Light, dark and mixed surfaces are options; beige is not a universal premium default. User-requested colors override the model's habitual palette.\n\nArtwork needs semantic distinction. For a chair, draw a seat/back/legs; for a lamp, a shade/stem/base; for typography, letterform composition; for spatial design, distinct volumes. A function can share drawing helpers without sharing the same final silhouette. Palette variation alone is not eight different artworks. Build SVG in components with unique IDs, appropriate viewBox and deliberate stroke/shadow extents. Details must remain legible at actual display size.\n\nUse chart forms to answer a question: trend line, comparison bars, distribution or proportions. Match tooltip/legend surfaces to theme, show units, use real filtered values and offer textual alternatives. Never use randomized chart data to make the dashboard look active. Animation must not distort the measurement.\n\nFor photographs and complex illustrations, this profile still lacks an integrated image-generation/upload pipeline. Use clearly intentional local graphic placeholders; never invent image URLs, random stock photos or promise photorealism. Future image assets need subject checks, source/usage metadata and budget control, not unlimited regeneration.\n\nReview silhouette recognition, variety, contrast, cropping, semantics and interaction at both desktop and mobile sizes. Grade visual issues separately from functionality. Sources: user preferences and generated-app reviews dated 2026-09-14; https://www.w3.org/TR/SVG/coords.html . Author guidance, no claim of automatic aesthetic quality.\n",
+      "source": "DevKiller studio-v1 / S06 / 2026-09-14"
+    },
+    {
+      "id": "studio-v1-s07",
+      "title": "S07 — Responsive app shell: no white bars / controles móveis faixas brancas display contents",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "S07 — Responsive app shell: no white bars / controles móveis faixas brancas display contents",
+      "content": "# S07 — Responsive app shell: no white bars / controles móveis faixas brancas display contents\n\nUse para prevenir o problema observado no ROOMLAB: três botões móveis sem estilo e o X da biblioteca apareciam no desktop. A causa verificada foi agrupar .mobile-bar, .mobile-panel-head e .drawer-wrap em display:contents. Essa propriedade remove a caixa do elemento, mas mantém seus filhos visíveis. Não significa ocultar.\n\nPadrão autoral mínimo para a shell (adaptar breakpoint):\n```css\n.mobile-bar,.mobile-panel-head{display:none}\n.drawer-wrap{display:contents}\n[hidden]{display:none!important}\nbutton{font:inherit;color:inherit}\n@media(max-width:760px){\n  .mobile-bar{display:flex;gap:.5rem;background:var(--surface);padding:.5rem}\n  .mobile-bar button{background:var(--surface);color:var(--text);border:1px solid var(--border);min-height:44px}\n  .mobile-panel-head{display:flex;align-items:center;justify-content:space-between}\n  .mobile-panel-head button{background:transparent;color:var(--text);border:0;min-width:44px;min-height:44px}\n  .drawer-wrap{display:none}\n  .drawer-wrap.open{display:block;position:fixed;inset:0;z-index:50}\n}\n```\nO wrapper e os controles têm funções diferentes. Em react-v3, preferir Radix Dialog para drawer com foco, Escape e retorno ao trigger; ainda é necessário CSS e o trigger continua exclusivo do breakpoint certo. Não usar controles brancos padrão sobre texto branco. Não esconder um menu inteiro para disfarçar um botão sem função.\n\nNo desktop: ações essenciais visíveis, botões móveis ausentes. No celular: trigger visível, painel fechado inicialmente, abre por toque/teclado e fecha com Escape/ação explícita. Redimensionar não pode deixar overlay invisível prendendo cliques. Testar com texto longo, zoom e viewport estreito; um pixel de diferença não é uma reprovação funcional.\n\nFonte: causa confirmada no código gerado do ROOMLAB em 14/09/2026 e contrato de acabamento do Engine. Exemplo não altera automaticamente projetos existentes; correção deve preservar versão e dados.\n",
+      "source": "DevKiller studio-v1 / S07 / 2026-09-14"
+    },
+    {
+      "id": "professional-product-delivery",
+      "title": "Professional website and application composition, photography and delivery",
+      "source": "DevKiller authored delivery recipe v7; validated against Trailroom reference workflow",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "website storefront app dashboard design professional premium photography rental catalog typography responsive layout components visual quality",
+      "content": "Plan the audience, primary journey, screens and visual direction before generating files. A customer storefront and operator workspace have different composition. Use approved photos with recorded subject, role and crop; never relabel an unrelated object as a product. Match demo product data to actual available photos. Build shared theme tokens, readable type hierarchy, responsive grids, accessible dialogs and intentional empty/loading/error states. Separate domain calculations and persistence from UI components. Derive charts and totals from the same records. For inclusive rental dates use UTC calendar arithmetic, validate dates and quantity, and use peak concurrent reserved stock, not the sum of disjoint bookings. Keep write operations serialized and await persistence before confirmation. Compare rendered desktop and mobile screenshots to the design plan; a successful build alone is not a visual quality assessment. Prioritize functional completeness and distinctive domain-appropriate composition; avoid repeating cards and palettes. Record observed evidence, never claim unperformed browser tests."
+    },
+    {
+      "id": "curated-v1-q01",
+      "title": "Q01 — React state architecture: consistent filters, totals and persistence",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "Q01 — React state architecture: consistent filters, totals and persistence",
+      "content": "# Q01 — React state architecture: consistent filters, totals and persistence\n\nScope: react-v3. Reference checked 2026-09-16: https://react.dev/learn/choosing-the-state-structure . Original DevKiller synthesis, not a verbatim documentation export.\n\nKeep canonical records once. Derive selected records, filtered lists and chart series from those records rather than maintaining independent copies. Represent mutually exclusive request states with one status field. Flatten relations with stable IDs. Update related values together.\n\nEngine adaptation: separate src/data, src/lib, src/hooks and src/components. A persistence hook loads before enabling mutations and never seeds over a failed read. Keep draft form state separate from committed records. Compute the proposed next state from the latest committed state, await its write, then publish the state and success message. Block concurrent writes with a synchronous ref guard or queue; disabling a button alone is not an atomic lock. Read and write the exact same namespaced storage key. This storage guidance is Engine-specific, not a React API guarantee.\n\nAcceptance: create a record, wait for confirmation, reload and navigate back; the same record appears. Simulated rejected storage writes retain the draft and display an error, with no success message. Changing a filter must update the list and any filtered totals consistently.\n",
+      "source": "DevKiller curated-v1 / Q01 / 2026-09-16"
+    },
+    {
+      "id": "curated-v1-q02",
+      "title": "Q02 — Accessible Radix dialog and mobile navigation with complete CSS",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "Q02 — Accessible Radix dialog and mobile navigation with complete CSS",
+      "content": "# Q02 — Accessible Radix dialog and mobile navigation with complete CSS\n\nScope: react-v3, installed radix-ui umbrella package. Reference checked 2026-09-16: https://www.radix-ui.com/primitives/docs/components/dialog . Original minimal example; not copied upstream source. Radix supplies dialog interaction primitives; the application supplies styling, content and persistence.\n\nComplete component, file src/components/DetailDialog.jsx:\n```jsx\nimport { Dialog } from 'radix-ui';\nimport './detail-dialog.css';\nexport default function DetailDialog({title,description,children}) {\n  return <Dialog.Root><Dialog.Trigger asChild><button type=\"button\">View details</button></Dialog.Trigger><Dialog.Portal><Dialog.Overlay className=\"detail-overlay\"/><Dialog.Content className=\"detail-panel\"><Dialog.Title>{title}</Dialog.Title><Dialog.Description>{description}</Dialog.Description>{children}<Dialog.Close asChild><button type=\"button\">Close details</button></Dialog.Close></Dialog.Content></Dialog.Portal></Dialog.Root>;\n}\n```\nComplete stylesheet, file src/components/detail-dialog.css:\n```css\n.detail-overlay{position:fixed;inset:0;background:rgb(0 0 0 / .45);z-index:40}\n.detail-panel{box-sizing:border-box;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(36rem,calc(100vw - 2rem));max-height:85dvh;overflow:auto;padding:1.5rem;background:var(--surface,#fff);color:var(--ink,#161616);border:1px solid var(--border,#aaa);border-radius:1rem;z-index:41}\n.detail-panel button{font:inherit;cursor:pointer}\n.detail-panel button:focus-visible{outline:3px solid var(--accent,#1746ed);outline-offset:3px}\n```\nFor a mobile drawer, adapt the position and dimensions, retain title, description and close control. Close after route selection. Scope rail-only icon styles under the rail, never a global selector that hides drawer labels. Verify Tab, Escape, focus return, readable theme colors and 320px viewport. Do not substitute unavailable @radix-ui/react-dialog imports for the installed radix-ui package.\n",
+      "source": "DevKiller curated-v1 / Q02 / 2026-09-16"
+    },
+    {
+      "id": "curated-v1-q03",
+      "title": "Q03 — Recharts analytics: responsive charts with real data and empty states",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "Q03 — Recharts analytics: responsive charts with real data and empty states",
+      "content": "# Q03 — Recharts analytics: responsive charts with real data and empty states\n\nScope: react-v3. Reference checked 2026-09-16: https://recharts.github.io/en-US/api/ResponsiveContainer/ . Original example using installed Recharts; container dimensions must be measurable.\n\nFile src/components/RevenueChart.jsx:\n```jsx\nimport {ResponsiveContainer,BarChart,Bar,XAxis,YAxis,Tooltip} from 'recharts';\nconst dollars=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(n/100);\nexport default function RevenueChart({rows}) {\n  if(!rows.length)return <section><h2>Booking value</h2><p>No bookings in this period.</p></section>;\n  const total=rows.reduce((sum,row)=>sum+row.cents,0);\n  return <section aria-label=\"Booking value by month\"><h2>Booking value</h2><p>{dollars(total)} across {rows.length} months.</p><div style={{height:280,width:'100%',minWidth:0}}><ResponsiveContainer width=\"100%\" height=\"100%\"><BarChart data={rows}><XAxis dataKey=\"month\"/><YAxis tickFormatter={dollars}/><Tooltip formatter={value=>[dollars(Number(value)),'Booking value']}/><Bar dataKey=\"cents\" fill=\"var(--accent, #ed5b20)\" radius={[4,4,0,0]}/></BarChart></ResponsiveContainer></div></section>;\n}\n```\nCaller supplies sorted rows shaped {month:'2026-10',cents:8400}, derived from saved reservations, with an explicit cancellation/status inclusion policy. Never seed unrelated random chart values. Recompute when reservations or filters change. Keep prices as integer cents and convert only for display. A grid parent should use minmax(0,1fr) to prevent chart overflow. Empty data and zero-valued data are different states. Test totals against the reservation table and inspect mobile tooltips.\n",
+      "source": "DevKiller curated-v1 / Q03 / 2026-09-16"
+    },
+    {
+      "id": "curated-v1-q04",
+      "title": "Q04 — Motion: purposeful animation and reduced-motion alternatives",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "Q04 — Motion: purposeful animation and reduced-motion alternatives",
+      "content": "# Q04 — Motion: purposeful animation and reduced-motion alternatives\n\nScope: react-v3. Reference checked 2026-09-16: https://motion.dev/docs/react-accessibility . Original synthesis. The installed package is motion: use imports from motion/react, not an uninstalled framer-motion dependency.\n\nUse MotionConfig reducedMotion=\"user\" at the animated application boundary. useReducedMotion supports custom choices such as replacing a large translating panel with a short opacity transition. Respect it for parallax, autoplay and decorative movement as well. Reduced motion should not hide content or remove functional feedback.\n\nEngine design application: animate a dialog appearing, a selected tab marker or a completed save. Keep essential actions available immediately. Prefer brief transitions over staggered reveals across every card. Never make animation a substitute for actual progress or simulate a server response with a timer. Use stable keys for records, avoid remounting the entire page after edits, and preserve focus. A photograph remains a real asset, not an SVG animated approximation. Verify both motion settings in the browser and ensure layout remains usable without animation.\n",
+      "source": "DevKiller curated-v1 / Q04 / 2026-09-16"
+    },
+    {
+      "id": "curated-v1-q05",
+      "title": "Q05 — Lucide icons, SVG and photography have different roles",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "Q05 — Lucide icons, SVG and photography have different roles",
+      "content": "# Q05 — Lucide icons, SVG and photography have different roles\n\nScope: react-v3. Source checked 2026-09-16: https://lucide.dev/guide/react . Original integration guidance for installed lucide-react.\n\nImport named icons from lucide-react. Apply a coherent size and stroke weight. Give icon-only buttons accessible names and keep decorative icons hidden from assistive technology. An icon should clarify an action; it must not replace the product photograph or become an unexplained clickable square. Confirm the chosen export exists in the installed package.\n\nFor product catalogs, use Engine-approved photos with asset provenance. Write descriptions from visible subjects; a backpack attached to a mat does not establish waterproofing or capacity. Use object-fit:contain for isolated product views and deliberate cover crops for editorial scenes. Missing photography gets an explicit placeholder. Use authored SVG for diagrams and geometric branding, with a defined viewBox, legible labels and no external scripts. SVG is not a substitute for photography. Establish palette, geometry and visual purpose before drawing; avoid random overlapping shapes as a default hero.\n\nVerify loaded image dimensions, mobile crop, attribution visibility, meaningful alt text and a graceful failed-image state. Do not claim a model-generated image depicts an actual product.\n",
+      "source": "DevKiller curated-v1 / Q05 / 2026-09-16"
+    },
+    {
+      "id": "curated-v1-q06",
+      "title": "Q06 — React Router navigation, route reload and responsive workspace",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "Q06 — React Router navigation, route reload and responsive workspace",
+      "content": "# Q06 — React Router navigation, route reload and responsive workspace\n\nScope: react-v3. Source checked 2026-09-16: https://reactrouter.com/api/declarative-routers/HashRouter . Original synthesis for the Engine static preview environment.\n\nHashRouter keeps the application location in the URL fragment. This suits static preview hosting where arbitrary server routes are not supplied. Use installed react-router-dom imports and one router boundary. Link navigation should preserve browser history; reserve buttons for actions. Include an unknown-route state instead of a blank screen.\n\nEngine application: separate catalog, reservations, analytics and settings when the brief requires them. Directly reload a nested route and verify the intended view returns after persisted data loads. A sidebar selected state must reflect the actual route. Mobile navigation should expose the same destinations and close after selection, while retaining keyboard access and visible labels. Do not hide every label through a global CSS rule. Prefer a two-column workspace on large screens and a deliberate mobile flow; a smaller version of the desktop canvas is not responsive design.\n\nCheck back/forward, reload, empty states and a missing record route. Never present links to features that are not implemented.\n",
+      "source": "DevKiller curated-v1 / Q06 / 2026-09-16"
+    },
+    {
+      "id": "curated-v1-q07",
+      "title": "Q07 — Playwright regression evidence: test errors are not app defects",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "topics": "Q07 — Playwright regression evidence: test errors are not app defects",
+      "content": "# Q07 — Playwright regression evidence: test errors are not app defects\n\nScope: all current Engine stacks. Source checked 2026-09-16: https://playwright.dev/docs/best-practices . Original synthesis and Engine-specific adaptation.\n\nTest visible user behavior with isolated data. Prefer accessible roles or stable explicit test IDs over incidental DOM structure. Use retrying assertions for asynchronous UI state and avoid arbitrary sleeps as proof that saving completed. Each test creates its own prerequisites.\n\nEngine DSL adaptation: text assertions compare the selected element's text, so target the message span rather than the entire toast including its close button. Do not expect one search result for a term appearing in several descriptions. Check that a selector exists in the delivered code before judging its failure. A reload test must reopen the relevant view if routing is not persistent. Cancellation and return are separate scenarios with separate active reservations.\n\nEvidence records requirement, fixture, steps, expected/observed values, revision and source hash. A missing selector is inconclusive until checked against the requirement: it may be a wrong test or a missing feature. A timeout alone does not prove an application defect. Never repair working code merely to satisfy an invalid assertion. Preserve the prior preview while assessing a candidate. Proposed tests are not independently confirmed defects.\n",
+      "source": "DevKiller curated-v1 / Q07 / 2026-09-16"
+    },
+    {
+      "id": "curated-v1-q08",
+      "title": "Q08 — shadcn registry blocks: complete components and stack compatibility",
+      "stacks": [
+        "react-v3"
+      ],
+      "topics": "Q08 — shadcn registry blocks: complete components and stack compatibility",
+      "content": "# Q08 — shadcn registry blocks: complete components and stack compatibility\n\nScope: react-v3; design and integration reference only, not permission to add dependencies. Sources checked 2026-09-16: https://ui.shadcn.com/docs/registry and https://github.com/shadcn-ui/ui/blob/main/LICENSE.md . The shadcn/ui repository has an MIT license; this does not establish the license of every third-party registry or paid block collection.\n\nA registry distributes source files together with metadata and dependencies. Preserve that unit when preparing reusable components. Do not index a JSX fragment without its stylesheet, imports and required files. Keep upstream URL, revision, license notice and adaptation notes with each imported example.\n\nEngine compatibility: the current profile provides React, radix-ui, motion, Recharts, Lucide and React Router. It does not provide Tailwind or arbitrary shadcn dependencies. Copying utility-class markup alone will produce incomplete styling. Adapt a selected layout to complete plain CSS and installed imports, then compile and inspect it before marking it reusable. Never claim that a fetched block is already installed.\n\nDesign application: select composition according to audience and workflow. A customer storefront emphasizes discovery and product details; an operator workspace emphasizes density and actions. Vary page structure with editorial image/text, tables, detail panels and timelines when appropriate. Do not reduce every page to the same dashboard cards. Keep real product content and meaningful states, not just decorative components. A reusable block is a starting point, not proof of application completeness.\n",
+      "source": "DevKiller curated-v1 / Q08 / 2026-09-16"
+    },
+    {
+      "id": "pro-v1-r01",
+      "title": "React Pro forms validation with React Hook Form and Zod",
+      "stacks": [
+        "react-v4"
+      ],
+      "topics": "React Pro forms validation with React Hook Form and Zod",
+      "content": "# React Pro forms validation with React Hook Form and Zod\n\nSupported only in react-v4. Checked 2026-09-16. Libraries installed: react-hook-form 7.88.0, @hookform/resolvers 5.9.1, zod 3.25.76. This is Zod 3; do not assume Zod 4-only methods. Primary reference: https://github.com/react-hook-form/resolvers\n\nComplete minimal form component; compose it into the requested app. Persistence uses the supplied Engine API, not localStorage. Load existing records before allowing edits. Keep date/stock business rules in separate tested domain helpers. Form validation alone cannot provide transactional multi-user stock control.\n\n```jsx\nimport {useRef,useState} from 'react';\nimport {useForm} from 'react-hook-form';\nimport {zodResolver} from '@hookform/resolvers/zod';\nimport {z} from 'zod';\nconst schema=z.object({quantity:z.number().int().min(1,'Choose at least one item')});\nexport default function QuantityForm(){\n const lock=useRef(false),[notice,setNotice]=useState('');\n const {register,handleSubmit,formState:{errors,isSubmitting}}=useForm({resolver:zodResolver(schema),defaultValues:{quantity:1}});\n const save=async data=>{if(lock.current)return;lock.current=true;setNotice('');try{await window.DevKillerDB.set('quantity',data.quantity);setNotice('Saved')}catch{setNotice('Could not save. Your entries are preserved.')}finally{lock.current=false}};\n return <form onSubmit={handleSubmit(save)} noValidate>\n  <label htmlFor=\"quantity\">Quantity</label>\n  <input id=\"quantity\" type=\"number\" {...register('quantity',{valueAsNumber:true})} aria-invalid={!!errors.quantity} aria-describedby=\"quantity-error\"/>\n  <p id=\"quantity-error\" role=\"alert\">{errors.quantity?.message}</p>\n  <button disabled={isSubmitting}>Save</button><p role=\"status\">{notice}</p>\n </form>;\n}\n```\n\nUse Controller for controlled Radix Select; never spread register onto a non-native control without adapting value/onChange. Preserve draft and dialog on save failure. An empty numeric input produces NaN rather than a meaningful zero: show a friendly error. Optional business details can use editable placeholders; missing optional content should not block the preview. Verify invalid input, keyboard focus, successful save/reload, failed save, and repeated submission.\n",
+      "source": "DevKiller pro-v1 / R01 / 2026-09-16"
+    },
+    {
+      "id": "pro-v1-r02",
+      "title": "React Pro Tailwind accessible local UI components and visual composition",
+      "stacks": [
+        "react-v4"
+      ],
+      "topics": "React Pro Tailwind accessible local UI components and visual composition",
+      "content": "# React Pro Tailwind accessible local UI components and visual composition\n\nSupported only in react-v4. Checked 2026-09-16. Tailwind 4.3.3 with Vite plugin already configured. clsx, tailwind-merge and class-variance-authority installed. Radix primitives are available via radix-ui. shadcn is a source-component approach, not an importable shadcn package. No pre-existing @/components aliases. Deliver complete local components and relative imports.\n\nSources: https://tailwindcss.com/docs/installation/using-vite and https://ui.shadcn.com/docs/installation/vite\n\nBegin src/styles.css with @import \"tailwindcss\"; then add your theme CSS. Use complete literal class names, not constructed fragments like bg-${color}-500. Set root/body tokens so portals inherit them. Generated CSS is bundled locally; no CDN or runtime install. Use CSS custom properties or inline style for truly dynamic values.\n\nExample src/components/ui/Button.jsx:\n```jsx\nimport {clsx} from 'clsx';\nimport {twMerge} from 'tailwind-merge';\nexport function Button({className,type='button',...props}){\n return <button type={type} className={twMerge(clsx('inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-orange-600 px-5 py-3 font-semibold text-white hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 disabled:pointer-events-none disabled:opacity-50',className))} {...props}/>;\n}\n```\nExample src/components/ui/Modal.jsx:\n```jsx\nimport {Dialog} from 'radix-ui';\nexport function Modal({open,onOpenChange,title,description,children}){\n return <Dialog.Root open={open} onOpenChange={onOpenChange}><Dialog.Portal>\n <Dialog.Overlay className=\"fixed inset-0 z-40 bg-black/50\"/>\n <Dialog.Content className=\"fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-auto rounded-2xl bg-white p-6 text-zinc-950 shadow-xl\">\n <Dialog.Title className=\"text-xl font-bold\">{title}</Dialog.Title>\n <Dialog.Description className=\"my-3 text-zinc-600\">{description}</Dialog.Description>\n {children}<Dialog.Close className=\"mt-4 rounded-lg border px-4 py-3 focus-visible:outline-2\">Close</Dialog.Close>\n </Dialog.Content></Dialog.Portal></Dialog.Root>;\n}\n```\nIf opened programmatically, explicitly restore focus to the opening control after closing. When using Dialog.Trigger, use asChild around one real button. Never nest buttons.\n\nThese examples establish behavior, not a mandatory orange visual identity. Choose typography, spacing, page structure and palette for the requested domain. Full application screens need loading/error/empty states and coherent photography, not repeated decorative cards. Responsive layout and accessibility remain necessary regardless of component libraries.\n",
+      "source": "DevKiller pro-v1 / R02 / 2026-09-16"
+    },
+    {
+      "id": "expansion-v1-e01",
+      "title": "Official shadcn components, real 3D and complex data interfaces",
+      "stacks": [
+        "react-v5",
+        "next-v1"
+      ],
+      "topics": "Official shadcn components, real 3D and complex data interfaces",
+      "content": "# Official shadcn components, real 3D and complex data interfaces\nOFFICIAL COMPONENT REGISTRY: shadcn/ui source components are supplied automatically when imported from @/components/ui/<name>. Available: button, input, textarea, label, card, badge, separator, skeleton, dialog, alert-dialog, select, tabs, dropdown-menu, popover, tooltip, sheet, checkbox, switch, table, accordion, progress, scroll-area, avatar. Use their standard named exports. Do not regenerate these primitives; compose domain-specific UI around them. @/lib/utils supplies cn(). Source is copied into the project and remains editable/exportable. A token stylesheet is supplied; customize CSS variables for the requested art direction. Import @import \"tailwindcss\"; at the start of src/styles.css. shadcn is not an importable npm package.\nADDITIONAL INSTALLED LIBRARIES: three, three/addons/*, @react-three/fiber (Canvas/useFrame), @react-three/drei, @tanstack/react-query (QueryClientProvider required), @tanstack/react-table v8. Use only where needed. Three.js must dispose resources and handle unavailable WebGL with a usable fallback; explicit canvas dimensions; respect reduced motion, no uncontrolled permanent animation. R3F Canvas needs an error boundary. Use simple procedural geometry unless approved assets are supplied; do not invent model URLs. Prefer conventional layout for ordinary content, not a 3D scene everywhere. Table and charts must reflect saved data. React Query must invalidate related queries after successful mutations.\nSources: https://ui.shadcn.com/docs/registry ; https://r3f.docs.pmnd.rs/getting-started/introduction ; https://tanstack.com/table/v8/docs/guide/introduction\n",
+      "source": "DevKiller expansion-v1 / E01 / 2026-09-16"
+    },
+    {
+      "id": "expansion-v1-e02",
+      "title": "PostgreSQL backend migrations, transaction integrity and isolation",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "topics": "PostgreSQL backend migrations, transaction integrity and isolation",
+      "content": "# PostgreSQL backend migrations, transaction integrity and isolation\nOPTIONAL REAL BACKEND: When requested functionality needs server-side validation, shared multi-user state, transactions or a relational database, deliver src/server/routes.mjs exporting default async function register(app,{db}). app is a Fastify instance scoped to /api; define routes such as app.get('/items', async()=>...). Frontend calls fetch('/api/items'). db is a pg Pool connected to a persistent, isolated PostgreSQL database for this project, never exposed to the browser. Deliver ordered migrations src/server/migrations/001_initial.sql etc. Migrations run transactionally once and are immutable: append later migrations, never rewrite applied ones. Use parameterized SQL ($1,$2), schema validation, pagination and transactions with SELECT FOR UPDATE or constraints for stock/bookings. Always release acquired clients in finally. Return real errors and status codes; await commits before confirming. No secrets in source, no listen() or process startup in routes. Helpers may be .mjs in src/server/. Only backend imports pg, zod and node builtins. Do not use window.DevKillerDB for records owned by PostgreSQL. Lightweight apps may instead use the existing DevKillerDB service. Auth/payments/third-party credentials are not provisioned automatically: never simulate them. Backend is private local preview infrastructure, not production tenant authentication.\nUse explicit validation on the server, not only in forms. Treat simultaneous requests as normal. Protect inventory with row locks inside a transaction. Use unique constraints for invariants and idempotency keys for duplicate submissions. Never expose database URLs or SQL errors to browsers. Migration failures must stop the candidate, preserve the previous preview and report the failing migration. Frontend success means a committed server result. QA uses a different schema from live data.\nSources: https://www.postgresql.org/docs/current/tutorial-transactions.html ; https://fastify.dev/docs/latest/Reference/Routes/\n",
+      "source": "DevKiller expansion-v1 / E02 / 2026-09-16"
+    },
+    {
+      "id": "expansion-v1-e03",
+      "title": "Vue and Angular native application modules",
+      "stacks": [
+        "vue-v1",
+        "angular-v1"
+      ],
+      "topics": "Vue and Angular native application modules",
+      "content": "# Vue and Angular native application modules\nVue: use SFC files, script setup, refs/computed, component props/emits and onUnmounted cleanup. Entry src/App.vue. Bootstrap is managed by Engine. Use lucide-vue-next or CSS, never React components. Angular: standalone AppComponent in src/app.component.ts, selector app-root, inline templates, signals and inject(). JIT with Vite; browser only. CommonModule must be explicitly imported when its directives are used. Both profiles use scoped source modules and async persisted data, with real error/loading/empty states. Optional Fastify backend follows the Engine backend contract.\nSources: https://vuejs.org/guide/quick-start.html ; https://angular.dev/guide/components\n",
+      "source": "DevKiller expansion-v1 / E03 / 2026-09-16"
+    },
+    {
+      "id": "expansion-v1-e04",
+      "title": "Next App Router export and server boundaries",
+      "stacks": [
+        "next-v1"
+      ],
+      "topics": "Next App Router export and server boundaries",
+      "content": "# Next App Router export and server boundaries\nEngine next-v1 uses Next.js App Router static export. Deliver src/app/layout.jsx, src/app/page.jsx, src/styles.css and page folders. Interactive components need use client. No request-time Server Actions, cookies or Next API handlers in this profile. Separate Fastify APIs implement server behavior at /api. Static dynamic routes require generateStaticParams; unknown item IDs can use search params and client data fetching with Suspense. Do not read browser globals at build time. Do not fetch fonts during build. Use system fonts and unoptimized next/image. Data must not be hardcoded as a fake backend.\nSources: https://nextjs.org/docs/app/guides/static-exports ; https://nextjs.org/docs/app/getting-started/server-and-client-components\n",
+      "source": "DevKiller expansion-v1 / E04 / 2026-09-16"
+    },
+    {
+      "id": "motion-v1-m01",
+      "title": "Motion visual design: React shared-layout collections and accessible expansion",
+      "stacks": [
+        "react-v5",
+        "next-v1"
+      ],
+      "topics": "Motion visual design: React shared-layout collections and accessible expansion",
+      "content": "# Motion visual design: React shared-layout collections and accessible expansion\nOriginal DevKiller guidance, 2026-09-20. Eligible: React Complete and Next static export.\nUse motion/react for purposeful transitions between related UI states. Plan one memorable interaction around the domain, such as expanding a collection into its contents; retain clear typography, real images and working actions. The referenced iOS folder is inspiration, not a reusable paid template. Motion+ source is not included.\nImplementation recipe: render a keyboard-operable button for each collection with a unique stable ID. Use the same unique layoutId on its compact and expanded surface; AnimatePresence owns conditional exit. Keep selection in application state. Compose an accessible Dialog for focus trapping, Escape and restoring focus to the trigger. Never replace dialog semantics with a clickable div. Use MotionConfig reducedMotion='user'; useReducedMotion can replace spatial movement with a brief opacity transition. Do not animate dialog transforms with two libraries. Scope IDs per collection and avoid duplicate layoutId instances outside the intended transition.\nNext: place hooks and motion components in a client component; no browser access during module evaluation. Test rapid open/close, keyboard-only use, resize, reduced motion and route changes. Expanded content must remain readable and actionable without animation. Keep the library useful when no cards exist.\nSources: https://motion.dev/examples/react-ios-app-folder (paid full source; visual reference only); https://motion.dev/docs/react-layout-animations ; https://motion.dev/docs/react-use-reduced-motion\n",
+      "source": "DevKiller motion-v1 / M01 / 2026-09-23"
+    },
+    {
+      "id": "motion-v1-m02",
+      "title": "Anime.js v4 motion components: SVG timelines, lifecycle and validation",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "topics": "Anime.js v4 motion components: SVG timelines, lifecycle and validation",
+      "content": "# Anime.js v4 motion components: SVG timelines, lifecycle and validation\nOriginal DevKiller guidance, 2026-09-20. Installed animejs 4.5.0 on React, Next, Vue and Angular.\nUse named imports {animate, createScope, createTimeline, svg} from 'animejs'. Do not generate the v3 default anime({targets}) API. Anime is useful for a deliberate sequence, diagrams and SVG line drawing; it is not product photography or a substitute for Recharts with real data.\nOriginal minimal lifecycle recipe: inside the framework mount/effect, createScope({root: element}).add(() => { animate('.accent', {opacity:[0.65,1], duration:250, ease:'out(2)'}); }); retain the scope and call scope.revert() at unmount. Pass a real mounted root, not a document-wide selector. React uses useEffect/useRef; Vue uses onMounted/onUnmounted; Angular uses ngAfterViewInit and DestroyRef; Next requires a client boundary. A timeline created in the scope can coordinate elements but must be reverted with it. Keep content visible before enhancement. Respect matchMedia('(prefers-reduced-motion: reduce)') and skip decorative sequences; preserve final state and all business actions. Do not use animation completion to commit data. Avoid infinite loops, large blur filters and simultaneous transform ownership with Motion.\nTest animation completion, remount without duplicate callbacks, route exit, keyboard/touch actions and reduced-motion behavior. For SVG use a valid viewBox and meaningful accessible labeling. Charts must represent saved records, not animated fabricated metrics.\nSources: https://animejs.com/documentation/getting-started/using-with-react/ ; https://animejs.com/documentation/scope/ ; https://animejs.com/documentation/timeline/ ; https://animejs.com/documentation/svg/\n",
+      "source": "DevKiller motion-v1 / M02 / 2026-09-23"
+    },
+    {
+      "id": "motion-v1-m03",
+      "title": "Three.js visual components: spatial art direction, lifecycle and performance validation",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "topics": "Three.js visual components: spatial art direction, lifecycle and performance validation",
+      "content": "# Three.js visual components: spatial art direction, lifecycle and performance validation\nOriginal DevKiller guidance, 2026-09-20. Installed three 0.186.0 on all extended profiles; React/Next also provide Fiber/Drei.\nSelect 3D when it explains an object, space, configuration or material. Do not make a routine form a 3D scene. Plan camera framing, light direction, background contrast, material roughness and a useful interaction before coding. Use approved model assets or intentional procedural geometry. Do not draw crude products and present them as real photos. Always keep essential product facts and actions in normal HTML.\nUse a sized container, responsive camera aspect and renderer size, and cap pixel ratio. Prefer demand rendering for a static scene. Provide visible HTML fallback for unavailable WebGL/loading failure. Reduce motion by disabling automatic camera orbit while preserving manual controls. Use keyboard-accessible HTML controls with the same state as the scene. React/Next use Canvas with an error boundary and a client boundary in Next; Vue/Angular instantiate after mount and own cleanup. Dispose geometries, materials and textures; remove resize observers/listeners and cancel frame loops. Avoid downloading invented model URLs.\nValidate resize, mobile readability, state updates from controls, fallback without WebGL, cleanup after route change and repeated mounts. Animation is enhancement: forms, navigation and persistence must work without it. No performance or premium-quality claim without examining the rendered result.\nSources: https://threejs.org/docs/ ; https://threejs.org/manual/#en/cleanup ; https://r3f.docs.pmnd.rs/advanced/scaling-performance\n",
+      "source": "DevKiller motion-v1 / M03 / 2026-09-23"
+    },
+    {
+      "id": "motion-v1-m04",
+      "title": "GSAP animation architecture and builder license boundary",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "topics": "GSAP animation architecture and builder license boundary",
+      "content": "# GSAP animation architecture and builder license boundary\nOriginal DevKiller research note, 2026-09-20. Research-only; GSAP is NOT installed or enabled for generated applications.\nGSAP offers timelines and scroll-driven choreography. Review its official docs for sequencing concepts, scoped cleanup and responsive animation. However the current Webflow product terms include restrictions on competing visual animation builders. DevKiller includes visual editing, so this integration needs an explicit licensing determination before production enablement. A general claim that GSAP is free for commercial use is not enough to establish builder permission.\nThe generator must not import gsap, fetch a GSAP CDN, or claim GSAP capability while this gate remains closed. Use installed Motion for state/layout or scroll progress and Anime.js for multi-step DOM/SVG timelines. Preserve natural scrolling, content visibility, reduced motion, cleanup and keyboard access. Do not mix animation owners on the same element/property. This research entry is useful to choose an allowed alternative, not to authorize a new dependency. Do not turn lack of GSAP into failure to create the application.\nSources: https://gsap.com/docs/v3/ ; https://webflow.com/legal/product-terms (section 9, GSAP)\n",
+      "source": "DevKiller motion-v1 / M04 / 2026-09-23"
+    },
+    {
+      "id": "motion-v1-m05",
+      "title": "Motion for React: interaction, scroll choreography and reduced motion",
+      "stacks": [
+        "react-v5",
+        "next-v1"
+      ],
+      "topics": "Motion for React: interaction, scroll choreography and reduced motion",
+      "content": "# Motion for React: interaction, scroll choreography and reduced motion\nDevKiller curated implementation playbook, 2026-09-23. Sources are official Motion documentation. Eligible for React Complete and Next static-export client components; verify the active stack before importing.\n\n## Choose the motion by user intent\n- Use `whileHover` and `whileTap` for brief feedback on a real interactive control. Keep buttons and links semantic; add a visible `whileFocus` state when focus is not already clear.\n- Use `whileInView` for a one-time reveal that helps establish reading order. Set `viewport={{ once: true }}` for editorial entrance effects. Keep content visible when JavaScript is unavailable or motion is reduced.\n- Use `useScroll` + `useTransform` only when a value should continuously track scroll (for example a thin reading-progress line or restrained image parallax). Choose offsets against the section being narrated; do not animate every block or make scroll control essential content.\n- Use `layout` for meaningful reflow/reorder and `layoutId` for one shared object moving between two related states. Use `AnimatePresence` for conditional exit. Make IDs unique and preserve a normal, readable state if animation is interrupted.\n- Use variants when parent and child motions need one authored sequence. Prefer a small number of coordinated values over a cascade of arbitrary delays.\n\n## Make the visual feel intentional\nDefine the before/after state, the focal object, the reason for movement, and its duration/easing before writing JSX. Motion should clarify hierarchy or feedback, never compensate for weak layout. Choose one motion signature per screen; avoid simultaneous scale, blur, parallax and rotation on the same element. Do not let two animation systems own the same element/property.\n\n## React implementation safeguards\nImport React APIs from `motion/react`. Keep browser-only hooks in a client component in Next. Use `MotionConfig reducedMotion=\"user\"` and `useReducedMotion()` to replace spatial movement with opacity or no decorative motion. Never hide essential content until an animation callback. Avoid high-frequency React state updates for continuously changing values; use MotionValues/styles. Keep clickable area and keyboard behavior unchanged during movement.\n\n## Acceptance checks\nTest the initial render without animation, keyboard focus, tap/hover, rapid repeated toggles, resize, route exit, and `prefers-reduced-motion`. Confirm no text shifts under the pointer, clipped content, layout jump, duplicated shared IDs or action blocked by animation. Capture the final state at desktop and mobile widths.\n\nOfficial references: https://motion.dev/docs/react ; https://motion.dev/docs/react-gestures ; https://motion.dev/docs/react-scroll-animations ; https://motion.dev/docs/react-layout-animations ; https://motion.dev/docs/react-use-reduced-motion\n",
+      "source": "DevKiller motion-v1 / M05 / 2026-09-23"
+    },
+    {
+      "id": "motion-v1-m06",
+      "title": "Three.js and React Three Fiber: premium scene and glass recipe",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "topics": "Three.js and React Three Fiber: premium scene and glass recipe",
+      "content": "# Three.js and React Three Fiber: premium scene and glass recipe\nDevKiller curated implementation playbook, 2026-09-23. Use only when the requested experience benefits from 3D. Confirm Three.js, Fiber and Drei are in the selected Engine profile; a retrieved recipe does not authorize a new dependency.\n\n## Art-direct the scene before coding\nWrite a one-sentence scene brief with subject, silhouette, camera angle, background, light direction, material, motion and the page content it supports. Build one unmistakable focal object and a few supporting shapes, not a pile of primitives. Keep headline, navigation and actions in normal HTML. Choose a composition that still reads at phone width; provide a non-WebGL fallback.\n\n## Glass must have something to reflect and transmit\nThree.js `MeshPhysicalMaterial` documentation explicitly recommends an environment map for best results. A transmission value alone does not make a convincing glass object. Use a real environment map/HDRI or a controlled studio environment plus visible bright softbox-like reflection shapes, darker surroundings and an object/background behind the glass. Prefer a checked-in, licensed environment asset or a locally generated studio environment over an unverified runtime URL.\n\nFor a starting material, use `MeshPhysicalMaterial` with `transmission` near 1, `opacity: 1`, low but nonzero `roughness` (roughly 0.04–0.16), a physically plausible `ior` around 1.45–1.52, and modest `thickness`; tune against the scene, not in isolation. Keep a clear rim/highlight and enough separation from the background. Use restrained accent color on bevels or internal elements. A uniformly black, opaque-looking ball is a failed glass treatment: first verify environment lighting, exposure/tone mapping, camera angle, transmission and contrast; if it still reads poorly, switch to an intentionally reflective metal/acrylic treatment rather than claiming glass.\n\n## Fiber scene recipe\nUse a sized `<Canvas>` with responsive camera framing and capped `dpr`. Keep static geometry/materials stable; use refs and delta-based mutation in `useFrame` for small continuous motion—never React `setState` per frame. Share geometries/materials, avoid remounting the scene, and use demand rendering when nothing animates. Keep pointer tilt subtle and disable automatic orbit under reduced motion while retaining accessible controls.\n\n## Visual acceptance gate\nAt desktop and mobile sizes, verify: recognizable silhouette at thumbnail scale; foreground/background depth; reflections visible on the intended glass; transmission visibly affects what is behind it; text and controls stay dominant/readable; no black blobs, clipping, z-fighting, flicker or excessive bloom; reduced-motion and WebGL fallbacks work. A successful build is not evidence of a successful material.\n\nPrimary references: https://threejs.org/docs/pages/MeshPhysicalMaterial.html ; https://threejs.org/manual/pages/materials.html ; https://r3f.docs.pmnd.rs/getting-started/your-first-scene ; https://r3f.docs.pmnd.rs/advanced/pitfalls ; https://r3f.docs.pmnd.rs/advanced/scaling-performance ; https://drei.docs.pmnd.rs/shaders/mesh-transmission-material\n",
+      "source": "DevKiller motion-v1 / M06 / 2026-09-23"
+    },
+    {
+      "id": "motion-v1-m07",
+      "title": "GSAP: timeline choreography, lifecycle and eligibility boundary",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "topics": "GSAP: timeline choreography, lifecycle and eligibility boundary",
+      "content": "# GSAP: timeline choreography, lifecycle and eligibility boundary\nDevKiller curated research and implementation reference, 2026-09-23. This document teaches the library but does not enable it in generated apps.\n\n## Current Engine constraint\nGSAP is not installed/enabled for generated projects under the current policy recorded in M04. Do not emit `gsap` imports, CDN scripts or ScrollTrigger code. Do not silently add the dependency. If the user explicitly asks for GSAP, explain the current restriction and use the approved Motion/Anime.js capability unless the Engine's licensing gate has been formally changed. Keep these sequencing principles available for choosing an allowed implementation.\n\n## When GSAP is a good fit after authorization\nUse a timeline when a hero or short editorial sequence has intentional beats with overlaps, labels and a clear ending. Keep one timeline per scene; name labels by story beat; animate only the intended properties; do not make the user wait before reading or interacting. Use ScrollTrigger only for content whose narrative is genuinely tied to scroll, preserve normal scrolling, and provide a reduced-motion/non-scroll state.\n\n## React lifecycle pattern after authorization\nUse the official `useGSAP` integration or a scoped `gsap.context()` rooted at the component. Revert/kill animations and ScrollTriggers on unmount, route changes and breakpoint changes. Use `gsap.matchMedia()` for responsive choreography and cleanup. Avoid document-wide selectors, unmanaged global timelines, duplicate triggers after remount, and concurrent ownership of the same transform by GSAP and Motion.\n\n## Validation\nTest mount/unmount/remount, route navigation, resize across breakpoints, interrupted timelines, keyboard/touch access, reduced motion and scroll restoration. Confirm the final static state remains legible and controls work when animation is skipped. No output from this document overrides the licensing/availability gate in M04.\n\nOfficial references: https://gsap.com/docs/v3/GSAP/Timeline/ ; https://gsap.com/docs/v3/GSAP/gsap.context%28%29/ ; https://gsap.com/docs/v3/Plugins/ScrollTrigger/ ; https://gsap.com/docs/v3/GSAP/gsap.matchMedia%28%29/ ; https://gsap.com/docs/v3/GSAP/gsap.registerPlugin%28%29/\n",
+      "source": "DevKiller motion-v1 / M07 / 2026-09-23"
+    },
+    {
+      "id": "motion-v1-m08",
+      "title": "Product-specific art direction for generated apps and sites",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "topics": "Product-specific art direction for generated apps and sites",
+      "content": "# Product-specific art direction for generated apps and sites\nDevKiller curated visual-design playbook, 2026-09-23. Applies to planning, component design and visual review across supported stacks. It is guidance, not a fixed brand theme.\n\n## Create a direction, not a template\nBefore implementation, state the audience, product category, primary task, emotional tone and viewing context. Select a distinct visual thesis and 2–3 signature motifs that support it. Specify typography roles, palette with contrast pairs, spacing/radius rhythm, image/illustration treatment, navigation form, content density and one interaction signature. Explain why the chosen imagery belongs to this product. Never default to the same pale background, centered hero, three cards and generic dashboard for every request.\n\n## Design the working product\nMap the information hierarchy and key user journey before decorating. Choose page composition that fits the domain: editorial, workspace, catalog, timeline, canvas, map, control room or another purposeful pattern. Use real components and useful empty/loading/error states. Distinguish a marketing site from an operational app. Use semantic theme tokens so the chosen direction is consistent and can be changed without restyling each component independently.\n\n## Use effects with restraint and proof\nChoose 3D, animation, SVG or photography only when it communicates product value. Treat 3D as a focal visual with a defined camera/light/material brief, animation as feedback or narrative, SVG as diagrams/illustrations/icons, and photography as literal subject evidence. Do not substitute generic screenshots for relevant product imagery or handmade SVGs for realistic products. Preserve attribution and fallback behavior.\n\n## Review across the actual viewport\nInspect a rendered desktop and mobile view. Check hierarchy at first glance, type scale/line lengths, contrast, spacing, image relevance/crop, alignment, control states, responsive rearrangement and motion. Fix obvious defects before adding effects. If the brief asks for a specific style, verify the visible output against it; compiling is not visual approval.\n\nSources: https://ui.shadcn.com/docs/theming ; https://ui.shadcn.com/docs/components ; https://vercel.com/design/guidelines\n",
+      "source": "DevKiller motion-v1 / M08 / 2026-09-23"
+    },
+    {
+      "id": "motion-v1-m09",
+      "title": "Visual QA for motion, Three.js and material effects",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "topics": "Visual QA for motion, Three.js and material effects",
+      "content": "# Visual QA for motion, Three.js and material effects\nDevKiller curated review checklist, 2026-09-23. Use during visual-review; distinguish a real defect from an optional taste preference.\n\n## Evidence first\nRender the app at a representative desktop size and a narrow mobile size. Review the actual browser output, not only source code or a successful build. Record viewport, route/state and visible evidence. Inspect one static initial frame and relevant interactive states. Respect reduced-motion settings.\n\n## Motion checks\nMotion clarifies an action or narrative beat; the user can still read and operate the app if motion is skipped. No content flashes in late, controls move away from the pointer, focus disappears, scroll is hijacked, or layout changes cause overlap. Check reduced motion, keyboard, touch and repeated interactions. If the animation is decoration with no visible purpose, simplify it.\n\n## 3D/material checks\nThe intended object is immediately identifiable and has a deliberate camera/composition. Check contrast against its background, visible lighting direction, form at thumbnail size, responsive crop, frame rate, loading/failure fallback and pointer/keyboard parity. For glass specifically, require visible environmental reflections and visible transmitted/distorted background; transparency without an environment often reads as dark/flat. Reject an opaque black sphere presented as glass. For metal require readable highlights and non-flat form. For a requested “3D” scene, a static flat CSS circle is not sufficient unless clearly chosen as fallback.\n\n## Repair order\nCorrect missing scene/environment/material setup first; then framing, contrast, silhouette, responsive sizing and motion. Reduce expensive post-processing before deleting meaningful design detail. Do not add unrelated effects to conceal the defect. Re-render and compare against the same acceptance checklist. A repaired build is not done until the repaired visual state is inspected.\n\nReference basis: https://threejs.org/docs/pages/MeshPhysicalMaterial.html ; https://r3f.docs.pmnd.rs/advanced/pitfalls ; https://motion.dev/docs/react-use-reduced-motion ; https://playwright.dev/docs/best-practices\n",
+      "source": "DevKiller motion-v1 / M09 / 2026-09-23"
+    }
+  ]
+}

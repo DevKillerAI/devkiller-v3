@@ -1,0 +1,8 @@
+import {reactFiles} from './react-fixture.mjs';
+// Deliberately authored test input; never presented as real OpenAI output.
+export const designFiles=[
+ {name:'src/App.jsx',content:reactFiles[0].content.replace("import {useEffect,useState} from 'react';", "import {useEffect,useState} from 'react';\nimport {Plus} from 'lucide-react';\nimport Trend from './components/Trend.jsx';").replace('Salvar mais um</button>','<Plus size={18} aria-hidden="true"/> Salvar mais um</button>').replace('</main>','<Trend value={value}/></main>')},
+ {name:'src/components/Trend.jsx',content:`import {ResponsiveContainer,BarChart,Bar,XAxis,YAxis,Tooltip} from 'recharts';
+export default function Trend({value}){const data=[{nome:'Salvos',valor:value},{nome:'Referência de teste',valor:2}];return <section className="trend" aria-label="Gráfico de teste"><h2>Contagem salva</h2><div className="chart"><ResponsiveContainer width="100%" height="100%"><BarChart data={data}><XAxis dataKey="nome"/><YAxis allowDecimals={false}/><Tooltip/><Bar dataKey="valor" fill="#6554c0" isAnimationActive={false}/></BarChart></ResponsiveContainer></div><p>Dados de demonstração para verificação.</p><table><caption>Valores do gráfico</caption><tbody>{data.map(d=><tr key={d.nome}><th>{d.nome}</th><td>{d.valor}</td></tr>)}</tbody></table></section>}`},
+ {name:'src/styles.css',content:reactFiles[1].content+'main{max-width:1100px}section.trend{display:block;margin-top:32px;min-width:0}.chart{height:280px;width:100%;min-width:0}button{display:flex;align-items:center;gap:8px}table{width:100%;text-align:left}button:focus-visible{outline:3px solid #292339;outline-offset:3px}@media(max-width:480px){main{margin:0;padding:16px}}'}
+];

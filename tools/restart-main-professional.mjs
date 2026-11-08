@@ -1,0 +1,1 @@
+const origin='http://127.0.0.1:4310';const s=await(await fetch(origin+'/api/state')).json();if(s.busy)throw Error('Main Engine busy; leave running');await fetch(origin+'/api/shutdown',{method:'POST',headers:{Origin:origin,'X-DevKiller-Token':s.token,'Content-Type':'application/json'},body:'{}'});console.log('Main Engine stopped safely for update');

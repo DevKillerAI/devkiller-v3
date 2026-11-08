@@ -1,0 +1,11 @@
+{
+  "name": "devkiller-backend-runtime",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "fastify": "5.12.5",
+    "pg": "8.23.0",
+    "zod": "3.25.76"
+  }
+}

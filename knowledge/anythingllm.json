@@ -1,0 +1,1051 @@
+{
+  "workspace": "devkiller-biblioteca",
+  "documents": [
+    {
+      "hash": "da779ec0ef46da396f4bfa2c62b0be7d29f48b8a44f5532807a6e3e92a48e73b",
+      "title": "DK01 — Arquivos e dependências permitidos no React do DevKiller",
+      "location": "custom-documents/raw-dk01-arquivos-e-dependencias-permitidos-no-react-do-devkiller-88c6bc3d-e07e-41cd-ac71-b9c6cd7be262.json",
+      "id": "DK01",
+      "stacks": [
+        "react-v1",
+        "react-v2"
+      ]
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "c38b7992051027cf277f9e60c02e2dc5bda1a7a44ef2a17237303e45d12e63bc",
+      "location": "custom-documents/raw-dk02-banco-local-api-carregamento-e-limites-3e908387-7168-4c8e-b2eb-c8be2c75cd20.json",
+      "title": "DK02 — Banco local: API, carregamento e limites",
+      "id": "DK02"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "ff508891e924bd5df360314f5981e086b4d7a9209f945f4bd3a91ae197ca55ee",
+      "location": "custom-documents/raw-dk03-persistencia-falha-de-salvamento-e-acoes-concorrentes-9047526b-b258-4eeb-a491-66ca1a101f65.json",
+      "title": "DK03 — Persistência: falha de salvamento e ações concorrentes",
+      "id": "DK03"
+    },
+    {
+      "hash": "47e600a39ce1529dcd296c95df169ea504a433aa22dbe0a9e9b07d34042710dc",
+      "title": "DK04 — Estado React: listas, filtros e totais consistentes",
+      "location": "custom-documents/raw-dk04-estado-react-listas-filtros-e-totais-consistentes-24dfd251-ae92-45d4-98f4-359ec83754ea.json",
+      "id": "DK04",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ]
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "cf777988b612b519f6137172f88ccb2a04e17d9a7287218f13ea6e7e3995c5b8",
+      "location": "custom-documents/raw-dk05-preview-confirmacao-rede-e-recursos-locais-1f2cab2a-735b-4f7b-86ce-1121c92bda7a.json",
+      "title": "DK05 — Preview: confirmação, rede e recursos locais",
+      "id": "DK05"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "aedf5c2622d65a7397b304ed1ddfd08bf1b371ce560132fbf5fba5d7773d3dd8",
+      "location": "custom-documents/raw-dk06-formularios-e-controles-com-acoes-verificaveis-66ed5b0b-d497-4e1e-9b24-371293af3def.json",
+      "title": "DK06 — Formulários e controles com ações verificáveis",
+      "id": "DK06"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "6f951b3e533a952e5995b477144651acf14b3e2829daede3a14fe6f17bc36187",
+      "location": "custom-documents/raw-dk07-layout-responsivo-e-graficos-somente-quando-necessarios-ddf99045-4cde-4674-ac6d-c23f2676a76c.json",
+      "title": "DK07 — Layout responsivo e gráficos somente quando necessários",
+      "id": "DK07"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "dee588d467d996e7a255ffcacffa5df1d1ad4a7fcfcb8f0a8e49b5d76305191e",
+      "location": "custom-documents/raw-dk08-valores-monetarios-e-datas-de-calendario-3ede56ea-bab6-41e9-80f4-a2f5fa67050e.json",
+      "title": "DK08 — Valores monetários e datas de calendário",
+      "id": "DK08"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "931e57db271cb345abd5292e85e1af41513576cc112a0b5a7a70f5f3ef6985ca",
+      "location": "custom-documents/raw-dk09-dsl-dos-testes-texto-exato-seletores-e-limites-bb9d7b72-baf7-439d-9edb-283721f9e7c6.json",
+      "title": "DK09 — DSL dos testes: texto exato, seletores e limites",
+      "id": "DK09"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "7d86ad17c44bafcd0ab1af6641e9abb186a8b3d0a59d0d75301573c493a24dea",
+      "location": "custom-documents/raw-dk10-cenarios-independentes-preparar-dados-dentro-do-proprio-teste-84c8718a-6cb1-4680-96fb-89c7001da9c4.json",
+      "title": "DK10 — Cenários independentes: preparar dados dentro do próprio teste",
+      "id": "DK10"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "6eeae3a183c7eb407718c45726209fc59ea9fe938131a1ce8a0ceeab8c96f7aa",
+      "location": "custom-documents/raw-dk11-caso-da-cafeteria-falso-positivo-nao-autoriza-reescrever-o-app-6f661780-24d2-40d6-a1cf-91e374d28f2e.json",
+      "title": "DK11 — Caso da cafeteria: falso positivo não autoriza reescrever o app",
+      "id": "DK11"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "199458e71a39fb8394c2330dcbcd56390ffe3439d5fb6d14f1685c722100c4e1",
+      "location": "custom-documents/raw-dk12-decisao-de-reparo-diferenciar-defeito-teste-e-ambiente-38349f2a-9926-4038-a23d-ba86210b32b7.json",
+      "title": "DK12 — Decisão de reparo: diferenciar defeito, teste e ambiente",
+      "id": "DK12"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "515b45fe3e159d744ac3efd1f20333a0139e2d32c3ab19719b2f46328abdeea3",
+      "location": "custom-documents/raw-p01-design-e-direcao-de-arte-262fe053-0f5b-4921-ab97-1195899022f8.json",
+      "title": "P01 — Design e direção de arte",
+      "id": "P01"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "d595e8d6a9bb9c539367926cc30cbbf88ebf01ea536a01718b1ec9b43e826051",
+      "location": "custom-documents/raw-p02-templates-e-estrutura-de-produto-dfcaaaaa-4cde-475e-865f-e1adcdd69f1e.json",
+      "title": "P02 — Templates e estrutura de produto",
+      "id": "P02"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "ad2cb4cd4feffd018a0710a49db5661b1566ed28f652216cd5518d2a690f804f",
+      "location": "custom-documents/raw-p03-seguranca-aplicada-876774b3-c79b-4a91-bc5d-1c1cb96a3309.json",
+      "title": "P03 — Segurança aplicada",
+      "id": "P03"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2"
+      ],
+      "hash": "a1682d4a67414f0dd5348d2ef8cddb343878a6f224d8f9e2293c9cc36ba98cc6",
+      "location": "custom-documents/raw-p04-tecnologias-e-arquitetura-46c252b3-efd8-425f-beec-ac56eb175bd6.json",
+      "title": "P04 — Tecnologias e arquitetura",
+      "id": "P04"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "4b4f97003b8bec53559aa725f221f3c13a4b0599f3691ef9c19bb5e6006decd9",
+      "location": "custom-documents/raw-p05-animacoes-e-microinteracoes-5d1bd31a-bff9-4f23-8479-5b24f63a0ac3.json",
+      "title": "P05 — Animações e microinterações",
+      "id": "P05"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "9ff0529267d312e5527d499b6a57649fadebbafb4c5f7cbd0244c86bb4bf510a",
+      "location": "custom-documents/raw-p06-videos-imagens-e-midia-2e93b4dc-d225-43f4-b552-f1c83191647f.json",
+      "title": "P06 — Vídeos, imagens e mídia",
+      "id": "P06"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "f8b36f3a1c7fcaf4cbddbb012c55114f8e39af4116d164375c2e7da94615fcb5",
+      "location": "custom-documents/raw-p07-gerenciamento-de-arquivos-17bc1304-1454-4c46-9ff1-a0a5027b2da5.json",
+      "title": "P07 — Gerenciamento de arquivos",
+      "id": "P07"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "db4921afcd20667a1d2dcf3e3ef6fffe86c3dc193ed5e9e70f28dc4ae1c217e0",
+      "location": "custom-documents/raw-p08-otimizacao-e-qualidade-de-experiencia-4352448a-256d-40b2-9424-9ac477f10121.json",
+      "title": "P08 — Otimização e qualidade de experiência",
+      "id": "P08"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "05ef8f15cc265120f314b2919eb65ec8b083373e3ecb75ef5d0a60b0be243269",
+      "location": "custom-documents/raw-p09-design-premium-e-iconografia-consistente-21fc0891-c516-4379-bee1-3c67ffe8a4f8.json",
+      "title": "P09 — Design premium e iconografia consistente",
+      "id": "P09"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "4f38f158305d49e7c22f64a93ad7a7244e64a28bb367f2b105331d6157c26685",
+      "location": "custom-documents/raw-t01-cafeteria-e-restaurante-60a07fdc-ba29-4887-a20c-135bf49d1d6f.json",
+      "title": "T01 — Cafeteria e restaurante",
+      "id": "T01"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "ce6ba2313afc610dcc3a3a7fa73d75aec274028d647cb0451435677101a0f66c",
+      "location": "custom-documents/raw-t02-landing-page-de-produto-61f7ed1d-200c-4ccf-a4dc-899188575260.json",
+      "title": "T02 — Landing page de produto",
+      "id": "T02"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "5b537c7dff4b7adf2102009c273c7cedb1f9c620c8598dfebe73d17d12f09917",
+      "location": "custom-documents/raw-t03-portfolio-e-estudio-criativo-e1499748-a5ed-4b97-bdf9-a5c2c055e7f4.json",
+      "title": "T03 — Portfólio e estúdio criativo",
+      "id": "T03"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "52c258b2aee459cc5491d2137d947a4860705e78f0f880dd17f7203d701f1eb7",
+      "location": "custom-documents/raw-t04-catalogo-e-loja-a55460ae-055c-4981-b76b-1f36dcf613b2.json",
+      "title": "T04 — Catálogo e loja",
+      "id": "T04"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "11021658175f8218f3313bd68189ebb052813f4cdd8d49f2aee7aa8e3ac4f4f6",
+      "location": "custom-documents/raw-t05-agenda-e-reservas-adaf0b13-eacd-45ca-ac09-2ff5736eb1d8.json",
+      "title": "T05 — Agenda e reservas",
+      "id": "T05"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "3fba5ce59af348db471503c297357246464e7c9383af4d5c7f63090b675269e6",
+      "location": "custom-documents/raw-t06-crm-e-pipeline-16616ed1-3609-4267-b267-a0c6f84a2071.json",
+      "title": "T06 — CRM e pipeline",
+      "id": "T06"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "785599dd88ebe9ec85491ea9defe2130c0445a6709abba878fbe0fb7ca4d9484",
+      "location": "custom-documents/raw-t07-estoque-e-movimentacoes-e4aceb5a-6a67-403d-9155-a5802927ecba.json",
+      "title": "T07 — Estoque e movimentações",
+      "id": "T07"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "4f61b7a8dfe8f093d42cf5ab96a190147feed6ff3f287ae76232a31838ad400d",
+      "location": "custom-documents/raw-t08-controle-de-despesas-28fd5d73-f7b0-473f-b48c-1f7baf3283de.json",
+      "title": "T08 — Controle de despesas",
+      "id": "T08"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "fa2aeadc9ad646b5f6f503195e41cf2c973c61035dfa4d7b4e1a76473d15b501",
+      "location": "custom-documents/raw-t09-kanban-e-tarefas-cb42a2ef-d885-4814-83ce-5c41694dff0b.json",
+      "title": "T09 — Kanban e tarefas",
+      "id": "T09"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "15581de286f4763928f76e30f0bcf88ad96a709e31ffc458ba6804c5477d474b",
+      "location": "custom-documents/raw-t10-cursos-e-aprendizagem-49c17ff0-ba45-4e83-a2fb-5c88e17a1d3b.json",
+      "title": "T10 — Cursos e aprendizagem",
+      "id": "T10"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "cdb0c3ee13e6e0468ed8da9325872e9a12df029c8300a09387df0702ec44db94",
+      "location": "custom-documents/raw-t11-biblioteca-e-gerenciador-de-arquivos-39d4078b-c761-4bf1-b80a-8d57595a23e5.json",
+      "title": "T11 — Biblioteca e gerenciador de arquivos",
+      "id": "T11"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "2a0fc14485ef87d6bc18ec569841aacbcf8110d4be98cd0466c18cdb90db9fe0",
+      "location": "custom-documents/raw-t12-revista-blog-e-base-de-conhecimento-e88ded19-9b44-461b-a519-198d91e3ffca.json",
+      "title": "T12 — Revista, blog e base de conhecimento",
+      "id": "T12"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "5a8ace5c740bf2696b38c593d311e0a6b153ecdbe382d0870f5109ad2faea572",
+      "location": "custom-documents/raw-u01-preferencias-do-usuario-design-premium-sem-emojis-76f09671-aa69-4350-9394-afaf3a676e17.json",
+      "title": "U01 — Preferências do usuário: design premium sem emojis",
+      "id": "U01"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2"
+      ],
+      "hash": "ef10686fe0028a24b716d77644919a9ace4169b2a4e2f5d0f026e89cabef5e08",
+      "location": "custom-documents/raw-c01-contrato-fixo-de-geracao-e-diagnostico-d0c151a5-4e68-4eee-9447-b6d439c91c18.json",
+      "title": "C01 — Contrato fixo de geração e diagnóstico",
+      "id": "C01"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "f57bd3bcccf501e594de7584502fd7fabff79ffa4781a374db83184a342c8ba4",
+      "location": "custom-documents/raw-u02-objetivos-decisoes-e-limites-acordados-com-o-usuario-8591b790-b140-466c-bc8c-f0daba3df1d1.json",
+      "title": "U02 — Objetivos, decisões e limites acordados com o usuário",
+      "id": "U02"
+    },
+    {
+      "hash": "bd4d18b769c4e9ca32b599bafe519b12a1b257598f7aa3fb005dcb75faa27310",
+      "title": "N01 — Preserving and Resetting State — React",
+      "location": "custom-documents/raw-n01-preserving-and-resetting-state-react-73554973-0d67-46ff-8648-fe26b8a86f3b.json",
+      "id": "N01",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ]
+    },
+    {
+      "hash": "40d83ba8f6a9a2908d890d96b8bd6594af77b1c446c2a8f859f930b768eb95e6",
+      "title": "N02 — Queueing a Series of State Updates — React",
+      "location": "custom-documents/raw-n02-queueing-a-series-of-state-updates-react-6cc7dddc-ca76-473c-9787-04fdaf9b76b3.json",
+      "id": "N02",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ]
+    },
+    {
+      "hash": "ddedd3ec0dc94ca9dddac69af3453a3035e8050e996695602f2aa56bb8315124",
+      "title": "N03 — useReducer — React",
+      "location": "custom-documents/raw-n03-usereducer-react-c85751dc-b247-41cb-9721-9f666c33fa8c.json",
+      "id": "N03",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ]
+    },
+    {
+      "hash": "3720a8064dc401bfaa891c82a8a7317f7eddd5564eac3eb0e877bc7303884999",
+      "title": "N04 — input — React",
+      "location": "custom-documents/raw-n04-input-react-7feee735-dc96-4957-9b3f-b212c9cc7aa6.json",
+      "id": "N04",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ]
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "6b7d9bd228215f27153c9cc445d9718cb8027189976fa37aa35fe696955a40df",
+      "location": "custom-documents/raw-n05-dialog-(modal)-pattern-w3c-wai-aria-apg-83a73c9a-fbc6-4324-937f-a97061f4d512.json",
+      "title": "N05 — Dialog (Modal) Pattern — W3C WAI-ARIA APG",
+      "id": "N05"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "5b23e1efd521d687f254681ae0beb804523a64dd855d0f92884919f98c02ee4a",
+      "location": "custom-documents/raw-n06-validating-input-w3c-wai-b45a831c-a708-4b3a-be34-345f8f4b4bde.json",
+      "title": "N06 — Validating Input — W3C WAI",
+      "id": "N06"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "f319bcaf1c3cddf5eeee9bc41970036f798af4b082fe07613358f3c69eb50dd6",
+      "location": "custom-documents/raw-n07-using-the-fetch-api-mdn-97f25137-87eb-4924-9e60-5b3f91fcd820.json",
+      "title": "N07 — Using the Fetch API — MDN",
+      "id": "N07"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "a53c105ccdcefc4a233b3f13119220d29f972abc2d281ab342824dc0756ab977",
+      "location": "custom-documents/raw-n08-best-practices-playwright-3cce306b-a589-4511-9d06-4636ff9b101e.json",
+      "title": "N08 — Best Practices — Playwright",
+      "id": "N08"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "b8dad258810cc2128877e93de9d01fd0b0b5582039c1819ec694aec04b82b9ee",
+      "location": "custom-documents/raw-n09-mock-apis-playwright-15e00cd3-9207-4926-a12c-32407829782c.json",
+      "title": "N09 — Mock APIs — Playwright",
+      "id": "N09"
+    },
+    {
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "hash": "32a8e85702e87a612b9cf2caad57f67147a26faa9e7ff534bc3fd5cbbfcb7caf",
+      "location": "custom-documents/raw-n10-trace-viewer-playwright-dfca8785-71da-4e6e-9e8c-87909e958e77.json",
+      "title": "N10 — Trace Viewer — Playwright",
+      "id": "N10"
+    },
+    {
+      "id": "D01",
+      "title": "D01 — Incomplete requests: editable event details / dados ausentes, a definir",
+      "hash": "90c297d870f4740a928c97cca9c203289f14e1e2fa2d88681e9d8839a6887319",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-d01-incomplete-requests-editable-event-details-dados-ausentes-a-definir-f68423c7-dea7-4cda-9fd6-8202c6d8c5ef.json",
+      "file": "design-v4/D01.md"
+    },
+    {
+      "id": "D02",
+      "title": "D02 — Premium themed filters, dropdowns and navigation / menus seletores cores",
+      "hash": "5ab7d778e6883987d44074bb2255bef2f252954679c2cb38b2c0edcb2e658b70",
+      "stacks": [
+        "react-v1",
+        "react-v2"
+      ],
+      "location": "custom-documents/raw-d02-premium-themed-filters-dropdowns-and-navigation-menus-seletores-cores-02263db7-c363-4eb6-bc60-2a0c51d5d028.json",
+      "file": "design-v4/D02.md"
+    },
+    {
+      "id": "D03",
+      "title": "D03 — Responsive cards: prevent text/button overlap / espaçamento rótulos longos",
+      "hash": "26899d805435fede4fb61c4db98011a1d223d8325fdee8b2dde5b619c23d4b2f",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-d03-responsive-cards-prevent-text-button-overlap-espacamento-rotulos-longos-a18747f9-a0f7-4d38-aa90-92619b3a927c.json",
+      "file": "design-v4/D03.md"
+    },
+    {
+      "id": "D04",
+      "title": "D04 — Expressive hero art with local SVG / ilustração vetorial profundidade",
+      "hash": "d869c77fb31f88fccc06deb2bc18f6fe4e4163415501fa4cf043c8652d7897f5",
+      "stacks": [
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-d04-expressive-hero-art-with-local-svg-ilustracao-vetorial-profundidade-a175d070-015c-4900-915b-64c02bef0069.json",
+      "file": "design-v4/D04.md"
+    },
+    {
+      "id": "D05",
+      "title": "D05 — Coherent SVG icons and accessible controls / ícones Lucide sem emojis",
+      "hash": "3156a4748046a62669adb43c46e568eb350d0f5a87893f74bab7173427b85ed5",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-d05-coherent-svg-icons-and-accessible-controls-icones-lucide-sem-emojis-263ff1d0-d849-4628-b497-609ff45813bd.json",
+      "file": "design-v4/D05.md"
+    },
+    {
+      "id": "D06",
+      "title": "D06 — Data charts with visual depth and honest meaning / gráficos Recharts SVG",
+      "hash": "f6d1089591ae2e2d40e2eade7d397de3f44700c4a4bd918d59a6aae41faae48b",
+      "stacks": [
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-d06-data-charts-with-visual-depth-and-honest-meaning-graficos-recharts-svg-eeb519af-881b-478d-8ff7-135e428ac0cc.json",
+      "file": "design-v4/D06.md"
+    },
+    {
+      "id": "D07",
+      "title": "D07 — Site para evento sem data, local ou descrição: preencher depois, A definir",
+      "hash": "4cb9d532deabd07a3b5f6dbd7be795572d32d0c60616bc95da46561404578c1b",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-d07-site-para-evento-sem-data-local-ou-descricao-preencher-depois-a-definir-786ff15b-5247-477d-9467-9effac2bf653.json",
+      "file": "design-v4/D07.md"
+    },
+    {
+      "id": "S01",
+      "title": "S01 — React Studio stack: Radix, Motion, routes / bibliotecas e aplicativos com várias telas",
+      "hash": "fdb29a7dd3305a2a71be051f9c7c50fa3af53c5ee6e3d74a914b87f826a12c95",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-s01-react-studio-stack-radix-motion-routes-bibliotecas-e-aplicativos-com-varias-telas-3c7be2c5-8d8b-4adb-9299-3e53cdb915ff.json",
+      "file": "studio-v1/S01.md"
+    },
+    {
+      "id": "S02",
+      "title": "S02 — Accessible polished dialogs, menus, selectors and tabs / Radix foco teclado cores",
+      "hash": "fe50157a9ff85b3349ab1d2d05906113d2f6576aafd805fc0a10cf0a81e9cf69",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-s02-accessible-polished-dialogs-menus-selectors-and-tabs-radix-foco-teclado-cores-6fae9e91-efd2-4f9b-b9ba-ab1f32b4ecf5.json",
+      "file": "studio-v1/S02.md"
+    },
+    {
+      "id": "S03",
+      "title": "S03 — Motion animation, SVG depth and interactive canvas / animações suaves sem quebrar zoom",
+      "hash": "901bd5018ef775391edcd697578efbfe6ac07eb4035558690de1819181a59476",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-s03-motion-animation-svg-depth-and-interactive-canvas-animacoes-suaves-sem-quebrar-zoom-10a24a4d-6ca6-423f-93e3-f3f601a90ab7.json",
+      "file": "studio-v1/S03.md"
+    },
+    {
+      "id": "S04",
+      "title": "S04 — Multi-screen apps with HashRouter / navegação rotas recarregar voltar",
+      "hash": "cda40c236e7670fe15bf5631bffc7ecd466a1da1efc14cb13a80db21b82dfcfc",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-s04-multi-screen-apps-with-hashrouter-navegacao-rotas-recarregar-voltar-2ee1d748-2fb7-491e-bd33-ad657b729cd8.json",
+      "file": "studio-v1/S04.md"
+    },
+    {
+      "id": "S05",
+      "title": "S05 — Prevent and diagnose errors / QA seletor texto completo persistência concorrência",
+      "hash": "15450c3b6c0c01a0cb6e0e3c287733a7b1688bffbf5518dfcbc1e724272b9019",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-s05-prevent-and-diagnose-errors-qa-seletor-texto-completo-persistencia-concorrencia-644d9bce-cb7e-4cbb-bde9-c1eb4e35673e.json",
+      "file": "studio-v1/S05.md"
+    },
+    {
+      "id": "S06",
+      "title": "S06 — Diverse premium graphics and app composition / identidade visual paletas ilustrações",
+      "hash": "a2c23321752dcae98104c848ac415bedba1e7f4ed329f447ef9d8a7aadd233be",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-s06-diverse-premium-graphics-and-app-composition-identidade-visual-paletas-ilustracoes-aa7f1a02-749c-439f-97e4-f524ac06f398.json",
+      "file": "studio-v1/S06.md"
+    },
+    {
+      "id": "S07",
+      "title": "S07 — Responsive app shell: no white bars / controles móveis faixas brancas display contents",
+      "hash": "ac6fc39914c53d570d3e43092549f8816b08c95f3724a646b3d480ad1fb417f7",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-s07-responsive-app-shell-no-white-bars-controles-moveis-faixas-brancas-display-contents-847e66fa-e0b1-44a4-a344-c1e94c6ff04b.json",
+      "file": "studio-v1/S07.md"
+    },
+    {
+      "id": "P10",
+      "title": "P10 — Professional website and application composition, photography and delivery",
+      "hash": "58f5708e811b3f06262c4bf6d8aa9c0a031215af4b58fbdd0aa6a870a35c5805",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-p10-professional-website-and-application-composition-photography-and-delivery-5bd0ae58-3273-43e3-bcea-9bb275a855ff.json",
+      "file": "professional-v1/P10.md"
+    },
+    {
+      "id": "Q01",
+      "title": "Q01 — React state architecture: consistent filters, totals and persistence",
+      "hash": "7f75e32e61932bc4b3b7e6ea5700fbd131b5a4ede0905f5acc1cf2a8ce139e65",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-q01-react-state-architecture-consistent-filters-totals-and-persistence-36821bdb-43bd-49a0-8b1a-7ca14a42c837.json",
+      "file": "curated-v1/Q01.md"
+    },
+    {
+      "id": "Q02",
+      "title": "Q02 — Accessible Radix dialog and mobile navigation with complete CSS",
+      "hash": "9ee9ba1d36acf43dbb2fa30dc0da6bcd6368da2af3c3e36fb05d7e8aba0911c9",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-q02-accessible-radix-dialog-and-mobile-navigation-with-complete-css-0adbb6c3-5be1-451b-8e7f-51dd07379d66.json",
+      "file": "curated-v1/Q02.md"
+    },
+    {
+      "id": "Q03",
+      "title": "Q03 — Recharts analytics: responsive charts with real data and empty states",
+      "hash": "ab4bab2123758f01e654a593efcd62e51ed0801f07493d2d533e194271b0a20e",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-q03-recharts-analytics-responsive-charts-with-real-data-and-empty-states-bbc3881c-c0eb-4039-be52-8e7097715e51.json",
+      "file": "curated-v1/Q03.md"
+    },
+    {
+      "id": "Q04",
+      "title": "Q04 — Motion: purposeful animation and reduced-motion alternatives",
+      "hash": "22c1d347aa53b90ae47864aab49113c3d6c4801165faf674792c8c1654478def",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-q04-motion-purposeful-animation-and-reduced-motion-alternatives-d1e5f10b-f78f-4e87-a3bb-f352b0935c87.json",
+      "file": "curated-v1/Q04.md"
+    },
+    {
+      "id": "Q05",
+      "title": "Q05 — Lucide icons, SVG and photography have different roles",
+      "hash": "2cdb55102d450a1f89094a2c7df01a059441fe706377f8f229c848c5e9d4529c",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-q05-lucide-icons-svg-and-photography-have-different-roles-a59bd393-7e0a-4859-af1b-965907fceffa.json",
+      "file": "curated-v1/Q05.md"
+    },
+    {
+      "id": "Q06",
+      "title": "Q06 — React Router navigation, route reload and responsive workspace",
+      "hash": "3c1f19cd3a08339bc027e306c3d2be0ec824c38c41b68c129b9c364de49fd8e2",
+      "stacks": [
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-q06-react-router-navigation-route-reload-and-responsive-workspace-e7d17f02-5393-4edb-abcd-c5dacc7eccbe.json",
+      "file": "curated-v1/Q06.md"
+    },
+    {
+      "id": "Q07",
+      "title": "Q07 — Playwright regression evidence: test errors are not app defects",
+      "hash": "3c2e3edbb15e5cd45006c1f1b6426b8d86de5277cce6b88b9caec75cead514e4",
+      "stacks": [
+        "static-v1",
+        "react-v1",
+        "react-v2",
+        "react-v3",
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-q07-playwright-regression-evidence-test-errors-are-not-app-defects-0e1fc2b8-187c-44a6-b62a-fc274be94895.json",
+      "file": "curated-v1/Q07.md"
+    },
+    {
+      "id": "Q08",
+      "title": "Q08 — shadcn registry blocks: complete components and stack compatibility",
+      "hash": "a7e4d6662856b3186c5b11280cae547debe9812b6d858b46ada419a9ad0ae102",
+      "stacks": [
+        "react-v3"
+      ],
+      "location": "custom-documents/raw-q08-shadcn-registry-blocks-complete-components-and-stack-compatibility-fca31c61-ac5c-4c78-a81e-6d09857304d2.json",
+      "file": "curated-v1/Q08.md"
+    },
+    {
+      "id": "R01",
+      "title": "React Pro forms validation with React Hook Form and Zod",
+      "hash": "040195d12508063a09bbdab8db60853fdec2767c358fcc0d8a2b48e638d2a063",
+      "stacks": [
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-react-pro-forms-validation-with-react-hook-form-and-zod-2f563b06-0e01-46bf-997b-43b454afc22a.json",
+      "file": "pro-v1/R01.md"
+    },
+    {
+      "id": "R02",
+      "title": "React Pro Tailwind accessible local UI components and visual composition",
+      "hash": "640d4c61a434abb5ea66dfa6ff2bf4a1b8765dd385f8002cef18837abb0664a5",
+      "stacks": [
+        "react-v4"
+      ],
+      "location": "custom-documents/raw-react-pro-tailwind-accessible-local-ui-components-and-visual-composition-f5bc62f4-d34b-43c4-9dc8-d0be84040055.json",
+      "file": "pro-v1/R02.md"
+    },
+    {
+      "id": "E01",
+      "title": "Official shadcn components, real 3D and complex data interfaces",
+      "hash": "5c0cbc684110948f40a195f8a2553069cd0956b698a26551874a38c7507cfe96",
+      "stacks": [
+        "react-v5",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-official-shadcn-components-real-3d-and-complex-data-interfaces-00cb781c-c619-45f2-a229-0f7797989ee9.json",
+      "file": "expansion-v1/E01.md"
+    },
+    {
+      "id": "E02",
+      "title": "PostgreSQL backend migrations, transaction integrity and isolation",
+      "hash": "c94a533330b394cd642d8ec7f706aa3805e712065ff1691dea00e99e9d07da30",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-postgresql-backend-migrations-transaction-integrity-and-isolation-1b6006b5-be42-4971-9d33-6ee898d80d6a.json",
+      "file": "expansion-v1/E02.md"
+    },
+    {
+      "id": "E03",
+      "title": "Vue and Angular native application modules",
+      "hash": "c5dfa42495911a15d3e8a4cf73079ff93becf4419bd217cc712de3601844a2f1",
+      "stacks": [
+        "vue-v1",
+        "angular-v1"
+      ],
+      "location": "custom-documents/raw-vue-and-angular-native-application-modules-3a209259-1e98-4e9b-b8be-47dda0d2d93c.json",
+      "file": "expansion-v1/E03.md"
+    },
+    {
+      "id": "E04",
+      "title": "Next App Router export and server boundaries",
+      "hash": "6c672819f01151bf0d8c456b839f1f320e9f28ed31e0e79d3e44ce1c0149e114",
+      "stacks": [
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-next-app-router-export-and-server-boundaries-54587d7c-f55a-41cb-bbac-635efe35e700.json",
+      "file": "expansion-v1/E04.md"
+    },
+    {
+      "id": "M01",
+      "title": "Motion visual design: React shared-layout collections and accessible expansion",
+      "hash": "3eb533090c93cc0cb47a0a1498e945615c90aaf84b3cf6915e4d7a3996265fe2",
+      "stacks": [
+        "react-v5",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-motion-visual-design-react-shared-layout-collections-and-accessible-expansion-f77a0d42-e88d-4a5c-8811-d14ca83740f2.json",
+      "file": "motion-v1/M01.md"
+    },
+    {
+      "id": "M02",
+      "title": "Anime.js v4 motion components: SVG timelines, lifecycle and validation",
+      "hash": "f6bb4319d10f85275745816ea831542ff35ec931db823f8c04c56b4d6ef9a1f1",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-anime-js-v4-motion-components-svg-timelines-lifecycle-and-validation-c448f791-7ca1-4270-a6e7-ad6f3a3f98fd.json",
+      "file": "motion-v1/M02.md"
+    },
+    {
+      "id": "M03",
+      "title": "Three.js visual components: spatial art direction, lifecycle and performance validation",
+      "hash": "e100c3fbf26a305a226dd10d12e8fc833d09937b80dbc93cd4074752f9a461f4",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-three-js-visual-components-spatial-art-direction-lifecycle-and-performance-validation-38ec0ad9-34eb-46a6-93c4-bcedb7feac7a.json",
+      "file": "motion-v1/M03.md"
+    },
+    {
+      "id": "M04",
+      "title": "GSAP animation architecture and builder license boundary",
+      "hash": "3c2b58d100bddc3a714fef5241ab1156c20dd9b066db46c1fc5b3898c0b11529",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-gsap-animation-architecture-and-builder-license-boundary-5b4a24a7-5993-416d-bfe8-cbdb5396524a.json",
+      "file": "motion-v1/M04.md"
+    },
+    {
+      "id": "M05",
+      "title": "Motion for React: interaction, scroll choreography and reduced motion",
+      "hash": "d0316c2c7a44dbcb9fe79feb68092f1a5561e0e33aa5f5a6d511bf32e5e686c8",
+      "stacks": [
+        "react-v5",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-motion-for-react-interaction-scroll-choreography-and-reduced-motion-c792a761-3cfc-4436-8203-21bdfc9fbf41.json",
+      "file": "motion-v1/M05.md"
+    },
+    {
+      "id": "M06",
+      "title": "Three.js and React Three Fiber: premium scene and glass recipe",
+      "hash": "3c7e7ed63eecadab821c41bad45618415b53b6e2e2cfabb948bc137eecd00753",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-three-js-and-react-three-fiber-premium-scene-and-glass-recipe-f7bd5aa3-8b06-4867-bc7d-4f4598d9ab05.json",
+      "file": "motion-v1/M06.md"
+    },
+    {
+      "id": "M07",
+      "title": "GSAP: timeline choreography, lifecycle and eligibility boundary",
+      "hash": "d20ad333d8f183ea0513210dbfca8f84107073b9a6a5664848f95fd9dd069b3e",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-gsap-timeline-choreography-lifecycle-and-eligibility-boundary-cc20eb69-f8aa-4238-bef5-e7dd9594d06f.json",
+      "file": "motion-v1/M07.md"
+    },
+    {
+      "id": "M08",
+      "title": "Product-specific art direction for generated apps and sites",
+      "hash": "2347e9d57919c93dffc629711773cef50d8bf34863067d691ea83b9fe3022d54",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-product-specific-art-direction-for-generated-apps-and-sites-1bc1846b-694d-49b1-a7e7-4ced448c69ea.json",
+      "file": "motion-v1/M08.md"
+    },
+    {
+      "id": "M09",
+      "title": "Visual QA for motion, Three.js and material effects",
+      "hash": "88d1edb241dc6dc4e0c0c380f23b3ec57eb843522e781919f020e344ece1f046",
+      "stacks": [
+        "react-v5",
+        "vue-v1",
+        "angular-v1",
+        "next-v1"
+      ],
+      "location": "custom-documents/raw-visual-qa-for-motion-three-js-and-material-effects-07d90926-4c4f-447b-b57a-d8cff073cfa1.json",
+      "file": "motion-v1/M09.md"
+    }
+  ]
+}

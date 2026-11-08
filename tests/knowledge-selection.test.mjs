@@ -1,0 +1,21 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {KnowledgeStore,contextPayload} from '../modules/knowledge.mjs';
+import {tokenCount} from '../modules/knowledge-embeddings.mjs';
+test('long design brief cannot crowd out persistence, business rules and stack guidance',async t=>{
+  const dir=await fs.mkdtemp(path.join(os.tmpdir(),'dk-needs-test-')),k=new KnowledgeStore(dir);
+  await k.initialize();t.after(async()=>{k.close();await fs.rm(dir,{recursive:true,force:true});});
+  const prompt=await fs.readFile(new URL('../validation/trailroom-professional-prompt.txt',import.meta.url),'utf8');
+  const c=await k.retrieve({query:prompt,stack:'react-v3',mode:'lexical'});
+  for(const need of ['data','rules','technology','design'])assert.ok(c.coverage.find(x=>x.need===need)?.references.length,need);
+  assert.ok(c.chunks.some(d=>d.id==='react-persistence'));
+  assert.ok(c.chunks.some(d=>d.id==='studio-v1-s01'));
+  assert.ok(c.chunks.some(d=>d.id==='professional-product-delivery'));
+  assert.ok(c.chunks.length<=6&&tokenCount(contextPayload(c))<=4000);
+  k.setSource('react-persistence',false);
+  const disabled=await k.retrieve({query:prompt,stack:'react-v3',mode:'lexical'});
+  assert.ok(!disabled.chunks.some(d=>d.id==='react-persistence'));
+});

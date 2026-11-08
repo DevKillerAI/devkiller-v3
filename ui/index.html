@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en-US">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>DevKiller Engine</title><link rel="icon" href="/assets/dk-icon.png"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/generation.css"><link rel="stylesheet" href="/projects.css"><link rel="stylesheet" href="/engine.css"><script type="module" src="/app.js"></script><script type="module" src="/engine.js"></script><link rel="stylesheet" href="/knowledge.css"></head>
+<body>
+  <aside class="sidebar">
+ <a class="brand" href="/#under-the-hood" aria-label="DevKiller Engine home"><img src="/assets/dk-mark.png" alt=""><span>DevKiller<small>ENGINE</small></span></a>
+ <div class="workspace-label">ENGINE CONTROL ROOM</div>
+ <nav aria-label="Main navigation"><a class="nav-item" href="#under-the-hood" data-nav="hood"><span>◉</span> Under the hood <i class="nav-dot"></i></a><a class="nav-item" href="#generator" data-nav="generator"><span>✧</span> Generate app</a><a class="nav-item" href="#projects" data-nav="projects"><span>▦</span> App library</a><a class="nav-item" href="/settings"><span>⚙</span> Connections</a></nav>
+ <div class="sidebar-note"><span class="tiny-label">BUILT TO CREATE</span><p>Our engine.<br>Our workshop.<br><strong>What comes next.</strong></p><div class="mini-track"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small>Watch every step.<br>Stay in control.</small></div>
+ <div class="sidebar-bottom"><span class="local-dot"></span> Running on this PC<small>DevKiller Engine · v0.14.0</small></div>
+ </aside>
+  <main>
+    <header class="topbar"><span class="breadcrumb">DEVKILLER ENGINE <span class="slash">/</span> <strong id="view-title">CREATE</strong></span><div class="topbar-right"><span class="connection-pill"><i class="live-dot"></i> <span id="panel-connection">Connecting</span></span><span class="edition">V0.14 <span>LOCAL</span></span></div></header><section id="hood-view" hidden aria-label="Under the hood">
+ <section class="hood-heading"><div><div class="eyebrow"><span class="live-dot"></span> ENGINE DIAGNOSTICS <span>/ LOCAL</span></div><h1>Under the <em>hood.</em></h1><p>Look inside the machine.<br>Live health, resources and capabilities of our Engine.</p></div><button id="scan-engine" class="secondary scan-button"><span>↻</span> Refresh readings</button></section>
+ <div id="engine-alert" class="engine-alert" role="status" hidden></div>
+ <div class="metric-strip">
+  <article><span class="metric-icon">◉</span><div><span class="tiny-label">ENGINE STATUS</span><strong id="engine-health">Checking</strong><small id="engine-health-detail">Connecting to local systems</small></div></article>
+  <article><span class="metric-icon">▦</span><div><span class="tiny-label">SAVED APPS</span><strong id="engine-projects">—</strong><small id="engine-versions">Reading local storage</small></div></article>
+  <article><span class="metric-icon">ϟ</span><div><span class="tiny-label">RECORDED USAGE</span><strong id="engine-tokens">—</strong><small id="engine-usage-note">Tokens reported by the API</small></div></article>
+  <article><span class="metric-icon">◷</span><div><span class="tiny-label">CURRENT SESSION</span><strong id="engine-uptime">—</strong><small id="engine-session">Time since the Engine started</small></div></article>
+ </div>
+ <div class="hood-grid">
+  <section class="engine-panel map-panel"><div class="panel-heading"><div><span class="tiny-label">01 / SYSTEMS</span><h2>The heart of the operation</h2></div><span id="engine-live" class="live-badge">Connecting</span></div>
+   <div class="motor-map" aria-label="Four systems connected to DevKiller Engine">
+    <svg class="motor-wires" viewBox="0 0 600 320" preserveAspectRatio="none" aria-hidden="true"><path d="M115 80 H210 L300 160 L390 80 H490 M115 240 H210 L300 160 L390 240 H490"/><path class="wire-signal" d="M115 80 H210 L300 160 L390 240 H490"/></svg>
+    <div class="motor-core"><div class="core-orbit"></div><div class="core-inner"><img src="/assets/dk-mark.png" alt="DevKiller"><span>ENGINE</span></div><span class="core-caption">LOCAL INTELLIGENCE</span></div>
+    <div class="motor-node node-provider"><span class="node-symbol">✧</span><b>Intelligence</b><small>OpenAI</small><span id="node-provider" class="node-state">Checking</span></div>
+    <div class="motor-node node-compiler"><span class="node-symbol">⌘</span><b>Build</b><small>Multi-framework</small><span id="node-compiler" class="node-state">Checking</span></div>
+    <div class="motor-node node-storage"><span class="node-symbol">▤</span><b>Memory</b><small>Projects + data</small><span id="node-storage" class="node-state">Checking</span></div>
+    <div class="motor-node node-runtime"><span class="node-symbol">▷</span><b>Runtime</b><small>Isolated Docker</small><span id="node-runtime" class="node-state">Checking</span></div>
+   </div><div class="map-footer"><span><i class="live-dot"></i><span id="engine-stage">Waiting for readings</span></span><span id="engine-sampled">—</span></div>
+  </section>
+  <section class="engine-panel instruments"><div class="panel-heading"><div><span class="tiny-label">02 / TELEMETRY</span><h2>Computer resources</h2></div><span class="instrument-symbol">⌁</span></div><p class="panel-caption">Live readings from this PC, including other running programs.</p>
+   <div class="dial-grid"><div class="dial-card"><div class="dial"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="dial-track" cx="60" cy="60" r="49" pathLength="100"/><circle id="cpu-ring" class="dial-value" cx="60" cy="60" r="49" pathLength="100" stroke-dasharray="0 100"/></svg><div><strong id="cpu-value">—</strong><span>CPU</span></div></div><small id="cpu-caption">First sample</small></div><div class="dial-card"><div class="dial memory"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="dial-track" cx="60" cy="60" r="49" pathLength="100"/><circle id="memory-ring" class="dial-value" cx="60" cy="60" r="49" pathLength="100" stroke-dasharray="0 100"/></svg><div><strong id="memory-value">—</strong><span>MEMORY</span></div></div><small id="memory-caption">Reading memory</small></div></div>
+   <div class="telemetry-history"><div><span>CPU · readings from this page</span><strong id="cpu-latest">—</strong></div><svg id="cpu-history" viewBox="0 0 300 45" preserveAspectRatio="none" aria-label="Recent CPU usage" role="img"><path class="history-grid" d="M0 11 H300 M0 23 H300 M0 35 H300"/><polyline id="cpu-line" points=""/></svg><small id="history-caption">Waiting for more samples</small></div>
+   <div class="telemetry-footer"><span>Engine memory <b id="process-memory">—</b></span><span>Free disk space <b id="disk-free">—</b></span></div>
+  </section>
+ </div>
+ <div class="hood-bottom-grid">
+  <section class="engine-panel capabilities"><div class="panel-heading"><div><span class="tiny-label">03 / CAPABILITIES</span><h2>What this engine delivers</h2></div><span class="edition-badge">LOCAL EDITION</span></div>
+   <div class="capability-pills"><span>React & shadcn</span><span>Vue</span><span>Angular</span><span>Next.js export</span><span>Three.js / WebGL</span><span>Motion & Anime.js</span><span>Data charts</span><span>Generated APIs</span><span>PostgreSQL per app</span></div>
+   <div class="capacity-rows"><div><span>Output per request<small>Budget for the AI response, including reasoning</small></span><b id="limit-output">—</b></div><div><span>Generation time<small>Stops when the limit is reached</small></span><b id="limit-time">—</b></div><div><span>Controlled repairs<small>No automatic retries</small></span><b id="limit-calls">—</b></div><div><span>SQLite adapter<small>Legacy data limit · PostgreSQL also available</small></span><b id="limit-data">—</b></div></div>
+   <details class="capacity-details"><summary>View runtime and build limits</summary><div id="technical-capacity"></div></details>
+   <div class="next-boundary"><span>NEXT FRONTIER</span><p>Generated Fastify backends and PostgreSQL are available. Public hosting, authentication, external credentials and production operations need separate configuration.</p></div>
+  </section>
+  <section class="engine-panel inspection"><div class="panel-heading"><div><span class="tiny-label">04 / INSPECTION</span><h2>Engine checklist</h2></div><span id="inspection-count">— / 4</span></div><div id="engine-checks" class="engine-checks"><p>Checking systems…</p></div><p class="inspection-note">This inspection checks infrastructure. Each app has its own diagnostics.</p><a href="#generator" class="primary hood-create">Create an app <span>↗</span></a></section>
+ </div>
+ <section class="engine-panel rag-instruments" aria-labelledby="hood-rag-title">
+  <div class="panel-heading"><div><span class="tiny-label">05 / KNOWLEDGE</span><h2 id="hood-rag-title">The context behind creation</h2></div><span id="hood-rag-badge" class="live-badge">READING RAG</span></div>
+  <p id="hood-rag-summary" class="panel-caption" role="status">Reading knowledge settings and saved generation queries…</p>
+  <div class="rag-metrics">
+   <div><span class="tiny-label">ELIGIBLE SOURCES</span><strong id="hood-rag-sources">—</strong><small id="hood-rag-library">Current catalog</small></div>
+   <div><span class="tiny-label">SAVED LOOKUPS</span><strong id="hood-rag-queries">—</strong><small>Generation contexts on this PC</small></div>
+   <div><span class="tiny-label">RETURNED REFERENCES</span><strong id="hood-rag-references">—</strong><small>Total across saved lookups</small></div>
+   <div><span class="tiny-label">MEAN LOOKUP TIME</span><strong id="hood-rag-latency">—</strong><small>Includes connection checks</small></div>
+  </div>
+  <div class="rag-detail-grid">
+   <div class="rag-quality"><span class="tiny-label">QUALITY / EVIDENCE</span><h3>App improvement not yet established</h3><p>Saved references show what retrieval returned. A completed generation does not prove the app is correct or that RAG improved it. Comparative app tests are still needed.</p><div class="rag-flow" aria-label="Retrieval flow"><span>Request</span><span aria-hidden="true">→</span><span>Library</span><span aria-hidden="true">→</span><span>Saved context</span><span aria-hidden="true">→</span><span>Model</span></div></div>
+   <div class="rag-current"><span class="tiny-label">LATEST SAVED LOOKUP</span><h3 id="hood-rag-latest-title">No reading yet</h3><p id="hood-rag-latest-detail">The original request, selected sources and context size will appear here.</p><div id="hood-rag-latest-sources" class="rag-source-tags"></div></div>
+  </div>
+  <details class="capacity-details rag-history"><summary>Inspect recent generation queries</summary><div id="hood-rag-history"></div></details>
+  <div class="rag-footer"><p id="hood-rag-limits">Reading retrieval limits…</p><a href="#generator" class="text-button">Manage knowledge ↗</a></div>
+  <p class="inspection-note">Counts cover saved generation lookups only, including older retrieval modes. Repairs, search previews and attempts without a saved context are not counted. Similarity scores are not quality grades. Reading this panel makes no AI call.</p>
+ </section>
+ <section class="engine-panel engine-history"><div class="panel-heading"><div><span class="tiny-label">06 / HISTORY</span><h2>Recent engine activity</h2></div><a href="#projects" class="text-button">View app library ↗</a></div><div id="engine-jobs"><p>Reading saved attempts…</p></div></section>
+ <div class="hood-footnote"><span>● Local data · no AI call for these readings</span><span>Sensors every 5 s · infrastructure every 30 s</span></div>
+ </section><div id="generator-view">
+    <section class="heading"><div><div class="eyebrow">CREATE STUDIO / 01</div><h1>Your application.<br><span>From idea to working code.</span></h1><p>Describe an idea. Follow its creation. Open and use the result.</p></div><div class="studio-emblem"><img src="/assets/dk-mark.png" alt=""><span>FROM IDEA TO REALITY</span></div></section>
+    <div id="notice" role="alert" hidden></div>
+
+    <section class="card generator-panel" aria-label="Generate an app with OpenAI"><div class="generator-connection-status"><span id="backend-key-status">Checking connection…</span><a href="/settings">Manage connection ↗</a></div>
+      <div class="generation-input">
+        <div class="studio-step"><span>01</span><div><h2>Describe your idea</h2><p>What should the app do, and who will use it?</p></div></div><p class="generation-scope">Includes official shadcn components, Three.js, Motion, Anime.js, charts and optional Fastify/PostgreSQL. Explicit Vue, Angular and Next.js requests use their dedicated profiles. The AI receives guidance for visual design, responsive layouts and complete functionality. Libraries are pinned and available locally.</p>
+        <label for="app-prompt">What are we building today?</label>
+        <textarea id="app-prompt" rows="5" maxlength="8000" placeholder="Example: Build an expense tracker with a description, amount, category, monthly total and a delete button for each expense."></textarea>
+        <label class="knowledge-note"><input type="checkbox" id="professional-delivery" checked> Plan and build in saved modules (React). Completed modules are preserved; at most two continuations of incomplete stages.</label>
+        <label class="knowledge-note"><input type="checkbox" id="editorial-image"> Create one AI editorial image for this app (optional · one additional image API call; never a real product photo).</label>
+        <div class="generate-row"><span><b id="generation-model">GPT-5.6 Luna</b> · up to 1 plan + 3 code stages + up to 2 partial continuations + 1 review<br><small>No Engine output-token ceiling; provider limits apply · 90 s planning + up to 300 s per code stage + 60 s review · billed to your API account</small></span><button id="generate" class="primary" disabled>✦ Generate app</button></div>
+        <p class="generation-scope">New apps use the current React profile with a local database. Each request creates a saved project. Automatic stack selection is planned for a later stage.</p>
+      </div>
+      <div id="generation-progress" hidden>
+        <div class="progress-heading"><strong id="generation-status" role="status"></strong><button id="cancel-generation" class="secondary">Cancel generation</button></div>
+        <ol class="generation-steps"><li data-stage="environment">1. Environment</li><li data-stage="generating">2. Writing code</li><li data-stage="building">3. Building app</li><li data-stage="completed">4. Preview ready</li></ol>
+        <p id="generation-metrics"></p><p id="generation-result"></p><p id="generation-error" role="alert" hidden></p><ul id="generation-limitations"></ul><details id="visual-review-panel" hidden><summary>Design review · desktop and mobile</summary><p id="visual-review-status"></p><ul id="visual-review-findings"></ul></details><details id="request-details" hidden><summary>Request sent</summary><p id="original-prompt"></p></details>
+      </div>
+    </section>
+    <section id="knowledge" class="card knowledge-panel" aria-label="DevKiller Knowledge">
+      <div class="card-heading"><h2>DevKiller Knowledge</h2><span>RAG · CONTEXTO ANTES DA GERAÇÃO</span></div>
+      <p>Relevant programming recipes for your request, selected before generation. Switch it off to compare with the original behavior.</p>
+      <p id="knowledge-status" role="status">Reading the knowledge catalog…</p>
+      <div class="knowledge-settings"><label for="knowledge-mode">Knowledge mode<select id="knowledge-mode"><option value="off">Off · original generation</option><option value="anythingllm">AnythingLLM · Biblioteca DevKiller</option><option value="lexical">Text retrieval · no embedding calls</option><option value="hybrid">Hybrid · text + semantic retrieval</option></select></label><button id="knowledge-save" class="secondary">Save knowledge mode</button><button id="knowledge-build" class="secondary">Build semantic index</button><button id="knowledge-cancel" class="secondary" hidden>Cancel indexing</button></div>
+      <p id="knowledge-index"></p><p id="knowledge-cost" class="knowledge-note"></p><p class="knowledge-note">AnythingLLM: mantenha o aplicativo aberto. O gerador consulta a Biblioteca e salva os trechos usados em cada execução. Off permite comparar sem RAG. O modo Hybrid antigo usa embeddings OpenAI; não há novas tentativas automáticas.</p>
+      <p id="knowledge-message" role="status" hidden></p><p id="knowledge-last"></p><button id="knowledge-used" class="text-button" hidden>Inspect saved generation context</button>
+      <details><summary>Sources and retrieval preview</summary><p>Curated recipes only. Generated code is never automatically promoted into this catalog. Disabling a source excludes it from new retrievals.</p><div id="knowledge-sources"></div>
+      <label for="knowledge-stack">Preview stack</label><select id="knowledge-stack"><option value="react-v5">React Complete · shadcn, Three.js, backend</option><option value="vue-v1">Vue</option><option value="angular-v1">Angular</option><option value="next-v1">Next.js App Router export</option><option value="react-v4">React Pro · forms, validation and Tailwind</option><option value="react-v3">React Studio · controls, motion and routing</option><option value="react-v2">React + icons and charts</option><option value="react-v1">Basic React</option><option value="static-v1">HTML, CSS and JavaScript</option></select><label for="knowledge-query">Try a knowledge query</label><textarea id="knowledge-query" rows="3" maxlength="8000" placeholder="How do I prevent saved data from being overwritten while the app loads?"></textarea><button id="knowledge-search" class="secondary">Preview retrieval</button><p class="knowledge-note">Preview uses the selected mode. Hybrid may make one embedding call. It does not generate an app.</p></details><div id="knowledge-results" aria-live="polite"></div>
+    </section>
+    <section class="card projects-panel" aria-label="Execution control"><div class="card-heading"><h2>Execution control</h2><button id="refresh-executions" class="text-button">Refresh executions</button></div><p id="execution-current" role="status"></p><p id="acceptance-coverage"></p><p>One AI call per generation. Saved responses can continue without generating again. Uncertain calls are never retried automatically. Repairs remain a separate, manually requested action.</p><p id="execution-read-error" role="alert" hidden>Could not refresh execution history. The last reading may be outdated.</p><details><summary>Saved executions and recovery</summary><div id="saved-executions"></div></details></section>
+    <section id="build-progress" class="card projects-panel" hidden><h2>App preparation</h2><p id="build-message" role="status"></p><p id="build-details"></p><p>Source files are saved before the build. A failed build keeps the previous preview available.</p></section>
+    <details id="live-code-panel" class="card projects-panel" hidden><summary>Watch code arriving from the AI</summary><p>Latest response excerpt, limited to 20,000 characters. It is provisional during generation. Complete files are available under “Details and versions → View files”.</p><pre id="live-code"></pre></details>
+    <section id="files-panel" class="card projects-panel" hidden><div class="card-heading"><h2>Project files</h2><button id="close-files" class="text-button">Close files</button></div><p id="source-folder"></p><p>Real files saved on this PC. This is a read-only view; external changes must be imported as a new version.</p><select id="source-file" aria-label="File to view"></select><button id="download-source" class="secondary">Download file</button><pre id="source-code"></pre></section>
+    <section class="workbench">
+      <div class="control-column">
+        <section class="card source-card"><div class="card-heading"><h2><span class="step">1</span> Test or import</h2><span class="file-type">HTML · CSS · JS</span></div>
+          <div class="example-icon">☑</div><h3 id="source-title">Task list</h3><p id="source-description">A sample app to test the basics: add, complete and delete tasks.</p>
+          <div class="file-summary" id="file-summary">Loading files…</div>
+          <div class="source-buttons"><button id="example" class="secondary">Use example</button><label class="secondary file-label">Import files<input type="file" id="files" multiple accept=".html,.css,.js,.jsx,.ts,.tsx,.vue,.mjs,.sql,.json,.txt,.svg" aria-label="Import files"></label><label class="secondary file-label">Import folder<input type="file" id="folder" webkitdirectory multiple aria-label="Import project folder"></label></div>
+          <p class="helper">HTML: include index.html. React: include src/App.jsx and src/styles.css. Up to 80 files and 2 MB; dependencies are managed by the Engine.</p>
+          <button id="start" class="primary">▶ Start app</button>
+          <div class="execution-controls"><button id="restart" class="secondary" disabled>↻ Restart</button><button id="stop" class="secondary" disabled>■ Stop</button></div>
+        </section>
+        <section class="card limits"><h2><span class="step">↳</span> Runtime limits</h2><dl><div><dt>Memory</dt><dd>128 MB</dd></div><div><dt>Processing</dt><dd>0.5 CPU</dd></div><div><dt>Time per version</dt><dd>30 min</dd></div><div><dt>Attempts per action</dt><dd>1</dd></div></dl><p>No automatic retries. You decide when to try again.</p></section>
+      </div>
+      <div class="preview-column">
+        <section class="card preview-card"><div class="preview-toolbar"><div class="preview-title"><h2><span class="step">2</span> Preview</h2><span id="status" class="status" role="status">Stopped</span></div><div class="preview-actions"><button id="reload" class="icon-button" aria-label="Reload preview" disabled>↻</button><a id="open" class="external disabled" target="_blank" rel="noopener noreferrer" aria-disabled="true">Open in new tab ↗</a></div></div>
+          <div class="address-bar"><div class="traffic"><i></i><i></i><i></i></div><span id="address">Your app will appear here</span><span id="version">—</span></div>
+          <div class="preview-stage"><div id="empty-preview"><div class="empty-symbol"><img src="/assets/dk-mark.png" alt=""></div><h3>A space for your next idea.</h3><p>Describe your idea above or open the example.<br>Your app comes to life here.</p><span>FILES → CONTAINER → PREVIEW</span></div><iframe id="preview" title="App preview" sandbox="allow-scripts allow-same-origin allow-forms" hidden></iframe></div>
+          <div class="preview-footer"><span id="preview-caption">Waiting for the first run</span><span id="remaining">ISOLATED WITH DOCKER</span></div>
+        </section>
+        <section class="card auto-diagnostic"><div class="card-heading"><h2>Automatic diagnostics</h2><button id="verify-app" class="secondary" disabled>Check app</button></div><p id="quality-summary" role="status">Start an app to see its diagnostics.</p><div class="repair-actions"><button id="repair-app" class="primary" disabled>Try a repair</button><span>One OpenAI call per click.<br>Usage is billed to your API account.</span></div><section id="repair-progress" hidden><div class="progress-heading"><strong id="repair-status" role="status"></strong><button id="cancel-repair" class="secondary">Cancel attempt</button></div><p id="repair-metrics"></p><p id="repair-result"></p><p id="repair-context"></p><details id="repair-explanation" hidden><summary>What the AI says it changed</summary><p>This is the AI’s account. The checks above show what has been verified.</p><p id="repair-summary"></p><ul id="repair-limitations"></ul></details></section><div id="comparison-actions" hidden><a id="open-comparison" class="text-button" target="_blank" rel="noopener noreferrer">Open previous version ↗</a><button id="restore-version" class="secondary">Restore previous version</button></div><div id="quality-findings"></div><p class="qa-scope">Local startup checks. App-specific rules and actions remain pending when they have not been tested.</p></section>
+        <section class="card activity"><div class="card-heading"><h2><span class="step">3</span> What is happening</h2><button id="environment" class="text-button">Check Docker ↻</button></div><div id="environment-state">Checking environment…</div><ol id="events" aria-live="polite"></ol><details><summary>Checks and evidence</summary><div id="qa"><p>Checks will appear after the first run.</p></div></details><details><summary>Technical details of the latest issue</summary><pre id="diagnostic">No issues recorded.</pre></details></section>
+      </div>
+    </section>
+    <section id="projects" class="card projects-panel" aria-label="App library"><div class="card-heading"><h2>App library</h2><div><button id="refresh-projects" class="text-button">Refresh list</button><button id="new-project" class="secondary">New app</button></div></div><p id="project-save-status" role="status">Reading projects on this PC…</p><p>Each app has its own local database. Reopen it without generating again; its data stays saved when the panel closes.</p><div id="project-list" class="project-list"></div><section id="project-details" hidden></section></section>
+    </div><footer>DevKiller Engine <span class="footer-signature">IDEAS IN. APPS OUT.</span><span>Internal engine · one app at a time <button id="shutdown" class="text-button">Shut down panel</button></span></footer>
+  </main>
+</body></html>
+

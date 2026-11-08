@@ -1,0 +1,63 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {once} from 'node:events';
+import http from 'node:http';
+import {fileURLToPath} from 'node:url';
+import {chromium} from 'playwright';
+import {SecretStore} from '../../modules/secrets.mjs';
+import {createConnectionServer} from './server.mjs';
+
+// Only synthetic keys and a temporary vault are used. No real credential is read.
+const directory=await fs.mkdtemp(path.join(os.tmpdir(),'dk-anythingllm-test-'));
+const store=new SecretStore(directory);
+const fake='anythingllm-test-only-not-a-real-key';
+const server=createConnectionServer({store,validateKey:async value=>value===fake?'valid':value==='unavailable-test-key'?'unavailable':'invalid'});
+let browser;
+try {
+  server.listen(0,'127.0.0.1');await once(server,'listening');
+  const origin=`http://127.0.0.1:${server.address().port}`;
+  const status=await(await fetch(origin+'/api/status')).json();assert.equal(status.configured,false);
+  const post=(apiKey,overrides={})=>fetch(origin+'/api/key',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json','X-Connect-Token':status.token,...overrides},body:JSON.stringify({apiKey})});
+  assert.equal((await post(fake,{Origin:'http://unrelated.example'})).status,403);
+  assert.equal((await post(fake,{'X-Connect-Token':'wrong'})).status,403);
+  const foreignHost=await new Promise((resolve,reject)=>{const req=http.get(origin+'/api/status',{headers:{Host:'unrelated.example'}},res=>{res.resume();resolve(res.statusCode);});req.on('error',reject);});
+  assert.equal(foreignHost,403);
+  assert.equal((await post('bad-key-value')).status,401);
+  assert.equal((await post('unavailable-test-key')).status,503);
+  assert.equal((await post('a'.repeat(5000))).status,413);
+  assert.equal(await store.load(),'');
+  browser=await chromium.launch({headless:true});
+  const page=await browser.newPage({viewport:{width:1100,height:850}});
+  const errors=[];page.on('pageerror',()=>errors.push('pageerror'));page.on('console',msg=>{if(msg.type()==='error')errors.push('console-error');});
+  await page.goto(origin);await page.waitForFunction(()=>!document.querySelector('#save').disabled);
+  assert.equal(await page.locator('#api-key').getAttribute('type'),'password');
+  const screenshot=path.join(path.dirname(fileURLToPath(import.meta.url)),'preview-empty.png');
+  await page.screenshot({path:screenshot,fullPage:true});
+  await page.setViewportSize({width:375,height:812});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+  await page.locator('#api-key').fill(fake);
+  await page.locator('#save').click();
+  await page.waitForFunction(()=>document.querySelector('#connection').hidden,{},{timeout:15000});
+  assert.equal(await page.locator('#api-key').inputValue(),'');
+  assert.match(await page.locator('#status').innerText(),/Chave validada e guardada/);
+  assert.equal(await page.evaluate(()=>localStorage.length+sessionStorage.length),0);
+  assert.equal((await page.content()).includes(fake),false);
+  assert.equal(errors.length,0);
+  const ciphertext=await fs.readFile(store.file,'utf8');assert(!ciphertext.includes(fake));assert.notEqual(ciphertext,Buffer.from(fake).toString('base64'));
+  assert.equal(await new SecretStore(directory).load(),fake);
+  assert.equal((await post('bad-key-value')).status,401);assert.equal(await store.load(),fake);
+  store.save=async()=>{throw new Error('synthetic-write-failure');};
+  const failure=await post(fake);assert.equal(failure.status,500);assert(!(await failure.text()).includes(fake));assert.equal(await store.load(),fake);
+  const final=await(await fetch(origin+'/api/status')).text();assert(!final.includes(fake));assert.equal(JSON.parse(final).configured,true);
+  assert.equal((await fetch(origin+'/api/key')).status,404);
+  assert.equal((await fetch(origin+'/openai.dpapi')).status,404);
+  console.log(JSON.stringify({status:'passed',checks:['origin/host/token protection','invalid/unavailable/oversize rejected','password field and responsive page','browser save flow and field clearing','no browser storage or console errors','Windows DPAPI roundtrip','failed replacement preserves previous key','no secret read endpoint'],screenshot}));
+} finally {
+  if(browser)await browser.close();
+  server.closeAllConnections();await new Promise(resolve=>server.close(resolve));
+  assert.equal(path.dirname(path.resolve(directory)),path.resolve(os.tmpdir()));
+  assert(path.basename(directory).startsWith('dk-anythingllm-test-'));
+  await fs.rm(directory,{recursive:true,force:true});
+}

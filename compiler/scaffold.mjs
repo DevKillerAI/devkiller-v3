@@ -1,0 +1,3 @@
+export const indexHtml='<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aplicativo DevKiller</title></head><body><div id="root"></div><script src="/__devkiller/db.js"></script><script type="module" src="/main.jsx"></script></body></html>';
+export const mainJsx="import React from 'react';import {createRoot} from 'react-dom/client';import App from './src/App.jsx';import './src/styles.css';createRoot(document.getElementById('root')).render(<App/>);";
+export const viteConfig="import {defineConfig} from 'vite';import react from '@vitejs/plugin-react';export default defineConfig({plugins:[react()],base:'./',build:{target:'es2022'}});";

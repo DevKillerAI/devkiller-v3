@@ -1,0 +1,647 @@
+{
+  "version": 1,
+  "workspaces": {
+    "DESIGN_INTELLIGENCE": {
+      "name": "DK_DESIGN_INTELLIGENCE",
+      "slug": "dk_design_intelligence"
+    },
+    "VISUAL_QA": {
+      "name": "DK_VISUAL_QA",
+      "slug": "dk_visual_qa"
+    },
+    "UI_COMPONENT_SYSTEMS": {
+      "name": "DK_UI_COMPONENT_SYSTEMS",
+      "slug": "dk_ui_component_systems"
+    },
+    "FUNCTIONAL_QA": {
+      "name": "DK_FUNCTIONAL_QA",
+      "slug": "dk_functional_qa"
+    },
+    "SECURITY_ACCESSIBILITY": {
+      "name": "DK_SECURITY_ACCESSIBILITY",
+      "slug": "dk_security_accessibility"
+    }
+  },
+  "documents": [
+    {
+      "id": "DS001",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/SKILL.md",
+      "hash": "5323ad04d96b9a110456fb638f10ade9060b62c9a09eb37851e5f30c522a1a16",
+      "location": "custom-documents/raw-ds001-pbakaus-impeccable-plugin-skills-impeccable-skill-md-762366ef-c66e-4ae4-b090-cc682848a600.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/SKILL.md",
+      "sourceHash": "b71863a370c38c6afdf2ec401118b4c68ebdac4b1527d6920e8d849d8cb15c24",
+      "role": "reference"
+    },
+    {
+      "id": "DS002",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/craft.md",
+      "hash": "335bd7b629d25fd41ddfe8fc3ccabe1115abd4cc1ce1af013210c67ac7ea3b38",
+      "location": "custom-documents/raw-ds002-pbakaus-impeccable-plugin-skills-impeccable-reference-craft-md-414f5ac7-c779-485a-b37b-12f4c89fe9ff.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/craft.md",
+      "sourceHash": "9205e222bc6565b37fb504ceec93233c2d2a456802b69d16e6b1c44723907c4c",
+      "role": "reference"
+    },
+    {
+      "id": "DS003",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/craft-floor.md",
+      "hash": "1ddb0cca16055347a66f00414309c60b6dc31c1c0f759e2a8e8ae6bbb6f79000",
+      "location": "custom-documents/raw-ds003-pbakaus-impeccable-plugin-skills-impeccable-reference-craft-floor-md-31ee7c0e-1efe-434d-9006-06a8f7d8c815.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/craft-floor.md",
+      "sourceHash": "96e2e6bd4fcf9a2c6da65fb029f96d9176308fae2efd9d8653d3b8d838960e07",
+      "role": "reference"
+    },
+    {
+      "id": "DS004",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/layout.md",
+      "hash": "ed2a7b28cade7ae19c1d80dff4edf53a0168e56e2b17f805b65a999617f34b21",
+      "location": "custom-documents/raw-ds004-pbakaus-impeccable-plugin-skills-impeccable-reference-layout-md-2a8f8aab-5840-401e-84a2-fd7792ec001e.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/layout.md",
+      "sourceHash": "1d6d2658482b7e2df0c4d27b1b29c5195f0803b402278b96590598f4d3e57aa7",
+      "role": "reference"
+    },
+    {
+      "id": "DS005",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/typeset.md",
+      "hash": "a8be8a4021e0ad7fa463378129e26c3bc862897ba18d079616aecd6d755b8281",
+      "location": "custom-documents/raw-ds005-pbakaus-impeccable-plugin-skills-impeccable-reference-typeset-md-c146e041-fd1f-4c3c-9af9-edb4de7a4fe4.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/typeset.md",
+      "sourceHash": "da98692848aa2e9ea22c681522a082f2226cb5dbfdb704ac38903be1b4cffafd",
+      "role": "reference"
+    },
+    {
+      "id": "DS006",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/colorize.md",
+      "hash": "79ddcfddf0cae94f8f0d9127746b082b01dec5113f39149053d1cb9cf9376481",
+      "location": "custom-documents/raw-ds006-pbakaus-impeccable-plugin-skills-impeccable-reference-colorize-md-f8d80af9-3490-4836-a20b-86582009d553.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/colorize.md",
+      "sourceHash": "d1fbd55074abb2251bdaa03749d34acc42c38e46e47549f18f5848df57d43c42",
+      "role": "reference"
+    },
+    {
+      "id": "DS007",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/adapt.md",
+      "hash": "d542398726d083fb5261739999d78ca979c48bd8c221c2248400d014d5981953",
+      "location": "custom-documents/raw-ds007-pbakaus-impeccable-plugin-skills-impeccable-reference-adapt-md-99f99fdc-d98a-4572-a1a6-51620e4587e1.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/adapt.md",
+      "sourceHash": "0648e4e06d01cabc91fa7dc19256ceedeeeea213b9265e9d36b0918370e16fb2",
+      "role": "reference"
+    },
+    {
+      "id": "DS008",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/animate.md",
+      "hash": "2402bc26dabe75a198b51e07603970a5a3678e697da2e43e7c019c01c72ab578",
+      "location": "custom-documents/raw-ds008-pbakaus-impeccable-plugin-skills-impeccable-reference-animate-md-06b48cfc-e91e-4ed2-87b2-c766473d6120.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/animate.md",
+      "sourceHash": "94b4ce6299fea93d9f256b2d25705961a76bc5ea940c56db4145686ebc99df1b",
+      "role": "reference"
+    },
+    {
+      "id": "DS009",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/polish.md",
+      "hash": "37db3e99e06f9c56a05bbb039c0b199efc116ab205253fdd4b54cd0db6d8daed",
+      "location": "custom-documents/raw-ds009-pbakaus-impeccable-plugin-skills-impeccable-reference-polish-md-6c8dfd68-c50b-4891-b8bb-66a2d94d3857.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/polish.md",
+      "sourceHash": "73893e18e874e14beccd7fca92335d9036f5a5e068fd8815fd7daceadf186a43",
+      "role": "reference"
+    },
+    {
+      "id": "DS010",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/critique.md",
+      "hash": "ef85c4ed017afef36dae5534ef56c435a484ca5fb0814c3e1c592833ceaa9359",
+      "location": "custom-documents/raw-ds010-pbakaus-impeccable-plugin-skills-impeccable-reference-critique-md-8a2301ed-1da0-4281-9c4c-9763975eebf0.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/critique.md",
+      "sourceHash": "8bf1b06547f571d9b8d3875426fff6621fadd3bc08ae9ebb16d749f5c5f44b01",
+      "role": "reference"
+    },
+    {
+      "id": "DS011",
+      "title": "pbakaus/impeccable — plugin/skills/impeccable/reference/audit.md",
+      "hash": "4f8a3477eb5156bf1879a656b561bfac682a76f5daaaaa8e72635d1ba7709bac",
+      "location": "custom-documents/raw-ds011-pbakaus-impeccable-plugin-skills-impeccable-reference-audit-md-96538252-d8fc-4e9b-86b1-708fe16faa5f.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/pbakaus/impeccable/f2c7051853848826aac2f4646581d62a732155ad/plugin/skills/impeccable/reference/audit.md",
+      "sourceHash": "d9963fd73bf6129fe0c8ec25c5148f50617ec85683b8eeae7e411c9a42e2db33",
+      "role": "reference"
+    },
+    {
+      "id": "DS012",
+      "title": "addyosmani/agent-skills — skills/frontend-ui-engineering/SKILL.md",
+      "hash": "76578a3793962bced060f21c8a6ef837564b0c31899bdcabc7a70003a86ec879",
+      "location": "custom-documents/raw-ds012-addyosmani-agent-skills-skills-frontend-ui-engineering-skill-md-b6877d6d-4c05-4610-b399-b3cc7fb77b3f.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/addyosmani/agent-skills/be4e44a9fbc5e8df0beaefadbb28bd22ee61cc39/skills/frontend-ui-engineering/SKILL.md",
+      "sourceHash": "2b74ac4862be3902ec918dceac9366a6fe83b9e003601c0deaf6be09c1766aca",
+      "role": "reference"
+    },
+    {
+      "id": "DS013",
+      "title": "PracticalSwan/agent-skills — frontend-design/SKILL.md",
+      "hash": "93d9e98418a8092b9751f5e4276b9cd2dcf053f87f6fc8681ca995aa6c7290b4",
+      "location": "custom-documents/raw-ds013-practicalswan-agent-skills-frontend-design-skill-md-d8a9e9d1-0f68-44a6-8fad-3b323856c9ac.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/PracticalSwan/agent-skills/ff6d12f61e8250dd1b988e101a482f6adc05c451/frontend-design/SKILL.md",
+      "sourceHash": "e2d8d74516d1c31a153aba29a712935feabf5427431880f9c8a9f8c27d59a169",
+      "role": "reference"
+    },
+    {
+      "id": "DS014",
+      "title": "vercel-labs/agent-skills — skills/web-design-guidelines/SKILL.md",
+      "hash": "d2ea8f0523a776ab90b63b294c6c46006eb834203853600594662d20da4b6706",
+      "location": "custom-documents/raw-ds014-vercel-labs-agent-skills-skills-web-design-guidelines-skill-md-a23bb514-facc-434d-b5c7-42c914ff2a33.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/vercel-labs/agent-skills/063bee94c3f4df8453406c830b0a7df0f2860278/skills/web-design-guidelines/SKILL.md",
+      "sourceHash": "f4647ca866a3accf763777f83e7682954f0187cd6bea7eea0399796652414e8f",
+      "role": "reference"
+    },
+    {
+      "id": "DS015",
+      "title": "vercel-labs/agent-skills — skills/react-best-practices/SKILL.md",
+      "hash": "a514340d87b9ca103cdeb789b5378aa01b6e7ac3777c8c97ba4328f81ca473c0",
+      "location": "custom-documents/raw-ds015-vercel-labs-agent-skills-skills-react-best-practices-skill-md-9d171681-fa70-4d86-bd0d-780f0d554c3c.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/vercel-labs/agent-skills/063bee94c3f4df8453406c830b0a7df0f2860278/skills/react-best-practices/SKILL.md",
+      "sourceHash": "71ed7794962fa6e803ee83030517b5b93a9f70fbfeb431ec4535c5480a8d8355",
+      "role": "reference"
+    },
+    {
+      "id": "DS016",
+      "title": "vercel-labs/design-systems-to-agent-skills — docs/architecture.md",
+      "hash": "3d4ff4382fa2b19bc5ccf4ab3dc95b41d3079524f24c3445a587739e04491062",
+      "location": "custom-documents/raw-ds016-vercel-labs-design-systems-to-agent-skills-docs-architecture-md-d2ecb33e-7889-4011-a3a5-4d8016a2087c.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/vercel-labs/design-systems-to-agent-skills/0e541bc7a8eb8e86e6b1c93fac7cf21588d487da/docs/architecture.md",
+      "sourceHash": "5b78adf43e5f7be0ea272e9a45aa2551865973028b0a19cb6070fcf099acedd1",
+      "role": "reference"
+    },
+    {
+      "id": "DS017",
+      "title": "vercel-labs/design-systems-to-agent-skills — docs/output-structure.md",
+      "hash": "5c69b8eaf8867a05ff255199babd5345164d276931d956d5ada584e42a8a33ea",
+      "location": "custom-documents/raw-ds017-vercel-labs-design-systems-to-agent-skills-docs-output-structure-md-396a0071-33ac-4af2-9ae7-ac68a6200364.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/vercel-labs/design-systems-to-agent-skills/0e541bc7a8eb8e86e6b1c93fac7cf21588d487da/docs/output-structure.md",
+      "sourceHash": "900b3466de9d90dceb522beb674cd8f7135b55c9e0f15af05eed0e8071bbafd5",
+      "role": "reference"
+    },
+    {
+      "id": "DS018",
+      "title": "snowmountainAi/webdevbench — README.md",
+      "hash": "70354ef3422f951cf6de1972d08216d2104a02860e2f1cd479213ae631744996",
+      "location": "custom-documents/raw-ds018-snowmountainai-webdevbench-readme-md-3634bc4a-066b-48c1-9224-2652b5c08c7d.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/snowmountainAi/webdevbench/04226782bf761594e4dd1c3e10c4a227eeec2686/README.md",
+      "sourceHash": "219d7e5a8bc0d6b688df1250fa58d0eb69ff1031e9031234f732dccb45d3b745",
+      "role": "evaluation-methodology"
+    },
+    {
+      "id": "DS019",
+      "title": "kaboider/VISTA_Bench — README.md",
+      "hash": "220e2abc3e6c123066a0d07087d48b6c35f3c64caa99e49d53550326fa8aee99",
+      "location": "custom-documents/raw-ds019-kaboider-vista_bench-readme-md-a5fd00df-68a6-40a4-8505-3529b21d66e5.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/kaboider/VISTA_Bench/417f5f2d16278800cf1cec7393e092ed4ef07481/README.md",
+      "sourceHash": "baba2388d87acc76dca9eb7b17afb342ab3964b3f92dec914e70eb8f49b50cd2",
+      "role": "evaluation-methodology"
+    },
+    {
+      "id": "DS020",
+      "title": "radmanesh/design2code-bench — README.md",
+      "hash": "6ef202e2574c666133e085835992931c5bdf051e5ce5b1d2c45e9756b325ca90",
+      "location": "custom-documents/raw-ds020-radmanesh-design2code-bench-readme-md-6ceb603a-1996-4457-8154-526b0e125aab.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/radmanesh/design2code-bench/3ec238c1b07369325aabf3ca1c06d30b5dbc1135/README.md",
+      "sourceHash": "b8c2bc9b88bae4d2f9947a3f69005848c3b8d583ce5b1da05d7adb9f18148ace",
+      "role": "evaluation-methodology"
+    },
+    {
+      "id": "DS021",
+      "title": "MAIL-Tele-AI/WebUIBench — README.md",
+      "hash": "c3ad913ee67b292f87003ab83cfb956deaa9e4255957b63badd4d564893c1397",
+      "location": "custom-documents/raw-ds021-mail-tele-ai-webuibench-readme-md-84f78cf0-db69-4811-ad23-b7334caa4219.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/MAIL-Tele-AI/WebUIBench/191b680318a29ebb70b4f8eb4e6f18980ad4c765/README.md",
+      "sourceHash": "3b70530a62f59b6787590e1700d878157d321072c001ee703eea0b6806ded010",
+      "role": "evaluation-methodology"
+    },
+    {
+      "id": "DS022",
+      "title": "WebPAI/Interaction2Code — README.md",
+      "hash": "67c96b4c717c4066660d2ddaf7a65052c1456e6cdedc1fcfc402fba3cfc4b68f",
+      "location": "custom-documents/raw-ds022-webpai-interaction2code-readme-md-f7fac978-40f5-46be-8947-2f6008039228.json",
+      "group": "FUNCTIONAL_QA",
+      "url": "https://raw.githubusercontent.com/WebPAI/Interaction2Code/29d8af1572888d33b028ef001dc8452f9e88497b/README.md",
+      "sourceHash": "1d836662aa42f2a05653fcb2d956043a03bdd1840468ff60ac40166356020e08",
+      "role": "evaluation-methodology"
+    },
+    {
+      "id": "DS023",
+      "title": "mnluzimu/FullStack-Agent — README.md",
+      "hash": "7e36b223c530d432a4cb80d5e56dcfddb6392434187288f517eb0c162c6c639b",
+      "location": "custom-documents/raw-ds023-mnluzimu-fullstack-agent-readme-md-c05683f8-c9a7-4deb-b372-e7162694c219.json",
+      "group": "FUNCTIONAL_QA",
+      "url": "https://raw.githubusercontent.com/mnluzimu/FullStack-Agent/a0b4789d64e2b6c7962730abdbd0281dbc3ec429/README.md",
+      "sourceHash": "7a3930dd9d5c00cc5bc4d5f38d119f8ac119e5a293fabcdfb50d010739fa02a3",
+      "role": "evaluation-methodology"
+    },
+    {
+      "id": "DS024",
+      "title": "code-philia/arc-bench — README.md",
+      "hash": "9a873efb5464735cc03e1341aaa1bbc1ff2fe199c6979f259c5a0af32d070974",
+      "location": "custom-documents/raw-ds024-code-philia-arc-bench-readme-md-bea033fe-24a4-469c-9983-ed08d5e26004.json",
+      "group": "FUNCTIONAL_QA",
+      "url": "https://raw.githubusercontent.com/code-philia/arc-bench/1eb018367bedd618d3b9ced406ce07fb423d4956/README.md",
+      "sourceHash": "90c9dc10898269c5d6e5a7dc5de99f9183352563d112286d1647e16696dd14a7",
+      "role": "evaluation-methodology"
+    },
+    {
+      "id": "DS025",
+      "title": "GoogleChrome/lighthouse-ci — README.md",
+      "hash": "c2abe5149b4e0cf33cb87589e852c4ae23d4a30a1b6b0726fdc052587c17fcb8",
+      "location": "custom-documents/raw-ds025-googlechrome-lighthouse-ci-readme-md-f28ee78b-496e-4d71-888d-1c43e3502e11.json",
+      "group": "FUNCTIONAL_QA",
+      "url": "https://raw.githubusercontent.com/GoogleChrome/lighthouse-ci/ebee453dad3f8acacd657a62ccc65e3296afb7d0/README.md",
+      "sourceHash": "2df7b6e1803047354838ad733db426f79491bde4f704ebac928e5b9f8294241f",
+      "role": "reference"
+    },
+    {
+      "id": "DS026",
+      "title": "GoogleChrome/lighthouse-ci — docs/configuration.md",
+      "hash": "0ae23c27b8c64e6ef69070cb20d94ceaca436a2113289b78324891723ec0a09c",
+      "location": "custom-documents/raw-ds026-googlechrome-lighthouse-ci-docs-configuration-md-92bbdbbc-4867-4121-9a14-472f328f41a9.json",
+      "group": "FUNCTIONAL_QA",
+      "url": "https://raw.githubusercontent.com/GoogleChrome/lighthouse-ci/ebee453dad3f8acacd657a62ccc65e3296afb7d0/docs/configuration.md",
+      "sourceHash": "ebbc2b915782fdbef82504d66e2f241b3b1a848776ad004039a8d12500455b40",
+      "role": "reference"
+    },
+    {
+      "id": "DS027",
+      "title": "dequelabs/axe-core — README.md",
+      "hash": "af7f92b325661b24eb619a5d803162e05b2d23226772fa14b9df9fea832b9738",
+      "location": "custom-documents/raw-ds027-dequelabs-axe-core-readme-md-83afdbd4-62f1-4975-acf5-d10a24575e51.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/dequelabs/axe-core/4887c3a880dc5c58649bb1d5c72b79dda3393312/README.md",
+      "sourceHash": "90f7366c3a6e9347dd17b083709fc4cbea06a1b694127c389f5a9dd377fa368b",
+      "role": "reference"
+    },
+    {
+      "id": "DS028",
+      "title": "dequelabs/axe-core — doc/rule-descriptions.md",
+      "hash": "27e1af08d32060681e825902ff37fa7cca3ba7111e679fd6e54024738dd44e4e",
+      "location": "custom-documents/raw-ds028-dequelabs-axe-core-doc-rule-descriptions-md-edff75b0-f933-4961-9f92-f46557dd78ad.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/dequelabs/axe-core/4887c3a880dc5c58649bb1d5c72b79dda3393312/doc/rule-descriptions.md",
+      "sourceHash": "e34d163aca70a8663c275edb056b0afffcc14e2fec0811c5b219c7da5f12884e",
+      "role": "reference"
+    },
+    {
+      "id": "DS029",
+      "title": "dequelabs/axe-core — doc/API.md",
+      "hash": "c61b53c2680786ce301c5a72422133cd9f861e9e39de53627b9ccac2251888ee",
+      "location": "custom-documents/raw-ds029-dequelabs-axe-core-doc-api-md-e1b96920-82a3-4ad9-9028-6bcbb0b07371.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/dequelabs/axe-core/4887c3a880dc5c58649bb1d5c72b79dda3393312/doc/API.md",
+      "sourceHash": "dff2e984f87c90169d4d5632db57167996f5e75cea1fc1c9301617ef4dd927e4",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V1",
+      "title": "OWASP ASVS 5.0.0 — V1 Encoding and Sanitization",
+      "hash": "5f778f2a9258fae3a8f352a86469cf67b97ad3d4bef7fdf0def8649cf29661f0",
+      "location": "custom-documents/raw-ds030-v1-owasp-asvs-5-0-0-v1-encoding-and-sanitization-32c79714-ae3c-4b47-ae8f-225f14aea42b.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V2",
+      "title": "OWASP ASVS 5.0.0 — V2 Validation and Business Logic",
+      "hash": "4b067d9040a6cd09fb670b0f603c8fe7ef305f99942124ca065a66a991307dde",
+      "location": "custom-documents/raw-ds030-v2-owasp-asvs-5-0-0-v2-validation-and-business-logic-8173964c-b6cd-445d-8678-203c92c63fed.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V3",
+      "title": "OWASP ASVS 5.0.0 — V3 Web Frontend Security",
+      "hash": "317b602419ad75e8b064254a16fd6a0e855c4a979d1429c1c956aace33c2861b",
+      "location": "custom-documents/raw-ds030-v3-owasp-asvs-5-0-0-v3-web-frontend-security-e2afd496-70bc-424d-a4a7-b1a97b22ac8a.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V4",
+      "title": "OWASP ASVS 5.0.0 — V4 API and Web Service",
+      "hash": "c16ac6ca0ef169bf3d99a3eb47fa4b01103696ee2322fbd559994bbae75ec764",
+      "location": "custom-documents/raw-ds030-v4-owasp-asvs-5-0-0-v4-api-and-web-service-3371e492-c7e4-4210-96a8-88a7617cda5f.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V5",
+      "title": "OWASP ASVS 5.0.0 — V5 File Handling",
+      "hash": "4bf69604419fe9ec13c246adad87353005bdd6b6dff7708eac1e138da3decb1a",
+      "location": "custom-documents/raw-ds030-v5-owasp-asvs-5-0-0-v5-file-handling-47486de7-3aa6-46a4-a9d0-ac6081fd62c6.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V6",
+      "title": "OWASP ASVS 5.0.0 — V6 Authentication",
+      "hash": "e689c3b1af8587b3f630ded6de06d0bc496f182af4fc3bea7a601c13dfb5a763",
+      "location": "custom-documents/raw-ds030-v6-owasp-asvs-5-0-0-v6-authentication-04079ce5-6d2f-4d02-9380-d26dec014a2a.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V7",
+      "title": "OWASP ASVS 5.0.0 — V7 Session Management",
+      "hash": "22ea8d192e815241a99490b9b826fa9b7bf1008f7cd376e85619ccca471527f9",
+      "location": "custom-documents/raw-ds030-v7-owasp-asvs-5-0-0-v7-session-management-bb514dc7-90aa-4435-857c-f70b3edf325a.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V8",
+      "title": "OWASP ASVS 5.0.0 — V8 Authorization",
+      "hash": "9b3d1260b3d07060719fc9c456c33567f9191a6dbb9507740e8ee20921e21ba5",
+      "location": "custom-documents/raw-ds030-v8-owasp-asvs-5-0-0-v8-authorization-cbfdaa47-e0b4-4074-a144-404335139eac.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V9",
+      "title": "OWASP ASVS 5.0.0 — V9 Self-contained Tokens",
+      "hash": "7777f7b5667e029199fe675ab9a0a481a69b7d69781431e73ec98dfe7c91e67f",
+      "location": "custom-documents/raw-ds030-v9-owasp-asvs-5-0-0-v9-self-contained-tokens-77082b57-5e91-402d-b2d7-38d2812d73f8.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V10",
+      "title": "OWASP ASVS 5.0.0 — V10 OAuth and OIDC",
+      "hash": "a2ab458d3695db963c8cc72971dc85cb9df62939e26078b9f26413ba16e6afaf",
+      "location": "custom-documents/raw-ds030-v10-owasp-asvs-5-0-0-v10-oauth-and-oidc-d7ad8356-9449-45ed-b6e1-d8add69c9f2a.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V11",
+      "title": "OWASP ASVS 5.0.0 — V11 Cryptography",
+      "hash": "33e4614855720629b415378c8f023627920e16c91e5280523cc06c89471920b9",
+      "location": "custom-documents/raw-ds030-v11-owasp-asvs-5-0-0-v11-cryptography-3b973bb3-8dd2-4959-9f4a-49bdf3eb90cc.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V12",
+      "title": "OWASP ASVS 5.0.0 — V12 Secure Communication",
+      "hash": "9ca167d042aee73fe0813dc25eb0bd7c124636c8909967281cb83c59d7f8965a",
+      "location": "custom-documents/raw-ds030-v12-owasp-asvs-5-0-0-v12-secure-communication-c56faec3-d648-4a50-8850-bc4f41d57dff.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V13",
+      "title": "OWASP ASVS 5.0.0 — V13 Configuration",
+      "hash": "8832ea5d1ae4bbed8e0e5fdcfcd5d0fb0510c078015c3fb64440cd97f30b3989",
+      "location": "custom-documents/raw-ds030-v13-owasp-asvs-5-0-0-v13-configuration-5c193720-5058-42db-82e8-b6805700ec63.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V14",
+      "title": "OWASP ASVS 5.0.0 — V14 Data Protection",
+      "hash": "74e50650523fc276bd48a56d5cf61cf0e5f9ccb682dab0a4b9ebe5f0f503033e",
+      "location": "custom-documents/raw-ds030-v14-owasp-asvs-5-0-0-v14-data-protection-daae81e3-593a-415c-a3cd-37fd28ce5cd6.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V15",
+      "title": "OWASP ASVS 5.0.0 — V15 Secure Coding and Architecture",
+      "hash": "cc5da51188bab795aca40990efc8ca7731b9ece936acec8828b8e33dcb308be8",
+      "location": "custom-documents/raw-ds030-v15-owasp-asvs-5-0-0-v15-secure-coding-and-architecture-4af7e967-bd8c-4eab-a9f1-dfe7cd4ddda1.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V16",
+      "title": "OWASP ASVS 5.0.0 — V16 Security Logging and Error Handling",
+      "hash": "08b74eb9cfa68dff447f7ba16ce3908820c72251ad9b06a742dc8781c91c9ef6",
+      "location": "custom-documents/raw-ds030-v16-owasp-asvs-5-0-0-v16-security-logging-and-error-handling-028162fc-f892-4ce7-aa2b-d0f9307bf0f8.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS030-V17",
+      "title": "OWASP ASVS 5.0.0 — V17 WebRTC",
+      "hash": "6199692aa3400e08de4de6dec1a60843e1517589179eedb97e958224e98730eb",
+      "location": "custom-documents/raw-ds030-v17-owasp-asvs-5-0-0-v17-webrtc-a9d57d12-1e2b-4c15-8ff3-8abaee2815fc.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/2b300716ebbef654788d0a14d6c878cecc70c2e9/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.json",
+      "sourceHash": "bcdbec214d70abcfad9284a31d4f9e5134305831d628aad3aa85d7e26626cb35",
+      "role": "reference"
+    },
+    {
+      "id": "DS031",
+      "title": "shadcn-ui/ui — README.md",
+      "hash": "7931ad7227d9d6e031f04936c4e3197ef58776b663d8ed0a8c38256c506371ea",
+      "location": "custom-documents/raw-ds031-shadcn-ui-ui-readme-md-f068005d-9c7b-4c3e-9aee-7f2555986e33.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/f5bb039c749afd2d111ad970dfaa9ab30bd90b3b/README.md",
+      "sourceHash": "bb0869848a2063e405b141aa6fae8b10f132ac45036f613459e2d778b7609619",
+      "role": "reference"
+    },
+    {
+      "id": "DS032",
+      "title": "radix-ui/primitives — README.md",
+      "hash": "076502780a89a69f9b1fe0bffbf117518094bf1405fb18203a3c9c609a6f3758",
+      "location": "custom-documents/raw-ds032-radix-ui-primitives-readme-md-837d8184-c396-4e73-aa00-b0d17ea01aee.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/radix-ui/primitives/f7ecd5ab16f5e1e820eb5786a1419a98a2d594ae/README.md",
+      "sourceHash": "20cbda0a49f12fb8d23bc41106611cd89d8ff3c6950059b4a3092b58f357656d",
+      "role": "reference"
+    },
+    {
+      "id": "DS033",
+      "title": "carbon-design-system/carbon — README.md",
+      "hash": "484beff1ba4dedade56df0d3a98137c97d93c2dd416569581efb69223834edb7",
+      "location": "custom-documents/raw-ds033-carbon-design-system-carbon-readme-md-9f9201d1-5d18-4352-84e0-422e4da0e4ba.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/58037668e896fa71c4d8f7c1e006aa575cf8c11b/README.md",
+      "sourceHash": "1379b2bc49aae94c6dcd2b76cdb4f165a18220c2c613faf431fee74b18f3baa2",
+      "role": "reference"
+    },
+    {
+      "id": "DS034",
+      "title": "adobe/spectrum-web-components — README.md",
+      "hash": "f483c315bf43297586e2bdd129dc925984eb5088302e447d2faf01fde77117f1",
+      "location": "custom-documents/raw-ds034-adobe-spectrum-web-components-readme-md-77faa9d4-6eea-48f9-8d93-2f051882cbb6.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/adobe/spectrum-web-components/83d9234bcaa5cdbe5116b3b463f18a958e653aa5/README.md",
+      "sourceHash": "aca58cb8313a969b245f3daacb9804b26a128bb75737152adffb418466f5ae04",
+      "role": "reference"
+    },
+    {
+      "id": "DS035",
+      "title": "primer/brand — README.md",
+      "hash": "2c3dc7a755c0d1a4c06c00c569a2c2170983ed17909d71753084d5d933ad318f",
+      "location": "custom-documents/raw-ds035-primer-brand-readme-md-18837333-7e81-4afe-aefb-44747f027eb6.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/primer/brand/43174e1098fed8fcd8cfc9731368439e01c5ff4d/README.md",
+      "sourceHash": "f366839d3429d2c39a568cb4f06ca1c42679eebf81ac3ff28c6368c1ba82221d",
+      "role": "reference"
+    },
+    {
+      "id": "DS036",
+      "title": "primer/brand — apps/next-docs/content/getting-started/index.mdx",
+      "hash": "7335e0f8c72a4059beee0050eb7293283445cdc194be8070c33a999bd867a9ed",
+      "location": "custom-documents/raw-ds036-primer-brand-apps-next-docs-content-getting-started-index-mdx-3389f0bc-3955-4c41-8bbb-34dc51fc16dc.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/primer/brand/43174e1098fed8fcd8cfc9731368439e01c5ff4d/apps/next-docs/content/getting-started/index.mdx",
+      "sourceHash": "d45dca09225b64cc628eaf466b08f0a2464f5455253e7822215be4dd58f1131f",
+      "role": "reference"
+    },
+    {
+      "id": "DS037",
+      "title": "primer/brand — apps/next-docs/content/primitives/color.mdx",
+      "hash": "4eb0cf8f98bfa311b9fb6ef9d9ad526ba4dee75767d12d883ff2b181f53d23bb",
+      "location": "custom-documents/raw-ds037-primer-brand-apps-next-docs-content-primitives-color-mdx-925bfd2c-3a5b-40cd-9e3b-c49560b8f493.json",
+      "group": "DESIGN_INTELLIGENCE",
+      "url": "https://raw.githubusercontent.com/primer/brand/43174e1098fed8fcd8cfc9731368439e01c5ff4d/apps/next-docs/content/primitives/color.mdx",
+      "sourceHash": "59388c2f9b2e3d4efec7359138489ebef4d17ff5b11fa68c7f9bd8620d540417",
+      "role": "reference"
+    },
+    {
+      "id": "DS038",
+      "title": "carbon-design-system/carbon — docs/guides/accessibility.md",
+      "hash": "8f2cbf0efe236bc0497498dcb05f10397bd811da84b6862aae762e73e34d86a1",
+      "location": "custom-documents/raw-ds038-carbon-design-system-carbon-docs-guides-accessibility-md-f9c9c09a-492f-49e7-9ed2-e2c9e03b1750.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/58037668e896fa71c4d8f7c1e006aa575cf8c11b/docs/guides/accessibility.md",
+      "sourceHash": "3ee28b621b2944e5c0b9e1b21826226f48d5434e74e898039ad2ed410f7cdc29",
+      "role": "reference"
+    },
+    {
+      "id": "DS039",
+      "title": "shadcn-ui/ui — apps/v4/content/docs/components/radix/dialog.mdx",
+      "hash": "f71d53b06c8e554bec923bf7b5251c6e9c06d4e19f218318f4bc68be0e1e0e03",
+      "location": "custom-documents/raw-ds039-shadcn-ui-ui-apps-v4-content-docs-components-radix-dialog-mdx-d10c351f-353c-46b6-8d7c-715d6fe7e4f8.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/f5bb039c749afd2d111ad970dfaa9ab30bd90b3b/apps/v4/content/docs/components/radix/dialog.mdx",
+      "sourceHash": "aab92c0ec95496a662dec2d3a63b0a81357cf42ed23fe6566636b69db1dd4f78",
+      "role": "reference"
+    },
+    {
+      "id": "DS040",
+      "title": "Vercel — Web interface guidelines",
+      "hash": "720f51d802867a01acdcb8ec654aa0b2fad11339df0288763d6faf1b9b298623",
+      "location": "custom-documents/raw-ds040-vercel-web-interface-guidelines-5a038d76-bf1d-4d5c-b13e-26ffb64568fc.json",
+      "group": "VISUAL_QA",
+      "url": "https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md",
+      "sourceHash": "79e040f56604d1ee40ba9b43989ac4345e9baa067f4fba16dfdbd064ff8461cc",
+      "role": "reference"
+    },
+    {
+      "id": "DS041",
+      "title": "Playwright — Best practices",
+      "hash": "c3a997a98fe0e7c73fbfa7e52eb4ad91ed0e98a50d7a96e2821d5a902477ac35",
+      "location": "custom-documents/raw-ds041-playwright-best-practices-70deff45-3199-430c-a8df-94ee10016c8f.json",
+      "group": "FUNCTIONAL_QA",
+      "url": "https://playwright.dev/docs/best-practices",
+      "sourceHash": "5d6adbaac3f09920fc743c42d8aabf10884b536bec5d2e620d1bc441eee44717",
+      "role": "reference"
+    },
+    {
+      "id": "DS042",
+      "title": "Storybook — Visual testing",
+      "hash": "c386c7fac83e2f5bfc4fa0ef8d5ed70fbbc557d9a3bc0752ba535c9f452545c9",
+      "location": "custom-documents/raw-ds042-storybook-visual-testing-e12a44f7-988e-4ed4-b6d8-e2ae8b3ac2fe.json",
+      "group": "VISUAL_QA",
+      "url": "https://storybook.js.org/docs/writing-tests/visual-testing",
+      "sourceHash": "39345872aef0f719d910e742311108e08f299c2c5abb83c802fecd4e022cd499",
+      "role": "reference"
+    },
+    {
+      "id": "DS043",
+      "title": "Storybook — Visual testing handbook",
+      "hash": "5917cfbec7bf603ce804cc6d632a2006faf2845dc56994d6aa58a30c429554d6",
+      "location": "custom-documents/raw-ds043-storybook-visual-testing-handbook-87a76749-0900-4960-9b12-6d17c0cea4d5.json",
+      "group": "VISUAL_QA",
+      "url": "https://storybook.js.org/tutorials/visual-testing-handbook",
+      "sourceHash": "78d43b9027a88e6b8ac384b4bc951ae9e310d815ea86327e6ce62f112e7e1afe",
+      "role": "reference"
+    },
+    {
+      "id": "DS044",
+      "title": "W3C — WCAG 2.2",
+      "hash": "3edbd7d347382359e81b7fab5c2e4ee23bb5198a74cc8e84b14d972ab1c27c46",
+      "location": "custom-documents/raw-ds044-w3c-wcag-2-2-01be90bc-2023-4cab-86bf-2792a8389c2f.json",
+      "group": "SECURITY_ACCESSIBILITY",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "sourceHash": "1c49f7d45f6c7f1cdd5c5f9b31848f2618d1cd29e1bdfea7348d6f2b9442864d",
+      "role": "reference"
+    },
+    {
+      "id": "DS045",
+      "title": "Radix — Accessibility",
+      "hash": "3fcb4437e9f099806959c4cf378356e193cd30f0f7c0d143f8d81c604cf774a7",
+      "location": "custom-documents/raw-ds045-radix-accessibility-8c6fbe91-e4ce-4898-83ef-7cc76c26ca7c.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://www.radix-ui.com/primitives/docs/overview/accessibility",
+      "sourceHash": "6ba8ce7a2c3093b5e77f1ad2f7e5276c9e50f7217f58806dda3d94de2e4487f0",
+      "role": "reference"
+    },
+    {
+      "id": "DS046",
+      "title": "shadcn — Theming",
+      "hash": "f8ed65b0d2d99dc0306c5ba5835a049b4a77f6e81d0994e660b124e527cd1d67",
+      "location": "custom-documents/raw-ds046-shadcn-theming-9f369268-a69b-49a2-830e-211acf69b144.json",
+      "group": "UI_COMPONENT_SYSTEMS",
+      "url": "https://ui.shadcn.com/docs/theming",
+      "sourceHash": "6195776cb3ca3077aeae90c4501f4ee8e216067b4c63ec4f43dbf9b7dcf6948c",
+      "role": "reference"
+    }
+  ]
+}
